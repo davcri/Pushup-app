@@ -13,8 +13,6 @@ from PySide.QtGui import QApplication
 from PySide.QtGui import QMessageBox
 from PySide.QtGui import QLabel
 from PySide.QtGui import QWidget
-from PySide import QtCore
-from PyQt4 import QtGui
 
 #from PySide.QtGui import QMainWindow 
 

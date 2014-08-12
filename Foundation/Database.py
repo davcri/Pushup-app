@@ -7,22 +7,20 @@ Created on Aug 12, 2014
 import sqlite3 
 import os
 
-databaseName = "push app.db"
 
 def databaseExists():
     return os.path.isfile(databaseName)
     
 class Database:    
-    def __init__(self):              
-               
+    _databaseName = "Push app.db"
+    
+    def __init__(self):       
         if not databaseExists() :
             connection = sqlite3.connect(databaseName)
             connection.execute("CREATE TABLE exercise(athlete text primary key, repetition int, series int, date text)")
         else :
             connection = sqlite3.connect(databaseName)
-            pass
-        
-    def close(self):
+            
         connection.commit()    
         connection.close()      
         

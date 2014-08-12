@@ -8,7 +8,7 @@ import datetime
 
 class Person:
     ''' Represents a person '''
-    
+      
     def __init__(self, name, surname, sex, birthDate, height, weight):
         ''' Initialize a person '''
         self._name = name 
@@ -17,7 +17,7 @@ class Person:
         self._birthDate = birthDate
         self._height = height # in centimeters (cm)
         self._weight = weight # in Kilograms (Kg)
-            
+                    
     def getAge(self):
         ''' Gets the age of a person '''
         today = datetime.date.today()
