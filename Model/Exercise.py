@@ -8,13 +8,13 @@ from datetime import datetime
 
 class Exercise:
     ''' Generic exercise class'''
-    def __init__(self, name, date = datetime.now(), avgHeartRate = 0):
-        self._name = name
+    def __init__(self, athleteName, date = datetime.now(), avgHeartRate = 0):
+        self._athleteName = athleteName
         self._date = date
         self._averageHeartRate = avgHeartRate
     
     def __str__(self):
-        objectInfo = "Name = " + self._name + "\n"
+        objectInfo = "Name = " + self._athleteName + "\n"
         objectInfo += "Timestamp [Y - M - D H:m:s:ms] = " + str(self._date) + "\n"
         objectInfo += "Average heart rate : " + str(self._averageHeartRate) + " bpm" + "\n"
        

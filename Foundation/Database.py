@@ -6,34 +6,30 @@ Created on Aug 12, 2014
 
 import sqlite3 
 import os
-
-
-def databaseExists():
-    return os.path.isfile(databaseName)
-    
+   
 class Database:    
     _databaseName = "Push app.db"
     
-    def __init__(self):       
-        if not databaseExists() :
-            connection = sqlite3.connect(databaseName)
-            connection.execute("CREATE TABLE exercise(athlete text primary key, repetition int, series int, date text)")
+    def __init__(self):      
+        if not self.databaseExists():
+            connection = self.connect()
+
+            connection.execute("CREATE TABLE athlete(name text primary key, surname text, sex text, birthDate text, height real, weight real)")                
+            connection.execute("CREATE TABLE exercise(athleteName text, date text, avgHearRate real, FOREIGN KEY(athleteName) REFERENCES athlete(name))") 
+            # exercise primary key is the rowid column that sqlite generates by default
+            # Read http://www.sqlite.org/lang_createtable.html#rowid
         else :
-            connection = sqlite3.connect(databaseName)
+            connection = sqlite3.connect(self._databaseName)
             
         connection.commit()    
         connection.close()      
+    
+    def connect(self):
+        connection = sqlite3.connect(self._databaseName)
+        # enables foreign key support
+        connection.execute("PRAGMA foreign_keys=ON")
         
-     
-#             connection.execute("CREATE TABLE flessioni (ripetizioni int, serie int, data text)")
-#         else :
-#             connection = sqlite3.connect(databaseName)    
-#             currentDate = datetime.today()
-#                
-#             connection.execute("INSERT INTO flessioni VALUES (?,?,?)", (4, 5, currentDate))
-#             x = connection.execute("SELECT * FROM flessioni")
-#                 
-#             pushupList = x.fetchall()
-#             print pushupList
-                
-              
+        return connection
+    
+    def databaseExists(self):
+        return os.path.isfile(Database._databaseName)

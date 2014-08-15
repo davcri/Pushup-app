@@ -9,16 +9,17 @@ from Model.Person import Person
 #from datetime import date
 
 class Athlete(Person):
-    def __init__(self, name, surname, sex, birthDate, height, weight, exercises):
+    def __init__(self, name, surname, sex, birthDate, height, weight):
         Person.__init__(self, name, surname, sex, birthDate, height, weight)
-        self._exercises = exercises
+        #self._exercises = exercises
         #athleteDb = Foundation.Athlete.Athlete()   
                  
     def __str__(self):
         athleteInfo = Person.__str__(self)
-        athleteInfo += str(self._exercises)
+        #athleteInfo += str(self._exercises)
         
         return athleteInfo
+    
     
 
         

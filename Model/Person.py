@@ -14,13 +14,13 @@ class Person:
         self._name = name 
         self._surname = surname
         self._sex = sex
-        self._birthDate = birthDate
+        self._birthDate = birthDate # datetime object
         self._height = height # in centimeters (cm)
         self._weight = weight # in Kilograms (Kg)
                     
     def getAge(self):
         ''' Gets the age of a person '''
-        today = datetime.date.today()
+        today = datetime.datetime.today()
         ageDelta = today - self._birthDate
         
         daysInYear = 365.242199
@@ -34,7 +34,7 @@ class Person:
     def __str__(self):
         personData = self._name + "\n" + self._surname + "\n" + self._sex + "\n" 
         personData += str(self._birthDate) + "\n" + str(self.getAge()) + " years old\n"
-        personData += self._height + " cm" +"\n" + self._weight + " Kg" + "\n"    
+        personData += str(self._height) + " cm" +"\n" + str(self._weight) + " Kg" + "\n"    
      
         return personData           
 
