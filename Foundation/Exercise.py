@@ -14,13 +14,16 @@ class Exercise(Database):
     def add(self, exercise):        
         connection = Database.connect(self)
                         
-        connection.execute("INSERT INTO exercise VALUES (:athleteName, :date, :avgHeartRate)", {"athleteName":exercise._athleteName, "date":exercise._date, "avgHeartRate": exercise._averageHeartRate})
+        connection.execute("INSERT INTO exercise VALUES (:athleteName, :date, :avgHeartRate)", 
+                          {"athleteName":exercise._athleteName, "date":exercise._date, "avgHeartRate": exercise._averageHeartRate})
         
         connection.commit()
         connection.close()
                 
-    def load(self):      
-        #result = connection.execute("SELECT * FROM exercise WHERE athlete = :primaryKeyParam", {"primaryKeyParam" :primaryKey})
-        #exercises = result.fetchall()
-        pass
-      
+    def getExercisesByAthleteName(self, athleteName):      
+        connection = Database.connect(self)
+        
+        result = connection.execute("SELECT * FROM exercise WHERE athleteName = :athl_name", {"athl_name" :athleteName})
+        return result.fetchall()
+        
+        
