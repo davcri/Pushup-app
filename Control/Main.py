@@ -5,6 +5,7 @@ Created on Aug 11, 2014
 '''
 
 from View.Main import Main as Main_View
+from PySide.QtGui import QApplication 
 from Model.Exercise import Exercise as Exercise_Model
 from Model.Athlete import Athlete as Athlete_Model
 from Model.Pushup import Pushup as Pushup_Model
@@ -13,17 +14,16 @@ from Foundation.Exercise import Exercise as Exercise_Foundation
 from Foundation.Pushup import Pushup as Pushup_Foundation
 
 from datetime import date
+import sys
 
 
 class Main():
     def __init__(self):
-        #self.showMainWindow()
-        profile =  "assd"
-        me = Athlete_Model(profile, "Cristini", "Male", date(1991,8,10), 188, 70)
-        self.storeAthlete(me)
+        self.showMainWindow()        
         
-        print self.loadAthlete(profile)
-            
+#         profile =  "assd"  
+#         print self.loadAthlete(profile).getBMI()
+             
                 
     def storeAthlete(self, athlete):
         database = Athlete_Foundation()
@@ -52,6 +52,11 @@ class Main():
         return lists
             
     def showMainWindow(self):
+        qtApplication = QApplication(sys.argv)
+        
         mainWindow =  Main_View()        
-        mainWindow.showMainWindow() 
+        #mainWindow.showMainWindow() 
         #mainWindow.showVersion()
+        sys.exit(qtApplication.exec_())
+        
+        
