@@ -11,15 +11,15 @@ class Exercise(Database):
         Database.__init__(self)
         pass
     
-    def add(self, exercise):        
+    def store(self, exercise):        
         connection = Database.connect(self)
                         
-        connection.execute("INSERT INTO exercise VALUES (:athleteName, :date, :avgHeartRate)", 
+        connection.execute("INSERT INTO exercise VALUES (null, :athleteName, :date, :avgHeartRate)", 
                           {"athleteName":exercise._athleteName, "date":exercise._date, "avgHeartRate": exercise._averageHeartRate})
         
         connection.commit()
         connection.close()
-                
+    
     def getExercisesByAthleteName(self, athleteName):      
         connection = Database.connect(self)
         

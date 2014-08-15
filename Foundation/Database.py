@@ -15,9 +15,10 @@ class Database:
             connection = self.connect()
 
             connection.execute("CREATE TABLE athlete(name text primary key, surname text, sex text, birthDate text, height real, weight real)")                
-            connection.execute("CREATE TABLE exercise(athleteName text, date text, avgHearRate real, FOREIGN KEY(athleteName) REFERENCES athlete(name))") 
-            # exercise primary key is the rowid column that sqlite generates by default
-            # Read http://www.sqlite.org/lang_createtable.html#rowid
+            connection.execute("CREATE TABLE exercise(id INTEGER primary key, athleteName text, date text, avgHearRate real, FOREIGN KEY(athleteName) REFERENCES athlete(name))")
+            connection.execute("CREATE TABLE pushup(exerciseId int, repetitions int, series int, FOREIGN KEY(exerciseId) REFERENCES exercise(id))") 
+                
+            print "Database created"
         else :
             connection = sqlite3.connect(self._databaseName)
             
@@ -26,7 +27,9 @@ class Database:
     
     def connect(self):
         connection = sqlite3.connect(self._databaseName)
-        # enables foreign key support
+        # Uses a different row_factory. "Row" enables access to row by name
+        connection.row_factory = sqlite3.Row
+        # Enables foreign key support
         connection.execute("PRAGMA foreign_keys=ON")
         
         return connection

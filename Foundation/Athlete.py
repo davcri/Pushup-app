@@ -15,8 +15,9 @@ class Athlete(Database):
         Database.__init__(self)
         
     def load(self, athleteName):
-        connection = sqlite3.connect(self._databaseName)
-        connection.row_factory = sqlite3.Row
+        connection = Database.connect(self)
+        #connection = sqlite3.connect(self._databaseName)
+        #connection.row_factory = sqlite3.Row
         
         result = connection.execute("SELECT * FROM athlete WHERE name=:searchParam", {"searchParam" :athleteName})
         result = result.fetchall()
