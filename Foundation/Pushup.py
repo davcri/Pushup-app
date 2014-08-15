@@ -5,6 +5,7 @@ Created on Aug 15, 2014
 '''
 
 from Foundation.Database import Database
+from Model.Pushup import Pushup as Pushup_Model
 #from Foundation.Exercise import Exercise
 
 class Pushup(Database):
@@ -28,4 +29,22 @@ class Pushup(Database):
         connection.commit()
         connection.close()
     
+    def load(self):
+        connection = Database.connect(self)
+        
+        cursor = connection.execute("SELECT * FROM pushup inner join exercise on exerciseId=id")
+        pushupRows = cursor.fetchall()
+        #keys = pushupRows[0].keys() # useful to check row keys.
+        
+        pushupsList = []        
+        
+        for row in pushupRows:
+            pushupObj = Pushup_Model(row["athleteName"],
+                                     row["date"], 
+                                     row["avgHeartRate"], 
+                                     row["series"],
+                                     row["repetitions"])
+            pushupsList.append(pushupObj)        
+        
+        return pushupsList
         

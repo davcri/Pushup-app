@@ -12,43 +12,44 @@ from Foundation.Athlete import Athlete as Athlete_Foundation
 from Foundation.Exercise import Exercise as Exercise_Foundation
 from Foundation.Pushup import Pushup as Pushup_Foundation
 
-import datetime
+from datetime import date
 
 
 class Main():
     def __init__(self):
-        #self.showMainWindow()    
+        #self.showMainWindow()
+        profile =  "assd"
+        me = Athlete_Model(profile, "Cristini", "Male", date(1991,8,10), 188, 70)
+        self.storeAthlete(me)
         
-        #at = Athlete_Model("dav", "s", "m", datetime.datetime.today(), 180, 90)
-        #ex = Exercise_Model("dav", datetime.datetime.today(), 90)
-        
-        #self.addProfile(at)
-        #self.addExercise(ex)
-        #self.addPushUp()        
-        p = Pushup_Model("dav", datetime.datetime.today(), 80, 1, 15)
-        db = Pushup_Foundation()
-        db.store(p)
-        
-    def addProfile(self, athlete):
+        print self.loadAthlete(profile)
+            
+                
+    def storeAthlete(self, athlete):
         database = Athlete_Foundation()
         database.store(athlete)
     
-    def showProfile(self, selectedProfile):
+    def loadAthlete(self, selectedProfile):
         athleteDb = Athlete_Foundation()
-        athleteDb.load(selectedProfile)
+        return athleteDb.load(selectedProfile)
         
-    def addExercise(self, exercise):
+    def storeExercise(self, exercise):
         database = Exercise_Foundation()
         database.add(exercise)
         
     def loadExercises(self, athleteName):
         database = Exercise_Foundation()        
-        exercises = database.getExercisesByAthleteName(athleteName)
-        return exercises
+        return database.getExercisesByAthleteName(athleteName)
     
-    def addPushUp(self):
+    def storePushup(self, pushup):
         database = Pushup_Foundation()
-        database.addPushup("super")
+        database.store(pushup)
+        
+    def loadPushups(self):
+        db = Pushup_Foundation()
+        lists = db.load()
+        
+        return lists
             
     def showMainWindow(self):
         mainWindow =  Main_View()        

@@ -14,8 +14,8 @@ class Database:
         if not self.databaseExists():
             connection = self.connect()
 
-            connection.execute("CREATE TABLE athlete(name text primary key, surname text, sex text, birthDate text, height real, weight real)")                
-            connection.execute("CREATE TABLE exercise(id INTEGER primary key, athleteName text, date text, avgHearRate real, FOREIGN KEY(athleteName) REFERENCES athlete(name))")
+            connection.execute("CREATE TABLE athlete(name text primary key, surname text, sex text, birthDate text, height real, mass real)")                
+            connection.execute("CREATE TABLE exercise(id INTEGER primary key, athleteName text, date text, avgHeartRate real, FOREIGN KEY(athleteName) REFERENCES athlete(name))")
             connection.execute("CREATE TABLE pushup(exerciseId int, repetitions int, series int, FOREIGN KEY(exerciseId) REFERENCES exercise(id))") 
                 
             print "Database created"
