@@ -15,7 +15,9 @@ class Athlete(Person):
         #athleteDb = Foundation.Athlete.Athlete()   
     
     def getBMI(self):
-        bodyMassIndex = 4 
+        heightInMeters = self._height/100
+        
+        bodyMassIndex = self._mass / (heightInMeters**2)
         return bodyMassIndex
                  
     def __str__(self):
