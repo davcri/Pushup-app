@@ -14,10 +14,16 @@ class Athlete(Database):
     def __init__(self):              
         Database.__init__(self)
         
+    def getAthletes(self):
+        connection = Database.connect(self)
+        
+        result = connection.execute("SELECT * FROM athlete")
+        result = result.fetchall()
+        
+        return result
+        
     def load(self, athleteName):
         connection = Database.connect(self)
-        #connection = sqlite3.connect(self._databaseName)
-        #connection.row_factory = sqlite3.Row
         
         result = connection.execute("SELECT * FROM athlete WHERE name=:searchParam",
                                     {"searchParam" :athleteName})

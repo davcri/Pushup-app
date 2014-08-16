@@ -4,8 +4,6 @@ Created on Aug 11, 2014
 @author: davide
 '''
 
-from View.Main import Main as Main_View
-from PySide.QtGui import QApplication 
 from Model.Exercise import Exercise as Exercise_Model
 from Model.Athlete import Athlete as Athlete_Model
 from Model.Pushup import Pushup as Pushup_Model
@@ -13,17 +11,17 @@ from Foundation.Athlete import Athlete as Athlete_Foundation
 from Foundation.Exercise import Exercise as Exercise_Foundation
 from Foundation.Pushup import Pushup as Pushup_Foundation
 
+from PySide.QtGui import QApplication
+from View.MainWindow import MainWindow as Main_View
+from View.ProfileSelection import ProfileSelection
+
 from datetime import date
 import sys
 
 
-class Main():
+class MainWindow():
     def __init__(self):
-        self.showMainWindow()        
-        
-#         profile =  "assd"  
-#         print self.loadAthlete(profile).getBMI()
-             
+        self.showMainWindow()                    
                 
     def storeAthlete(self, athlete):
         database = Athlete_Foundation()
@@ -32,7 +30,11 @@ class Main():
     def loadAthlete(self, selectedProfile):
         athleteDb = Athlete_Foundation()
         return athleteDb.load(selectedProfile)
-        
+    
+    def loadAthletes(self):
+        athleteDb = Athlete_Foundation()
+        return athleteDb.getAthletes()
+    
     def storeExercise(self, exercise):
         database = Exercise_Foundation()
         database.add(exercise)
@@ -54,9 +56,16 @@ class Main():
     def showMainWindow(self):
         qtApplication = QApplication(sys.argv)
         
-        mainWindow =  Main_View()        
-        #mainWindow.showMainWindow() 
-        #mainWindow.showVersion()
-        sys.exit(qtApplication.exec_())
+        athletesList = self.loadAthletes()
         
+        profileSelection = ProfileSelection(athletesList)
         
+        if profileSelection.execDialogWindow() == True :
+            print profileSelection.getSelectedProfile()
+        
+            mainWindow =  Main_View()   
+            mainWindow.show()     
+            #mainWindow.showMainWindow() 
+            #mainWindow.showVersion()
+            sys.exit(qtApplication.exec_())
+            

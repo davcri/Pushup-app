@@ -5,6 +5,6 @@ Created on Aug 11, 2014
 @author: davide
 '''
 
-from Control.Main import Main
+from Control.MainWindow import MainWindow
 
-mainController = Main() # calls the Main controller
+mainController = MainWindow() # calls the MainWindow controller
