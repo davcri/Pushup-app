@@ -14,6 +14,7 @@ from Foundation.Pushup import Pushup as Pushup_Foundation
 from PySide.QtGui import QApplication
 from View.MainWindow import MainWindow as Main_View
 from View.ProfileSelection import ProfileSelection
+from View.ProfileCreation import ProfileCreation
 
 from datetime import date
 import sys
@@ -58,14 +59,24 @@ class MainWindow():
         
         athletesList = self.loadAthletes()
         
-        profileSelection = ProfileSelection(athletesList)
-        
-        if profileSelection.execDialogWindow() == True :
-            print profileSelection.getSelectedProfile()
+        if len(athletesList) == 0:
+            profileCreation = ProfileCreation()
+            profileCreation.execProfileCreation()
+            print "No athlete registered"
+        elif len(athletesList) == 1:
+            pass
+        elif len(athletesList) > 1:
+            profileSelection = ProfileSelection(athletesList)
         
             mainWindow =  Main_View()   
-            mainWindow.show()     
-            #mainWindow.showMainWindow() 
-            #mainWindow.showVersion()
-            sys.exit(qtApplication.exec_())
+            mainWindow.show() 
+       
+            if profileSelection.execDialogWindow() == True :
+                print profileSelection.getSelectedProfile()
+        
+                # mainWindow =  Main_View()   
+                # mainWindow.show()     
+            
+            
+        sys.exit(qtApplication.exec_())
             

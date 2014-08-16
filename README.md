@@ -1,7 +1,7 @@
 # Pushup app
-Work in progress application to handle progresses in physicals exercises, like pushups. 
+Work in progress application to handle progresses in physicals exercises, like pushups.
 
 # Development
-Programming language : Python 2.7.6
-GUI : Pyside (Qt)
-
+- __Programming language__ : Python 2.7.6
+- __Database__ : Sqlite3 
+- __GUI__ : Pyside (Qt)

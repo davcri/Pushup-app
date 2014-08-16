@@ -30,7 +30,8 @@ class ProfileSelection():
         vLayout = QVBoxLayout()
         
         # Label
-        greeterText = QLabel("Welcome to Pushup app. \nSelect a profile")
+        greeterText = QLabel("Welcome to <b>Pushup app</b>." + \
+                             "<br><br> Select a profile:")
         vLayout.addWidget(greeterText)        
             
         # List 
@@ -50,7 +51,7 @@ class ProfileSelection():
         vLayout.addWidget(self.list)
         
         # layout fix
-        vLayout.addStretch(1)
+        #vLayout.addStretch(1)
         vLayout.addLayout(hLayout)
         
         # Buttons
