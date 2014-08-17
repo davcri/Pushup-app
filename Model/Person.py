@@ -13,6 +13,9 @@ class Person:
         ''' Initialize a person '''
         self._name = name 
         self._surname = surname
+        
+        assert sex == "Male" or sex == "Female"
+        
         self._sex = sex
         self._birthDate = birthDate # date object
                 
@@ -39,9 +42,13 @@ class Person:
         return timedeltaObj.days
              
     def __str__(self):
-        personData = self._name + "\n" + self._surname + "\n" + self._sex + "\n" 
-        personData += str(self._birthDate) + "\n" + str(self.getAge()) + " years old\n"
-        personData += str(self._height) + " cm" +"\n" + str(self._mass) + " Kg" + "\n"    
+        personData = "Name = " + self._name + "\n" +\
+                     "Surname = " + self._surname + "\n" +\
+                     "Sex = " + self._sex + "\n" +\
+                     "Datestamp [Y - M - D] : " + str(self._birthDate) + "\n" +\
+                     "Age = " + str(self.getAge()) + " years old\n" +\
+                     "Height = " + str(self._height) + " cm" +"\n" +\
+                     "Masss = " + str(self._mass) + " Kg" + "\n"    
      
         return personData           
 

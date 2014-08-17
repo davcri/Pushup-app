@@ -8,6 +8,12 @@ from PySide.QtGui import QWidget, QLabel
 from PySide.QtGui import QFormLayout, QVBoxLayout,QHBoxLayout, QPushButton
 from PySide.QtGui import QLineEdit, QCalendarWidget, QRadioButton
 from PySide.QtGui import QDoubleSpinBox
+from PySide.QtCore import QDate
+
+from datetime import date
+
+from Model.Athlete import Athlete
+
  
 class ProfileCreation(QWidget):
     '''
@@ -25,31 +31,77 @@ class ProfileCreation(QWidget):
         self.form = QFormLayout()
         
         #--------------------------------
-        name = QLineEdit()
-        surname = QLineEdit()
-        birthdate = QCalendarWidget()
-        male = QRadioButton("Male")
-        female = QRadioButton("Female")
-        height = QDoubleSpinBox()
-        mass = QDoubleSpinBox()
+        self.name = QLineEdit()
+        self.surname = QLineEdit()
+        
+        self.birthdate = QCalendarWidget()
+        self.birthdate.setGridVisible(True)
+        self.birthdate.setMinimumDate(QDate(1850,1,1))
+        self.birthdate.setMaximumDate(QDate.currentDate())
+        
+        self.male = QRadioButton("Male")
+        self.male.setChecked(True)
+        self.female = QRadioButton("Female")
+        
+        self.height = QDoubleSpinBox()
+        self.height.setMaximum(250)
+        self.height.setMinimum(50)
+        self.height.setValue(165)
+        self.height.setSuffix(" cm")
+        
+        self.mass = QDoubleSpinBox()
+        self.mass.setMaximum(300)
+        self.mass.setMinimum(20)
+        self.mass.setValue(60)
+        self.mass.setSuffix(" Kg")
+        
         createBtn = QPushButton("Create")
                 
-        self.form.addRow("Name", name)
-        self.form.addRow("Surname", surname)
-        self.form.addRow("Birth date",birthdate)
+        self.form.addRow("Name", self.name)
+        self.form.addRow("Surname", self.surname)
+        self.form.addRow("Birth date",self.birthdate)
         
         sexLayout = QHBoxLayout()
-        sexLayout.addWidget(male)
-        sexLayout.addWidget(female)
+        sexLayout.addWidget(self.male)
+        sexLayout.addWidget(self.female)
         self.form.addRow("Sex", sexLayout)
         
-        self.form.addRow("Height (meters)", height)
-        self.form.addRow("Mass (Kilograms)", mass)
+        self.form.addRow("Height", self.height)
+        self.form.addRow("Mass", self.mass)
                 
-        self.layout.addWidget(QLabel("<h3>Your profile data</h3><hr>"))
+        self.layout.addWidget(QLabel("<h3>Create your profile!</h3><hr>"))
         self.layout.addLayout(self.form)
         self.layout.addWidget(createBtn)
+        createBtn.clicked.connect(self.createProfile)
         #--------------------------------
         
         self.setLayout(self.layout)
         self.show()
+        
+    def createProfile(self):                
+        # Check errors on widget close
+        assert self.close() == True
+        
+        print "Profile creation"
+        qDate = self.birthdate.selectedDate()
+        birthDate = self.qDate_to_date(qDate)
+        
+        athleteProfile = Athlete(self.name.text(),
+                                 self.surname.text(),
+                                 self._getSex(),
+                                 birthDate,
+                                 self.height.value(),
+                                 self.mass.value()) 
+        return athleteProfile                    
+        
+    def qDate_to_date(self, qDate):        
+        return date(qDate.year(), qDate.month(),qDate.day())
+    
+    def _getSex(self):
+        if (self.male.isChecked()):
+            return "Male"
+        elif (self.female.isChecked()):
+            return "Female"
+        else :
+            print "Error: No sex selected"
+            return False

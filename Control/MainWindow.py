@@ -19,7 +19,6 @@ from View.ProfileCreation import ProfileCreation
 from datetime import date
 import sys
 
-
 class MainWindow():
     def __init__(self):
         self.showMainWindow()                    
@@ -59,24 +58,23 @@ class MainWindow():
         
         athletesList = self.loadAthletes()
         
-        if len(athletesList) == 0:
+        if len(athletesList) == 0:            
+            print "No athlete registered"
+            
             profileCreation = ProfileCreation()
             profileCreation.execProfileCreation()
-            print "No athlete registered"
+            print "cacca"
         elif len(athletesList) == 1:
+            mainWindow =  Main_View()   
+            mainWindow.show() 
             pass
         elif len(athletesList) > 1:
             profileSelection = ProfileSelection(athletesList)
-        
-            mainWindow =  Main_View()   
-            mainWindow.show() 
-       
+               
             if profileSelection.execDialogWindow() == True :
-                print profileSelection.getSelectedProfile()
-        
-                # mainWindow =  Main_View()   
-                # mainWindow.show()     
-            
-            
+                print profileSelection.getSelectedProfile()           
+                mainWindow =  Main_View()   
+                mainWindow.show()
+                 
         sys.exit(qtApplication.exec_())
             
