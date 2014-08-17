@@ -18,9 +18,7 @@ class Athlete(Database):
         
         result = connection.execute("SELECT * FROM athlete")
         result = result.fetchall()
-        
-        print result
-        
+                
         athletesList = []
         for row in result :       
             athlete = self._createAthleteFromRow(row)      
@@ -34,32 +32,18 @@ class Athlete(Database):
         result = connection.execute("SELECT * FROM athlete WHERE name=:searchParam",
                                     {"searchParam" :athleteName})
         result = result.fetchall()
-                
-        i=0
-        row = []
-        for i in range(len(result)):
-            row = result[i]
-            i += 1
         
-        if i>1 :
+        resultLength = len(result)
+        
+        if resultLength == 1:
+            athlete = self._createAthleteFromRow(result[0])
+        elif resultLength == 0:
+            print "Error. No profile found for " + "'" + athleteName + "'"
+            athlete = False
+        elif resultLength > 1:
             print "Database corrupted. More than one tuple for the same Primary Key"
             athlete = False
-        else :                        
-            if len(row) == 0 :
-                print "Error. No profile found for " + "'" + athleteName + "'"
-                athlete = False   
-            else:
-                self._createAthleteFromRow(row)
-#                 #converting a string into a date object
-#                 birthDateString = row["birthDate"]
-#                 birthDate = self._stringToDate(birthDateString)
-#                 
-#                 athlete = Model.Athlete.Athlete(row["name"],
-#                                                 row["surname"],
-#                                                 row["sex"],
-#                                                 birthDate,
-#                                                 row["height"],
-#                                                 row["mass"])                
+              
         return athlete
     
     def store(self, athlete):    

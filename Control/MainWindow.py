@@ -73,8 +73,8 @@ class MainWindow():
                 sys.exit(qtApplication.quit())            
         elif len(athletesList) == 1:
             mainWindow =  Main_View(athletesList[0])   
-            mainWindow.show() 
-            pass
+            mainWindow.show()
+            
         elif len(athletesList) > 1:
             profileSelection = ProfileSelection(athletesList)
                
