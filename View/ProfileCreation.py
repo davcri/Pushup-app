@@ -4,7 +4,7 @@ Created on Aug 16, 2014
 @author: davide
 '''
 
-from PySide.QtGui import QWidget, QLabel
+from PySide.QtGui import QDialog, QLabel
 from PySide.QtGui import QFormLayout, QVBoxLayout,QHBoxLayout, QPushButton
 from PySide.QtGui import QLineEdit, QCalendarWidget, QRadioButton
 from PySide.QtGui import QDoubleSpinBox
@@ -15,7 +15,7 @@ from datetime import date
 from Model.Athlete import Athlete
 
  
-class ProfileCreation(QWidget):
+class ProfileCreation(QDialog):
     '''
     classdocs
     '''
@@ -24,8 +24,15 @@ class ProfileCreation(QWidget):
         '''
         Constructor
         '''
-        QWidget.__init__(self)
-    
+        QDialog.__init__(self)
+        self.athleteProfile = False
+        
+    def getAthleteProfile(self):
+        self.execProfileCreation() # Modal dialog
+        # execProfileCreation sets the self.athleteProfile variable !
+        
+        return self.athleteProfile
+        
     def execProfileCreation(self):
         self.layout = QVBoxLayout()
         self.form = QFormLayout()
@@ -56,6 +63,7 @@ class ProfileCreation(QWidget):
         self.mass.setSuffix(" Kg")
         
         createBtn = QPushButton("Create")
+        createBtn.setDefault(True)
                 
         self.form.addRow("Name", self.name)
         self.form.addRow("Surname", self.surname)
@@ -72,27 +80,30 @@ class ProfileCreation(QWidget):
         self.layout.addWidget(QLabel("<h3>Create your profile!</h3><hr>"))
         self.layout.addLayout(self.form)
         self.layout.addWidget(createBtn)
+        
         createBtn.clicked.connect(self.createProfile)
+    
         #--------------------------------
         
         self.setLayout(self.layout)
-        self.show()
         
+        return self.exec_()
+    
+    # Slot     
     def createProfile(self):                
-        # Check errors on widget close
-        assert self.close() == True
-        
         print "Profile creation"
+        
         qDate = self.birthdate.selectedDate()
         birthDate = self.qDate_to_date(qDate)
         
-        athleteProfile = Athlete(self.name.text(),
+        self.athleteProfile = Athlete(self.name.text(),
                                  self.surname.text(),
                                  self._getSex(),
                                  birthDate,
                                  self.height.value(),
                                  self.mass.value()) 
-        return athleteProfile                    
+        
+        self.accept()
         
     def qDate_to_date(self, qDate):        
         return date(qDate.year(), qDate.month(),qDate.day())

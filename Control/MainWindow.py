@@ -62,8 +62,15 @@ class MainWindow():
             print "No athlete registered"
             
             profileCreation = ProfileCreation()
-            profileCreation.execProfileCreation()
-            print "cacca"
+            athlete = profileCreation.getAthleteProfile() 
+            
+            if athlete != False:
+                self.storeAthlete(athlete)
+                mainWindow =  Main_View()   
+                mainWindow.show() 
+            else:
+                print "No athlete created. Pushup-app quitting"
+                sys.exit(qtApplication.quit())            
         elif len(athletesList) == 1:
             mainWindow =  Main_View()   
             mainWindow.show() 
@@ -76,5 +83,5 @@ class MainWindow():
                 mainWindow =  Main_View()   
                 mainWindow.show()
                  
-        sys.exit(qtApplication.exec_())
+        sys.exit(qtApplication.exec_())    
             
