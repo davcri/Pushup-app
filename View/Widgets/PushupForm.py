@@ -9,7 +9,8 @@ from PySide.QtCore import QDate
 from PySide.QtGui import QWidget, \
                          QFormLayout, QSpinBox, QCalendarWidget, \
                          QPushButton
-from Model.Pushup import Pushup
+from Model.Pushup import Pushup as Pushup_Model
+from Foundation.Pushup import Pushup as Pushup_Foundation
 from datetime import date
 
 class PushupForm(QWidget):
@@ -59,12 +60,16 @@ class PushupForm(QWidget):
         exerciseDate = self.date.selectedDate()
         exerciseDate = self.qDate_to_date(exerciseDate)
         
-        pushup = Pushup(self.athlete._name, 
+        pushup = Pushup_Model(self.athlete._name, 
                         exerciseDate, 
                         self.avgHeartRate.value(), 
                         self.series.value(),
                         self.repetitions.value())
-        print pushup
+        
+        db = Pushup_Foundation()
+        db.store(pushup)
+        
+        return pushup
     
     def qDate_to_date(self, qDate):        
         return date(qDate.year(), qDate.month(),qDate.day())

@@ -11,8 +11,9 @@ from PySide.QtGui import QApplication, QMainWindow, \
                          QAction, \
                          QWidget, QMessageBox
 
-from View.Profile import Profile 
-from View.PushupForm import PushupForm
+from View.Widgets.Profile import Profile  
+from View.Widgets.PushupForm import PushupForm
+from View.Widgets.PushupList import PushupList
  
 class MainWindow(QMainWindow):
     def __init__(self, athlete): 
@@ -35,9 +36,11 @@ class MainWindow(QMainWindow):
         verticalLayout = QVBoxLayout()
         
         profileGUI = Profile(self.athlete)
+        pushupsList = PushupList("") 
         pushupForm = PushupForm(self.athlete)
         
         verticalLayout.addWidget(profileGUI)
+        verticalLayout.addWidget(pushupsList)
         verticalLayout.addWidget(pushupForm)
                 
         self.mainWidget.setLayout(verticalLayout)

@@ -4,19 +4,18 @@ Created on Aug 11, 2014
 @author: davide
 '''
 
-from Model.Exercise import Exercise as Exercise_Model
-from Model.Athlete import Athlete as Athlete_Model
-from Model.Pushup import Pushup as Pushup_Model
+# from Model.Exercise import Exercise as Exercise_Model
+# from Model.Athlete import Athlete as Athlete_Model
+# from Model.Pushup import Pushup as Pushup_Model
 from Foundation.Athlete import Athlete as Athlete_Foundation
 from Foundation.Exercise import Exercise as Exercise_Foundation
 from Foundation.Pushup import Pushup as Pushup_Foundation
 
 from PySide.QtGui import QApplication
 from View.MainWindow import MainWindow as Main_View
-from View.ProfileSelection import ProfileSelection
-from View.ProfileCreation import ProfileCreation
+from View.Widgets.ProfileSelection import ProfileSelection
+from View.Widgets.ProfileCreation import ProfileCreation
 
-from datetime import date
 import sys
 
 class MainWindow():
