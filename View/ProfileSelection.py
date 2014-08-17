@@ -62,9 +62,9 @@ class ProfileSelection():
         
         hLayout.addWidget(self.okBtn)
         
-#         cancel = QPushButton("Cancel")      
-#         cancel.clicked.connect(self.dialog.reject)
-#         hLayout.addWidget(cancel)        
+        # cancel = QPushButton("Cancel")      
+        # cancel.clicked.connect(self.dialog.reject)
+        # hLayout.addWidget(cancel)        
         
 
         self.dialog.setLayout(vLayout)
