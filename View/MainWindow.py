@@ -18,18 +18,20 @@ class MainWindow(QMainWindow):
         QMainWindow.__init__(self)
         self.setWindowTitle("Pushup app")       
         
+        self.athlete = athlete
+        
         self._initWidth = 700
         self._initHeight = 600
         self.resize(QSize(self._initWidth, self._initHeight))
         self.centerWindow()
-        self.createUI()
+        self.createUI()        
             
     def createUI(self):
         self.mainWidget = QWidget()        
         
         verticalLayout = QVBoxLayout()
         
-        profileGUI = Profile()
+        profileGUI = Profile(self.athlete)
         verticalLayout.addWidget(profileGUI)
                 
         self.mainWidget.setLayout(verticalLayout)

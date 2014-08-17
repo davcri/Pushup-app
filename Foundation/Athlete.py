@@ -6,7 +6,6 @@ Created on Aug 12, 2014
 
 from Foundation.Database import Database
 import Model.Athlete
-import sqlite3 
 
 import datetime
 
@@ -20,7 +19,14 @@ class Athlete(Database):
         result = connection.execute("SELECT * FROM athlete")
         result = result.fetchall()
         
-        return result
+        print result
+        
+        athletesList = []
+        for row in result :       
+            athlete = self._createAthleteFromRow(row)      
+            athletesList.append(athlete)
+        
+        return athletesList
         
     def load(self, athleteName):
         connection = Database.connect(self)
@@ -40,23 +46,24 @@ class Athlete(Database):
             athlete = False
         else :                        
             if len(row) == 0 :
-                print "Error. No profile found for " + "'" +athleteName + "'"
+                print "Error. No profile found for " + "'" + athleteName + "'"
                 athlete = False   
             else:
-                #converting a string into a date object
-                birthDateString = row["birthDate"]
-                birthDate = self.stringToDate(birthDateString)
-                
-                athlete = Model.Athlete.Athlete(row["name"],
-                                                row["surname"],
-                                                row["sex"],
-                                                birthDate,
-                                                row["height"],
-                                                row["mass"])                
+                self._createAthleteFromRow(row)
+#                 #converting a string into a date object
+#                 birthDateString = row["birthDate"]
+#                 birthDate = self._stringToDate(birthDateString)
+#                 
+#                 athlete = Model.Athlete.Athlete(row["name"],
+#                                                 row["surname"],
+#                                                 row["sex"],
+#                                                 birthDate,
+#                                                 row["height"],
+#                                                 row["mass"])                
         return athlete
     
     def store(self, athlete):    
-        if self.nameAlreadyExists(athlete._name):
+        if self._nameAlreadyExists(athlete._name):
             print "Error: Name '" + athlete._name + "' already taken.\n" 
         else:
             database = Database.connect(self)
@@ -69,7 +76,7 @@ class Athlete(Database):
             database.commit()
             database.close()
 
-    def nameAlreadyExists(self, name):
+    def _nameAlreadyExists(self, name):
         connection = Database.connect(self)
         
         cursor = connection.execute("SELECT * FROM athlete WHERE name==:name", {"name": name})
@@ -84,7 +91,7 @@ class Athlete(Database):
         
         return nameAlreadyExists        
         
-    def stringToDate(self, string):
+    def _stringToDate(self, string):
         #strptime() allows to convert a string into a datetime object
         datetimeObj = datetime.datetime.strptime(string, "%Y-%m-%d")
         
@@ -92,3 +99,16 @@ class Athlete(Database):
         dateObj = datetimeObj.date()
     
         return dateObj
+    
+    def _createAthleteFromRow(self, row):  
+        birthDateString = row["birthDate"]
+        birthDate = self._stringToDate(birthDateString)
+        
+        athlete = Model.Athlete.Athlete(row["name"],
+                                        row["surname"],
+                                        row["sex"],
+                                        birthDate,
+                                        row["height"],
+                                        row["mass"])
+        return athlete
+        

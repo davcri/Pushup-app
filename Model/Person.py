@@ -45,7 +45,7 @@ class Person:
         personData = "Name = " + self._name + "\n" +\
                      "Surname = " + self._surname + "\n" +\
                      "Sex = " + self._sex + "\n" +\
-                     "Datestamp [Y - M - D] : " + str(self._birthDate) + "\n" +\
+                     "Birth date [y-m-d] : " + str(self._birthDate) + "\n" +\
                      "Age = " + str(self.getAge()) + " years old\n" +\
                      "Height = " + str(self._height) + " cm" +"\n" +\
                      "Masss = " + str(self._mass) + " Kg" + "\n"    

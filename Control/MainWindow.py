@@ -72,7 +72,6 @@ class MainWindow():
                 print "No athlete created. Pushup-app quitting"
                 sys.exit(qtApplication.quit())            
         elif len(athletesList) == 1:
-            print athletesList[0]
             mainWindow =  Main_View(athletesList[0])   
             mainWindow.show() 
             pass
