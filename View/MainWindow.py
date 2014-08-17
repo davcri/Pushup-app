@@ -6,13 +6,13 @@ Created on Aug 11, 2014
 
 import PySide
 from PySide.QtCore import QSize
-from PySide.QtGui import QApplication, QMainWindow
-from PySide.QtGui import QVBoxLayout
-from PySide.QtGui import QMenuBar, QToolBar, QAction
-from PySide.QtGui import QMessageBox, QLabel
-from PySide.QtGui import QWidget, QMessageBox
+from PySide.QtGui import QApplication, QMainWindow, \
+                         QVBoxLayout, \
+                         QAction, \
+                         QWidget, QMessageBox
 
 from View.Profile import Profile 
+from View.PushupForm import PushupForm
  
 class MainWindow(QMainWindow):
     def __init__(self, athlete): 
@@ -26,16 +26,19 @@ class MainWindow(QMainWindow):
         self.resize(QSize(self._initWidth, self._initHeight))
         self.centerWindow()
         
-        self.createUI()        
+        self.createGUI()        
             
-    def createUI(self):
+    def createGUI(self):
         self.mainWidget = QWidget()
         self._createMenus()
         
         verticalLayout = QVBoxLayout()
         
         profileGUI = Profile(self.athlete)
+        pushupForm = PushupForm(self.athlete)
+        
         verticalLayout.addWidget(profileGUI)
+        verticalLayout.addWidget(pushupForm)
                 
         self.mainWidget.setLayout(verticalLayout)
         self.setCentralWidget(self.mainWidget)
