@@ -18,7 +18,8 @@ class Athlete(Person):
         heightInMeters = self._height/100
         
         bodyMassIndex = self._mass / (heightInMeters**2)
-        return bodyMassIndex
+        
+        return round(bodyMassIndex,1)
                  
     def __str__(self):
         athleteInfo = Person.__str__(self)
