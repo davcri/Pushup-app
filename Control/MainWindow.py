@@ -66,21 +66,22 @@ class MainWindow():
             
             if athlete != False:
                 self.storeAthlete(athlete)
-                mainWindow =  Main_View()   
+                mainWindow =  Main_View(athlete)   
                 mainWindow.show() 
             else:
                 print "No athlete created. Pushup-app quitting"
                 sys.exit(qtApplication.quit())            
         elif len(athletesList) == 1:
-            mainWindow =  Main_View()   
+            print athletesList[0]
+            mainWindow =  Main_View(athletesList[0])   
             mainWindow.show() 
             pass
         elif len(athletesList) > 1:
             profileSelection = ProfileSelection(athletesList)
                
             if profileSelection.execDialogWindow() == True :
-                print profileSelection.getSelectedProfile()           
-                mainWindow =  Main_View()   
+                selectedProfile = profileSelection.getSelectedProfile()           
+                mainWindow =  Main_View(selectedProfile) # NOT TESTED !   
                 mainWindow.show()
                  
         sys.exit(qtApplication.exec_())    

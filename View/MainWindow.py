@@ -4,19 +4,17 @@ Created on Aug 11, 2014
 @author: davide
 '''
 
-#import sys 
 import PySide
 from PySide.QtCore import QSize
-from PySide.QtGui import QApplication, QMainWindow, QPushButton
-from PySide.QtGui import QLabel, QComboBox, QVBoxLayout, QHBoxLayout
-from PySide.QtGui import QMessageBox, QDialog
+from PySide.QtGui import QApplication, QMainWindow
+from PySide.QtGui import QLabel, QVBoxLayout
+from PySide.QtGui import QMessageBox
 from PySide.QtGui import QWidget
 
-#from PySide.QtGui import QMainWindow 
-
+from View.Profile import Profile 
  
 class MainWindow(QMainWindow):
-    def __init__(self): 
+    def __init__(self, athlete): 
         QMainWindow.__init__(self)
         self.setWindowTitle("Pushup app")       
         
@@ -24,29 +22,16 @@ class MainWindow(QMainWindow):
         self._initHeight = 600
         self.resize(QSize(self._initWidth, self._initHeight))
         self.centerWindow()
-        self.addStuff()
+        self.createUI()
             
-    def addStuff(self):
+    def createUI(self):
         self.mainWidget = QWidget()        
         
         verticalLayout = QVBoxLayout()
         
-        
-        text = QLabel("<h3><b>Pushup app</b></h3>")
-        
-        verticalLayout.addWidget(text)
-        
-        verticalLayout.addStretch(1)
-        
-        go_button = QPushButton('&Go')
-        verticalLayout.addWidget(go_button)
-                 
-        comboBox = QComboBox()
-        comboBox.addItem("pappa")
-        comboBox.addItem("asd")
-        comboBox.addItem("gr")
-        verticalLayout.addWidget(comboBox)        
-        
+        profileGUI = Profile()
+        verticalLayout.addWidget(profileGUI)
+                
         self.mainWidget.setLayout(verticalLayout)
         self.setCentralWidget(self.mainWidget)
             

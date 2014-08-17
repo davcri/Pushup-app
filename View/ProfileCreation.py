@@ -13,7 +13,6 @@ from PySide.QtCore import QDate
 from datetime import date
 
 from Model.Athlete import Athlete
-
  
 class ProfileCreation(QDialog):
     '''
