@@ -22,8 +22,7 @@ class PushupList(QWidget):
     def createGUI(self):
         self.layout = QVBoxLayout()
         self.pushupsListWidget = QListWidget(self)
-        self.pushupsListWidget.setMinimumHeight(250)
-        
+        self.pushupsListWidget.setMinimumHeight(250)        
         self.pushupsListWidget.setAlternatingRowColors(True)
         
         self._populateListWidget()

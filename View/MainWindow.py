@@ -7,9 +7,9 @@ Created on Aug 11, 2014
 import PySide
 from PySide.QtCore import QSize
 from PySide.QtGui import QApplication, QMainWindow, \
-                         QVBoxLayout, \
-                         QAction, \
-                         QWidget, QMessageBox
+                         QVBoxLayout, QHBoxLayout, \
+                         QAction, QPushButton, \
+                         QWidget, QMessageBox, QLabel
 
 from View.Widgets.Profile import Profile
 from View.Widgets.ProfileCreation import ProfileCreation 
@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
         self._initWidth = 700
         self._initHeight = 600
         self.resize(QSize(self._initWidth, self._initHeight))
-        # self.centerWindow()
+        # self._centerWindow()
         
         self.createGUI()        
             
@@ -36,20 +36,33 @@ class MainWindow(QMainWindow):
         self.mainWidget = QWidget()
         self._createMenus()
         
-        verticalLayout = QVBoxLayout()
+        hLayout = QHBoxLayout()
+        vLayout = QVBoxLayout()
+        innerVLayout = QVBoxLayout()
         
         profileGUI = Profile(self.athlete)
+        addPushupBtn = QPushButton("Add Pushup")
+        addPushupBtn.clicked.connect(self._pushupForm)
         
         pushupsList = PushupList_Widget(self.pushups) 
-        pushupForm = PushupForm(self.athlete)
         
-        verticalLayout.addWidget(profileGUI)
-        verticalLayout.addWidget(pushupsList)
-        verticalLayout.addWidget(pushupForm)
-                
-        self.mainWidget.setLayout(verticalLayout)
+        vLayout.addWidget(profileGUI)
+        hLayout.addWidget(pushupsList)
+        innerVLayout.addWidget(QLabel("More info (TODO)"))
+        innerVLayout.addWidget(addPushupBtn)
+        hLayout.addLayout(innerVLayout)
+        
+        vLayout.addLayout(hLayout)
+        
+                        
+        
+        self.mainWidget.setLayout(vLayout)
         self.setCentralWidget(self.mainWidget)
     
+    def _pushupForm(self):
+        dialog = PushupForm(self.athlete)
+        dialog.exec_()
+        
     def _createMenus(self):
         self._createActions()
         
@@ -93,18 +106,10 @@ class MainWindow(QMainWindow):
         self.aboutApplicationAction.triggered.connect(self._actionAboutApplication)        
         
                 
-    def centerWindow(self):
+    def _centerWindow(self):
         displayWidth = QApplication.desktop().width()
         displayHeight = QApplication.desktop().height()
         
         self.move(displayWidth/2.0 - self._initWidth/2.0, 
                   displayHeight/2.0 - self._initHeight/2.0)        
-                
-    def showVersion(self):
-        pySideV = "<b>PySide</b> version : " + PySide.__version__
-        QtCoreV = "<b>QtCore</b> version : " + PySide.QtCore.__version__
-        
-        msgBox = QMessageBox()
-        msgBox.setText(pySideV + "<br>" + QtCoreV)
-        msgBox.exec_()
         

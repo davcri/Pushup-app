@@ -5,15 +5,15 @@ Created on Aug 17, 2014
 '''
 
 
-from PySide.QtCore import QDate
-from PySide.QtGui import QWidget, \
-                         QFormLayout, QSpinBox, QCalendarWidget, \
+from PySide.QtCore import QDate, Qt
+from PySide.QtGui import QWidget, QDialog, \
+                         QFormLayout, QVBoxLayout, QSpinBox, QCalendarWidget, \
                          QPushButton
 from Model.Pushup import Pushup as Pushup_Model
 from Foundation.Pushup import Pushup as Pushup_Foundation
 from datetime import date
 
-class PushupForm(QWidget):
+class PushupForm(QDialog):
     '''
     classdocs
     '''
@@ -22,40 +22,53 @@ class PushupForm(QWidget):
         '''
         Constructor
         '''
-        QWidget.__init__(self)
+        QDialog.__init__(self)
+        self.setWindowTitle("Pushup form")
         
         self.athlete = athlete
         self.pushupForm = QFormLayout()
         self.createGUI()
     
     def createGUI(self):
+        self.series = QSpinBox()
+        self.series.setMinimum(1)
+        
+        self.repetitions = QSpinBox()
+        
         self.avgHeartRate = QSpinBox()
         self.avgHeartRate.setMinimum(40)
         self.avgHeartRate.setMaximum(250)
         self.avgHeartRate.setValue(120)
         
-        self.series = QSpinBox()
-        self.series.setMinimum(1)
-        
         self.date = QCalendarWidget()
         self.date.setMaximumDate(QDate.currentDate())
         
-        self.repetitions = QSpinBox()
-        
         self.addButton = QPushButton("Add pushup")
         self.addButton.setMaximumWidth(90)
-        self.addButton.clicked.connect(self.createPushup)
+        self.addButton.clicked.connect(self._createPushup)
         
-        self.pushupForm.addRow("Average Heart Rate", self.avgHeartRate)
+        self.cancelButton = QPushButton("Cancel")
+        self.cancelButton.setMaximumWidth(90)
+        self.cancelButton.clicked.connect(self.reject)
+        
         self.pushupForm.addRow("Series", self.series)
         self.pushupForm.addRow("Repetitions", self.repetitions)
+        self.pushupForm.addRow("Average Heart Rate", self.avgHeartRate)
         self.pushupForm.addRow("Exercise Date", self.date)
         
-        self.pushupForm.addWidget(self.addButton)
+        btnsLayout = QVBoxLayout()
+        btnsLayout.addWidget(self.addButton)
+        btnsLayout.addWidget(self.cancelButton)        
+        btnsLayout.setAlignment(Qt.AlignRight)
         
-        self.setLayout(self.pushupForm)
+        layoutWrapper = QVBoxLayout()
+        layoutWrapper.addLayout(self.pushupForm)
+        layoutWrapper.addLayout(btnsLayout)
         
-    def createPushup(self):
+        self.setLayout(layoutWrapper)
+        
+        
+    def _createPushup(self):
         print "Storing pushup"
         
         exerciseDate = self.date.selectedDate()
@@ -69,6 +82,7 @@ class PushupForm(QWidget):
         
         db = Pushup_Foundation()
         db.store(pushup)
+        self.accept()
         
         return pushup
     
