@@ -52,8 +52,10 @@ class MainWindow():
             profileSelection = ProfileSelection(athletesList)
                
             if profileSelection.execDialogWindow() == True :
-                selectedProfile = profileSelection.getSelectedProfile()           
-                mainWindow =  Main_View(selectedProfile) # NOT TESTED !   
+                selectedAthleteProfile = profileSelection.getSelectedProfile()
+                pushups = self.loadPushups(selectedAthleteProfile._name)
+                           
+                mainWindow =  Main_View(selectedAthleteProfile, pushups)  
                 mainWindow.show()
                  
         sys.exit(qtApplication.exec_())                   

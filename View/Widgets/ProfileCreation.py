@@ -27,12 +27,12 @@ class ProfileCreation(QDialog):
         self.athleteProfile = False
         
     def getAthleteProfile(self):
-        self.execProfileCreation() # Modal dialog
+        self._execProfileCreation() # Modal dialog
         # execProfileCreation sets the self.athleteProfile variable !
         
         return self.athleteProfile
         
-    def execProfileCreation(self):
+    def _execProfileCreation(self):
         self.layout = QVBoxLayout()
         self.form = QFormLayout()
         
@@ -80,7 +80,7 @@ class ProfileCreation(QDialog):
         self.layout.addLayout(self.form)
         self.layout.addWidget(createBtn)
         
-        createBtn.clicked.connect(self.createProfile)
+        createBtn.clicked.connect(self._createProfile)
     
         #--------------------------------
         
@@ -89,7 +89,7 @@ class ProfileCreation(QDialog):
         return self.exec_()
     
     # Slot     
-    def createProfile(self):                
+    def _createProfile(self):                
         print "Profile creation"
         
         qDate = self.birthdate.selectedDate()

@@ -11,7 +11,7 @@ from PySide.QtGui import QLabel, QPushButton, QListWidget
 from PySide.QtGui import QListWidgetItem, QIcon
 from PySide.QtGui import QAbstractItemView
  
-class ProfileSelection():
+class ProfileSelection(QDialog):
     '''
     classdocs
     '''
@@ -20,12 +20,12 @@ class ProfileSelection():
         '''
         Constructor
         '''  
+        QDialog.__init__(self)
+        
         self.athletesList = athletesList
         self.selectedProfile = False
     
-    def execDialogWindow(self):        
-        self.dialog = QDialog()
-        
+    def execDialogWindow(self):                
         hLayout = QHBoxLayout()
         vLayout = QVBoxLayout()
         
@@ -45,7 +45,7 @@ class ProfileSelection():
             # doens't work on Mac and Windows
             # http://qt-project.org/doc/qt-4.8/qicon.html#fromTheme
             
-            listW = QListWidgetItem(iconW, athlete["name"])
+            listW = QListWidgetItem(iconW, athlete._name)
             self.list.addItem(listW)
                 
         vLayout.addWidget(self.list)
@@ -67,16 +67,22 @@ class ProfileSelection():
         # hLayout.addWidget(cancel)        
         
 
-        self.dialog.setLayout(vLayout)
+        self.setLayout(vLayout)
         
-        return self.dialog.exec_() 
+        return self.exec_() 
     
     def okButtonSlot(self):
         self.selectedProfile = self.list.selectedItems()[0].text()
-        self.dialog.accept()
+        self.accept()
     
     def getSelectedProfile(self):
-        return self.selectedProfile       
+        
+        for athlete in self.athletesList:
+            if self.selectedProfile == athlete._name:
+                selectedAthlete = athlete
+        
+        return selectedAthlete
+    
     
     def activateOkButton(self):
         self.okBtn.setDisabled(False)

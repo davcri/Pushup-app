@@ -43,6 +43,7 @@ class PushupForm(QWidget):
         self.repetitions = QSpinBox()
         
         self.addButton = QPushButton("Add pushup")
+        self.addButton.setMaximumWidth(90)
         self.addButton.clicked.connect(self.createPushup)
         
         self.pushupForm.addRow("Average Heart Rate", self.avgHeartRate)

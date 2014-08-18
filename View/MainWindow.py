@@ -11,10 +11,12 @@ from PySide.QtGui import QApplication, QMainWindow, \
                          QAction, \
                          QWidget, QMessageBox
 
-from View.Widgets.Profile import Profile  
+from View.Widgets.Profile import Profile
+from View.Widgets.ProfileCreation import ProfileCreation 
 from View.Widgets.PushupForm import PushupForm
-from View.Widgets.PushupList import PushupList as WidgetPushupList
- 
+from View.Widgets.PushupList import PushupList as PushupList_Widget
+from Control.ProfileCreation import ProfileCreation as ProfileCreation_Control
+
 class MainWindow(QMainWindow):
     def __init__(self, athlete, pushups): 
         QMainWindow.__init__(self)
@@ -26,7 +28,7 @@ class MainWindow(QMainWindow):
         self._initWidth = 700
         self._initHeight = 600
         self.resize(QSize(self._initWidth, self._initHeight))
-       # self.centerWindow()
+        # self.centerWindow()
         
         self.createGUI()        
             
@@ -38,7 +40,7 @@ class MainWindow(QMainWindow):
         
         profileGUI = Profile(self.athlete)
         
-        pushupsList = WidgetPushupList(self.pushups) 
+        pushupsList = PushupList_Widget(self.pushups) 
         pushupForm = PushupForm(self.athlete)
         
         verticalLayout.addWidget(profileGUI)
@@ -52,35 +54,43 @@ class MainWindow(QMainWindow):
         self._createActions()
         
         fileMenu = self.menuBar().addMenu("File")
+        profile = self.menuBar().addMenu("Profile")
         about = self.menuBar().addMenu("About")
         
         fileMenu.addAction(self.exit)
+        profile.addAction(self._createProfile)
         about.addAction(self.aboutQtAction)
         about.addAction(self.aboutApplicationAction)
-        #self.menuBar().addMenu("File")
+
         #self.toolBarArea("te")
     
-    def actionExit(self):
+    def _actionExit(self):
         self.close()
-        
-    def actionAboutApplication(self):
+    
+    def _actionCreateProfile(self): 
+        profileCreation = ProfileCreation_Control()
+        profileCreation.runCreationDialogAndStore()        
+           
+    def _actionAboutApplication(self):
         text = "Pushup app is a work in progress application.<br><br>\
                 For developmente info look at the \
                 <a href=\"https://github.com/davcri/Push-up-app\">Github Page</a> <br>"
         QMessageBox.about(self, "About Pushup app", text)   
     
-    def actionAboutQt(self):
+    def _actionAboutQt(self):
         QMessageBox.aboutQt(self)
         
     def _createActions(self):             
         self.aboutQtAction = QAction("About PySide (Qt)", self)
         self.aboutApplicationAction = QAction("About Pushup App", self)
+        self._createProfile = QAction("Create new profile", self)
         
         self.exit = QAction("Exit", self)   
         
-        self.exit.triggered.connect(self.actionExit)
-        self.aboutQtAction.triggered.connect(self.actionAboutQt)
-        self.aboutApplicationAction.triggered.connect(self.actionAboutApplication)        
+        self.exit.triggered.connect(self._actionExit)
+        self._createProfile.triggered.connect(self._actionCreateProfile)
+        self.aboutQtAction.triggered.connect(self._actionAboutQt)
+        self.aboutApplicationAction.triggered.connect(self._actionAboutApplication)        
         
                 
     def centerWindow(self):

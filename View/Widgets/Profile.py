@@ -23,7 +23,7 @@ class Profile(QWidget):
     def initGUI(self):
         vLayout = QVBoxLayout()
         
-        text = QLabel("<h3><b>Pushup app</b></h3>")
+        text = QLabel("<h3><b>Your profile</b></h3>")
         
         profileLayout = QFormLayout()
         

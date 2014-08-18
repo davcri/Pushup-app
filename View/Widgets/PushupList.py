@@ -24,6 +24,8 @@ class PushupList(QWidget):
         self.pushupsListWidget = QListWidget(self)
         self.pushupsListWidget.setMinimumHeight(250)
         
+        self.pushupsListWidget.setAlternatingRowColors(True)
+        
         self._populateListWidget()
         
         self.layout.addWidget(self.pushupsListWidget)
