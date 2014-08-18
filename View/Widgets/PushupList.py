@@ -16,13 +16,17 @@ class PushupList(QWidget):
         Constructor
         '''
         QWidget.__init__(self)
+        self.pushups = pushups
         self.createGUI()
     
     def createGUI(self):
         self.layout = QVBoxLayout()
         
         self.pushupsList = QListWidget(self)
-        self.pushupsList.addItem(QListWidgetItem("asd"))
+        
+        for pushup in self.pushups:
+            listItem = QListWidgetItem(pushup._athleteName + " " + str(pushup._series) + " " + str(pushup._repetitions))
+            self.pushupsList.addItem(listItem)
         
         self.layout.addWidget(self.pushupsList)
         self.setLayout(self.layout)

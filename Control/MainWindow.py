@@ -35,13 +35,18 @@ class MainWindow():
             
             if athlete != False:
                 self.storeAthlete(athlete)
-                mainWindow =  Main_View(athlete)   
+                emptyPushupList = []
+                mainWindow =  Main_View(athlete, emptyPushupList)   
                 mainWindow.show() 
             else:
                 print "No athlete created. Pushup-app quitting"
                 sys.exit(qtApplication.quit())            
         elif len(athletesList) == 1:
-            mainWindow =  Main_View(athletesList[0])   
+            athlete = athletesList[0]
+            
+            pushups = self.loadPushups(athlete._name)
+            print pushups
+            mainWindow =  Main_View(athlete, pushups)   
             mainWindow.show()
             
         elif len(athletesList) > 1:
@@ -78,9 +83,9 @@ class MainWindow():
         database = Pushup_Foundation()
         database.store(pushup)
         
-    def loadPushups(self):
+    def loadPushups(self, athleteName):
         db = Pushup_Foundation()
-        lists = db.load()
+        lists = db.getPushupsByAthlete(athleteName)
         
         return lists
             

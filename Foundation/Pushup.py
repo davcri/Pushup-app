@@ -29,7 +29,29 @@ class Pushup(Database):
         connection.commit()
         connection.close()
     
-    def load(self):
+    
+    def getPushupsByAthlete(self, athleteName):
+        connection = Database.connect(self)
+        
+        cursor = connection.execute("SELECT * FROM pushup inner join exercise on " +\
+                                    "exerciseId=id WHERE athleteName = :name",
+                                    {"name":athleteName})
+        
+        pushupsList = []        
+        pushupRows = cursor.fetchall()
+        
+        for row in pushupRows:
+            pushupObj = Pushup_Model(row["athleteName"],
+                                     row["date"], 
+                                     row["avgHeartRate"], 
+                                     row["series"],
+                                     row["repetitions"])
+            pushupsList.append(pushupObj)        
+        
+        return pushupsList
+        
+    
+    def getAllPushups(self):
         connection = Database.connect(self)
         
         cursor = connection.execute("SELECT * FROM pushup inner join exercise on exerciseId=id")

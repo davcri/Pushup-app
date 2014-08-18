@@ -13,14 +13,15 @@ from PySide.QtGui import QApplication, QMainWindow, \
 
 from View.Widgets.Profile import Profile  
 from View.Widgets.PushupForm import PushupForm
-from View.Widgets.PushupList import PushupList
+from View.Widgets.PushupList import PushupList as WidgetPushupList
  
 class MainWindow(QMainWindow):
-    def __init__(self, athlete): 
+    def __init__(self, athlete, pushups): 
         QMainWindow.__init__(self)
         self.setWindowTitle("Pushup app")       
         
         self.athlete = athlete
+        self.pushups = pushups
         
         self._initWidth = 700
         self._initHeight = 600
@@ -36,7 +37,8 @@ class MainWindow(QMainWindow):
         verticalLayout = QVBoxLayout()
         
         profileGUI = Profile(self.athlete)
-        pushupsList = PushupList("") 
+        
+        pushupsList = WidgetPushupList(self.pushups) 
         pushupForm = PushupForm(self.athlete)
         
         verticalLayout.addWidget(profileGUI)
