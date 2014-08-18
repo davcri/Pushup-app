@@ -28,9 +28,9 @@ class MainWindow(QMainWindow):
         self._initWidth = 700
         self._initHeight = 600
         self.resize(QSize(self._initWidth, self._initHeight))
-        # self._centerWindow()
         
-        self.createGUI()        
+        self.createGUI()
+        self._centerWindow()        
             
     def createGUI(self):
         self.mainWidget = QWidget()
@@ -111,5 +111,5 @@ class MainWindow(QMainWindow):
         displayHeight = QApplication.desktop().height()
         
         self.move(displayWidth/2.0 - self._initWidth/2.0, 
-                  displayHeight/2.0 - self._initHeight/2.0)        
+                  displayHeight/2.0 - self._initHeight/2.0 - 50)        
         

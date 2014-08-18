@@ -24,6 +24,7 @@ class MainWindow():
     
     def showMainWindow(self):
         qtApplication = QApplication(sys.argv)
+        #qtApplication.setStyleSheet("*{background-color : blue}")
         
         athletesList = self.loadAthletes()
         
