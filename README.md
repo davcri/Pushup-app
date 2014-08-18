@@ -3,7 +3,7 @@ Stores your progresses in physicals exercises, like pushups, on a local database
 
 This application is being developed using __Linux__ (Mint 17), but it should be portable (I haven't tried yet)
 
-# Requirments
+# Requirements
 - __PySide__: For _apt-based_ Linux distros, open your terminal and run 
 
 ```sudo apt-get install python-pyside```
