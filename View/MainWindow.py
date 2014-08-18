@@ -26,7 +26,7 @@ class MainWindow(QMainWindow):
         self._initWidth = 700
         self._initHeight = 600
         self.resize(QSize(self._initWidth, self._initHeight))
-        self.centerWindow()
+       # self.centerWindow()
         
         self.createGUI()        
             

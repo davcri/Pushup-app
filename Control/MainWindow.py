@@ -43,9 +43,8 @@ class MainWindow():
                 sys.exit(qtApplication.quit())            
         elif len(athletesList) == 1:
             athlete = athletesList[0]
-            
             pushups = self.loadPushups(athlete._name)
-            print pushups
+            
             mainWindow =  Main_View(athlete, pushups)   
             mainWindow.show()
             
