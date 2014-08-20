@@ -61,7 +61,15 @@ class Pushup(Database):
             pushupsList.append(pushupObj)   
         
         return pushupsList
-  
+    
+    def deletePushup(self, id):
+        connection = Database.connect(self)
+        
+        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id":id})
+        connection.commit()
+        connection.close()
+        
+        
     def _loadPushupFromRow(self, row):
         pushupObj = Pushup_Model(row["athleteName"],
                                  row["date"], 

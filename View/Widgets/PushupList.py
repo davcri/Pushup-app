@@ -78,6 +78,7 @@ class PushupList(QWidget):
         self.deletePushup.emit(self.pushupId)
 
     def _populateTree(self):
+        self.pushupsListWidget.clear()
         self.pushupsListWidget.setColumnCount(4)
         self.pushupsListWidget.setHeaderLabels(["Date", "Series", "Repetitions",
                                                 "Avg Heart Rate"])
@@ -107,7 +108,7 @@ class PushupList(QWidget):
         
     def reloadPushupsList(self, pushups):
         self.pushups = pushups
-        self._populateListWidget()
+        self._populateTree()
         
     def _populateListWidget(self):
         ''' 

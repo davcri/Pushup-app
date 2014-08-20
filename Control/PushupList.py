@@ -33,7 +33,8 @@ class PushupList():
     @Slot(int)
     def deletePushup(self, pushupId):
         database = Pushup_Database()
-        print str(pushupId)        
+        database.deletePushup(pushupId)
+        self.refreshList() 
                 
     def getListWidget(self):
         return self.pushupsListWidget     
