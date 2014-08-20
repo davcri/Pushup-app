@@ -4,13 +4,18 @@ Created on Aug 17, 2014
 @author: davide
 '''
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QWidget, QListWidget, QVBoxLayout, QListWidgetItem, QTreeWidget, QTreeWidgetItem
+from PySide.QtCore import Qt, Signal
+from PySide.QtGui import QWidget, QListWidget, QVBoxLayout, QListWidgetItem,\
+                         QTreeWidget, QTreeWidgetItem, QAction, QMenu, QCursor
+                         
 
 class PushupList(QWidget):
     '''
     classdocs
     ''' 
+    
+    deletePushup = Signal(int)
+    deleteDay = Signal()
     
     def __init__(self, pushups):
         '''
@@ -34,15 +39,48 @@ class PushupList(QWidget):
         # WARNING : double click on top level Item is  not handled, so it will 
         # produce a AttributeError: 'NoneType' object has no attribute '_id'
         
+        self.pushupsListWidget.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.pushupsListWidget.customContextMenuRequested.connect(self._customMenu)
+        
         self._populateTree()
         
         self.layout.addWidget(self.pushupsListWidget)
         
         self.setLayout(self.layout)   
-       
+    
+    # Slot
+    def _customMenu(self):
+        selectedItems = self.pushupsListWidget.selectedItems()
+        
+        if selectedItems is not None :
+            selectedItem = selectedItems[0] 
+            
+            if selectedItem.parent() is not None : # Child Item selected
+                menu = QMenu()
+                
+                self.pushupId = selectedItem.data(0, Qt.UserRole)._id
+                
+                delete = QAction(self.pushupsListWidget)
+                delete.setText("Delete this pushup")
+                delete.triggered.connect(self._emitDeleteSignal)
+                menu.addAction(delete)
+                menu.exec_(QCursor.pos())
+            else : # Top level Item selected
+                menu = QMenu()
+             
+                delete = QAction(self.pushupsListWidget)
+                delete.setText("Delete this day and all of its exercises")
+                delete.triggered.connect(self._populateTree)
+                menu.addAction(delete)
+                menu.exec_(QCursor.pos())
+    
+    def _emitDeleteSignal(self):
+        self.deletePushup.emit(self.pushupId)
+
     def _populateTree(self):
         self.pushupsListWidget.setColumnCount(4)
-        self.pushupsListWidget.setHeaderLabels(["Date","Series","Repetitions","Avg Heart Rate"])
+        self.pushupsListWidget.setHeaderLabels(["Date", "Series", "Repetitions",
+                                                "Avg Heart Rate"])
         
         pushupDict = self._getPushupDictionary()
 
@@ -55,6 +93,7 @@ class PushupList(QWidget):
              
             for pushup in pushupDict[dayOfExercise]:
                 pushupItem = QTreeWidgetItem()
+                
                 pushupItem.setText(1, str(pushup._series))
                 pushupItem.setText(2, str(pushup._repetitions))
                 pushupItem.setText(3, str(pushup._averageHeartRate))
@@ -84,7 +123,8 @@ class PushupList(QWidget):
             listItem_Data =[]
             
             for pushup in pushupDict[dayOfExercise]:
-                listItemString += "Series : " + str(pushup._series) + " Repetition : " + str(pushup._repetitions) + "\n"
+                listItemString += "Series : " + str(pushup._series) + \
+                                  " Repetition : " + str(pushup._repetitions) + "\n"
                 listItem_Data.append(pushup)
                              
             listItem = QListWidgetItem(listItemString)
