@@ -16,6 +16,7 @@ class PushupList(QWidget):
         Constructor
         '''
         QWidget.__init__(self)
+        
         self.pushups = pushups
         self.createGUI()
     
@@ -32,7 +33,14 @@ class PushupList(QWidget):
         
         self.setLayout(self.layout)   
         
+    
+    def reloadPushupsList(self, pushups):
+        self.pushups = pushups
+        self._populateListWidget()
+        
     def _populateListWidget(self):
+        self.pushupsListWidget.clear()
+        
         pushupDict = self._getPushupDictionary()
         
         for dayOfExercise in pushupDict:                  

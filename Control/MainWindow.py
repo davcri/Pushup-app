@@ -23,25 +23,24 @@ class MainWindow():
         self.showMainWindow()     
     
     def showMainWindow(self):
-        qtApplication = QApplication(sys.argv)
+        self.qtApplication = QApplication(sys.argv)
         #qtApplication.setStyleSheet("*{background-color : blue}")
         
         athletesList = self.loadAthletes()
         
         if len(athletesList) == 0:            
-            print "No athlete registered"
-            
-            profileCreation = ProfileCreation()
-            athlete = profileCreation.getAthleteProfile() 
+            athlete = self.createAthlete()
             
             if athlete != False:
                 self.storeAthlete(athlete)
+            
                 emptyPushupList = []
                 mainWindow =  Main_View(athlete, emptyPushupList)   
                 mainWindow.show() 
             else:
                 print "No athlete created. Pushup-app quitting"
-                sys.exit(qtApplication.quit())            
+                sys.exit(self.qtApplication.quit())
+            
         elif len(athletesList) == 1:
             athlete = athletesList[0]
             pushups = self.loadPushups(athlete._name)
@@ -59,8 +58,14 @@ class MainWindow():
                 mainWindow =  Main_View(selectedAthleteProfile, pushups)  
                 mainWindow.show()
                  
-        sys.exit(qtApplication.exec_())                   
-                
+        sys.exit(self.qtApplication.exec_())                   
+                    
+    def createAthlete (self):
+        profileCreation = ProfileCreation()
+        athlete = profileCreation.getAthleteProfile() 
+        
+        return athlete
+    
     def storeAthlete(self, athlete):
         database = Athlete_Foundation()
         database.store(athlete)

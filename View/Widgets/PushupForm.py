@@ -5,7 +5,7 @@ Created on Aug 17, 2014
 '''
 
 
-from PySide.QtCore import QDate, Qt
+from PySide.QtCore import Qt, QDate, Signal
 from PySide.QtGui import QWidget, QDialog, \
                          QFormLayout, QVBoxLayout, QSpinBox, QCalendarWidget, \
                          QPushButton, QCheckBox
@@ -17,18 +17,19 @@ class PushupForm(QDialog):
     '''
     classdocs
     '''
+    pushupAdded = Signal()
     
     def __init__(self, athlete):
         '''
         Constructor
         '''
         QDialog.__init__(self)
-        self.setWindowTitle("Pushup form")
         
+        self.setWindowTitle("Pushup form")
         self.athlete = athlete
         self.pushupForm = QFormLayout()
         self.createGUI()
-    
+        
     def createGUI(self):
         self.series = QSpinBox()
         self.series.setMinimum(1)
@@ -92,7 +93,9 @@ class PushupForm(QDialog):
         
         db = Pushup_Foundation()
         db.store(pushup)
+        
         self.accept()
+        self.pushupAdded.emit()       
         
         return pushup
     
@@ -104,6 +107,4 @@ class PushupForm(QDialog):
         
     def qDate_to_date(self, qDate):        
         return date(qDate.year(), qDate.month(),qDate.day())
-        
-        
         

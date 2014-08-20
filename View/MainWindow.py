@@ -16,6 +16,7 @@ from View.Widgets.ProfileCreation import ProfileCreation
 from View.Widgets.PushupForm import PushupForm
 from View.Widgets.PushupList import PushupList as PushupList_Widget
 from Control.ProfileCreation import ProfileCreation as ProfileCreation_Control
+from Control.PushupList import PushupList as PushupList_Control
 
 class MainWindow(QMainWindow):
     def __init__(self, athlete, pushups): 
@@ -24,6 +25,10 @@ class MainWindow(QMainWindow):
         
         self.athlete = athlete
         self.pushups = pushups
+       
+        #
+        self.dialog = PushupForm(self.athlete)
+        #
         
         self._initWidth = 700
         self._initHeight = 600
@@ -44,7 +49,11 @@ class MainWindow(QMainWindow):
         addPushupBtn = QPushButton("Add Pushup")
         addPushupBtn.clicked.connect(self._pushupForm)
         
-        pushupsList = PushupList_Widget(self.pushups) 
+        self.pushupListController = PushupList_Control(self.athlete)
+        self.dialog.pushupAdded.connect(self.pushupListController.refreshList)
+        
+        pushupsList = self.pushupListController.getListWidget()
+        # pushupsList = PushupList_Widget(self.pushups) 
         
         vLayout.addWidget(profileGUI)
         hLayout.addWidget(pushupsList)
@@ -54,14 +63,14 @@ class MainWindow(QMainWindow):
         
         vLayout.addLayout(hLayout)
         
-                        
-        
         self.mainWidget.setLayout(vLayout)
         self.setCentralWidget(self.mainWidget)
     
     def _pushupForm(self):
-        dialog = PushupForm(self.athlete)
-        dialog.exec_()
+        #dialog = PushupForm(self.athlete, controller)
+        #self.dialog.pushupAdded.emit()
+        self.dialog.exec_()
+        
         
     def _createMenus(self):
         self._createActions()
@@ -112,4 +121,6 @@ class MainWindow(QMainWindow):
         
         self.move(displayWidth/2.0 - self._initWidth/2.0, 
                   displayHeight/2.0 - self._initHeight/2.0 - 50)        
-        
+    
+    def test(self):
+        print "test"
