@@ -20,7 +20,8 @@ class PushupList():
         self.athlete = athlete    
         self.pushups = self._getPushups()
         self.pushupsListWidget = PushupList_Widget(self.pushups) 
-        
+    
+    # Slot    
     def refreshList(self):
         updatedPushups = self._getPushups()
         self.pushupsListWidget.reloadPushupsList(updatedPushups)

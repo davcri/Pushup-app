@@ -15,13 +15,13 @@ class ProfileCreation():
         '''
         Constructor
         '''
-        self.dialog = ProfileCreationWidget()         
+        self.pushupCreationDialog = ProfileCreationWidget()         
         
     def runCreationDialog(self):
-        return self.dialog.getAthleteProfile()
+        return self.pushupCreationDialog.getAthleteProfile()
         
     def runCreationDialogAndStore(self):
-        athlete = self.dialog.getAthleteProfile()
+        athlete = self.pushupCreationDialog.getAthleteProfile()
         database = Athlete()
         
         database.store(athlete)

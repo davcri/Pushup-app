@@ -4,7 +4,6 @@ Created on Aug 11, 2014
 @author: davide
 '''
 
-import PySide
 from PySide.QtCore import QSize
 from PySide.QtGui import QApplication, QMainWindow, \
                          QVBoxLayout, QHBoxLayout, \
@@ -12,9 +11,8 @@ from PySide.QtGui import QApplication, QMainWindow, \
                          QWidget, QMessageBox, QLabel
 
 from View.Widgets.Profile import Profile
-from View.Widgets.ProfileCreation import ProfileCreation 
 from View.Widgets.PushupForm import PushupForm
-from View.Widgets.PushupList import PushupList as PushupList_Widget
+from View.Widgets.PushupEdit import PushupEdit
 from Control.ProfileCreation import ProfileCreation as ProfileCreation_Control
 from Control.PushupList import PushupList as PushupList_Control
 
@@ -26,9 +24,8 @@ class MainWindow(QMainWindow):
         self.athlete = athlete
         self.pushups = pushups
        
-        #
-        self.dialog = PushupForm(self.athlete)
-        #
+        self.pushupCreationDialog = PushupForm(self.athlete)
+        self.editDialog = PushupEdit()
         
         self._initWidth = 700
         self._initHeight = 600
@@ -45,20 +42,25 @@ class MainWindow(QMainWindow):
         vLayout = QVBoxLayout()
         innerVLayout = QVBoxLayout()
         
-        profileGUI = Profile(self.athlete)
+        profileBox = Profile(self.athlete)
         addPushupBtn = QPushButton("Add Pushup")
-        addPushupBtn.clicked.connect(self._pushupForm)
+        addPushupBtn.clicked.connect(self._showPushup_DialogForm)
+        self.editBtn = QPushButton("Edit")
+        self.editBtn.clicked.connect(self._showEditDialog)
+        self.editBtn.setDisabled(True)
         
         self.pushupListController = PushupList_Control(self.athlete)
-        self.dialog.pushupAdded.connect(self.pushupListController.refreshList)
+        self.pushupCreationDialog.pushupAdded.connect(self.pushupListController.refreshList)
         
         pushupsList = self.pushupListController.getListWidget()
+        pushupsList.pushupsListWidget.clicked.connect(self._enableEditButton)
         # pushupsList = PushupList_Widget(self.pushups) 
         
-        vLayout.addWidget(profileGUI)
+        vLayout.addWidget(profileBox)
         hLayout.addWidget(pushupsList)
         innerVLayout.addWidget(QLabel("More info (TODO)"))
         innerVLayout.addWidget(addPushupBtn)
+        innerVLayout.addWidget(self.editBtn)
         hLayout.addLayout(innerVLayout)
         
         vLayout.addLayout(hLayout)
@@ -66,12 +68,15 @@ class MainWindow(QMainWindow):
         self.mainWidget.setLayout(vLayout)
         self.setCentralWidget(self.mainWidget)
     
-    def _pushupForm(self):
-        #dialog = PushupForm(self.athlete, controller)
-        #self.dialog.pushupAdded.emit()
-        self.dialog.exec_()
+    def _showPushup_DialogForm(self):
+        self.pushupCreationDialog.exec_()    
         
+    def _showEditDialog(self):
+        self.editDialog.exec_()
         
+    def _enableEditButton(self):
+        self.editBtn.setDisabled(False)
+            
     def _createMenus(self):
         self._createActions()
         
@@ -83,8 +88,6 @@ class MainWindow(QMainWindow):
         profile.addAction(self._createProfile)
         about.addAction(self.aboutQtAction)
         about.addAction(self.aboutApplicationAction)
-
-        #self.toolBarArea("te")
     
     def _actionExit(self):
         self.close()
@@ -122,5 +125,3 @@ class MainWindow(QMainWindow):
         self.move(displayWidth/2.0 - self._initWidth/2.0, 
                   displayHeight/2.0 - self._initHeight/2.0 - 50)        
     
-    def test(self):
-        print "test"

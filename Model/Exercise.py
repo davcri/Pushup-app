@@ -13,6 +13,9 @@ class Exercise:
         self._date = date
         self._averageHeartRate = avgHeartRate
     
+    def setId(self, id):
+        self._id = id
+    
     def __str__(self):
         objectInfo = "Name = " + self._athleteName + "\n"
         objectInfo += "Timestamp [Y - M - D H:m:s:ms] = " + str(self._date) + "\n"

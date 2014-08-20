@@ -41,13 +41,9 @@ class Pushup(Database):
         pushupRows = cursor.fetchall()
         
         for row in pushupRows:
-            pushupObj = Pushup_Model(row["athleteName"],
-                                     row["date"], 
-                                     row["avgHeartRate"], 
-                                     row["series"],
-                                     row["repetitions"])
-            pushupsList.append(pushupObj)        
-        
+            pushupObj = self._loadPushupFromRow(row)
+            pushupsList.append(pushupObj) 
+                   
         return pushupsList
         
     
@@ -61,12 +57,18 @@ class Pushup(Database):
         pushupsList = []        
         
         for row in pushupRows:
-            pushupObj = Pushup_Model(row["athleteName"],
-                                     row["date"], 
-                                     row["avgHeartRate"], 
-                                     row["series"],
-                                     row["repetitions"])
-            pushupsList.append(pushupObj)        
+            pushupObj = self._loadPushupFromRow(row)
+            pushupsList.append(pushupObj)   
         
         return pushupsList
+  
+    def _loadPushupFromRow(self, row):
+        pushupObj = Pushup_Model(row["athleteName"],
+                                 row["date"], 
+                                 row["avgHeartRate"], 
+                                 row["series"],
+                                 row["repetitions"])
+        pushupObj.setId(row["exerciseId"])
+           
+        return pushupObj
         
