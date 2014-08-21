@@ -15,6 +15,7 @@ from View.Widgets.PushupForm import PushupForm
 from View.Widgets.PushupEdit import PushupEdit
 from Control.ProfileCreation import ProfileCreation as ProfileCreation_Control
 from Control.PushupList import PushupList as PushupList_Control
+from Control.GraphPlotter import GraphPlotter
 
 class MainWindow(QMainWindow):
     def __init__(self, athlete, pushups): 
@@ -27,7 +28,7 @@ class MainWindow(QMainWindow):
         self.pushupCreationDialog = PushupForm(self.athlete)
         self.editDialog = PushupEdit()
         
-        self._initWidth = 700
+        self._initWidth = 800
         self._initHeight = 600
         self.resize(QSize(self._initWidth, self._initHeight))
         
@@ -45,9 +46,11 @@ class MainWindow(QMainWindow):
         profileBox = Profile(self.athlete)
         addPushupBtn = QPushButton("Add Pushup")
         addPushupBtn.clicked.connect(self._showPushup_DialogForm)
+        addPushupBtn.setMaximumWidth(100)
         self.editBtn = QPushButton("Edit")
         self.editBtn.clicked.connect(self._showEditDialog)
         self.editBtn.setDisabled(True)
+        self.editBtn.setMaximumWidth(100)
         
         self.pushupListController = PushupList_Control(self.athlete)
         self.pushupCreationDialog.pushupAdded.connect(self.pushupListController.refreshList)
@@ -56,14 +59,21 @@ class MainWindow(QMainWindow):
         pushupsList.pushupsListWidget.clicked.connect(self._enableEditButton)
         # pushupsList = PushupList_Widget(self.pushups) 
         
+        graphController = GraphPlotter()
+        self.plot = graphController.getGraphWidget()
+        self.plot.setMaximumSize(400, 300)
+        print self.plot
+        
         vLayout.addWidget(profileBox)
+        
         hLayout.addWidget(pushupsList)
-        innerVLayout.addWidget(QLabel("More info (TODO)"))
-        innerVLayout.addWidget(addPushupBtn)
-        innerVLayout.addWidget(self.editBtn)
+        innerVLayout.addWidget(self.plot)
         hLayout.addLayout(innerVLayout)
         
         vLayout.addLayout(hLayout)
+        
+        vLayout.addWidget(addPushupBtn)
+        vLayout.addWidget(self.editBtn)
         
         self.mainWidget.setLayout(vLayout)
         self.setCentralWidget(self.mainWidget)

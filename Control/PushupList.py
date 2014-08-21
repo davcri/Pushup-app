@@ -23,7 +23,6 @@ class PushupList():
         self.pushupsListWidget = PushupList_Widget(self.pushups)
         self.pushupsListWidget.deletePushup.connect(self.deletePushup) 
         
-        
     # Slot    
     def refreshList(self):
         updatedPushups = self._getPushups()
