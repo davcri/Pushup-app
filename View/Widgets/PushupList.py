@@ -81,7 +81,8 @@ class PushupList(QWidget):
         self.pushupsListWidget.clear()
         self.pushupsListWidget.setColumnCount(4)
         self.pushupsListWidget.setHeaderLabels(["Date", "Series", "Repetitions",
-                                                "Avg Heart Rate"])
+                                                "Average Heart Rate"])
+        self.pushupsListWidget.setSortingEnabled(True)
         
         pushupDict = self._getPushupDictionary()
 
