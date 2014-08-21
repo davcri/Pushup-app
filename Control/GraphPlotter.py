@@ -4,21 +4,41 @@ Created on Aug 21, 2014
 @author: davide
 '''
 
-from View.Widgets.PlotWidget import PlotWidget
+from View.Widgets.GraphWidget import GraphWidget
+#import pyqtgraph as pqt_graph
 
 class GraphPlotter():
     '''
     classdocs
     '''
 
-    def __init__(self):
+    def __init__(self, pushups):
         '''
         Constructor
         '''
-        
-        self.plot = PlotWidget()
+        self.graphWidget = GraphWidget()
+        self.pushups = pushups
+        self.initPlotWidget()
     
     def getGraphWidget(self):
-        return self.plot
+        return self.graphWidget
+    
+    def initPlotWidget(self):                                            
+        pushupDateList = {} # dictionary initialization
+     
+        for pushup in self.pushups:
+            if not pushupDateList.has_key(pushup._date):
+                pushupDateList[pushup._date] = pushup._repetitions
+            else :
+                pushupDateList[pushup._date] += pushup._repetitions
         
+        x = []
+        y = []
+             
+        for k in sorted(pushupDateList.keys()):
+            x.append(k)
+            y.append(pushupDateList[k])
+            
+        self.graphWidget.customPlot(range(len(x)), y) 
+        # plot doesn't support date objects by default. But it can be implemented
         

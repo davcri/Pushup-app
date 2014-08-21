@@ -34,16 +34,16 @@ class Pushup(Database):
         connection = Database.connect(self)
         
         cursor = connection.execute("SELECT * FROM pushup inner join exercise on " +\
-                                    "exerciseId=id WHERE athleteName = :name",
+                                    "exerciseId=id WHERE athleteName = :name ORDER BY date",
                                     {"name":athleteName})
         
         pushupsList = []        
         pushupRows = cursor.fetchall()
         
         for row in pushupRows:
-            pushupObj = self._loadPushupFromRow(row)
+            pushupObj = self._getPushupFromRow(row)
             pushupsList.append(pushupObj) 
-                   
+        
         return pushupsList
         
     
@@ -57,7 +57,7 @@ class Pushup(Database):
         pushupsList = []        
         
         for row in pushupRows:
-            pushupObj = self._loadPushupFromRow(row)
+            pushupObj = self._getPushupFromRow(row)
             pushupsList.append(pushupObj)   
         
         return pushupsList
@@ -70,7 +70,7 @@ class Pushup(Database):
         connection.close()
         
         
-    def _loadPushupFromRow(self, row):
+    def _getPushupFromRow(self, row):
         pushupObj = Pushup_Model(row["athleteName"],
                                  row["date"], 
                                  row["avgHeartRate"], 

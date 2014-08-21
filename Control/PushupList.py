@@ -13,13 +13,13 @@ class PushupList():
     classdocs
     '''
 
-    def __init__(self, athlete):
+    def __init__(self, athlete, pushups):
         '''
         Constructor
         '''
         
         self.athlete = athlete    
-        self.pushups = self._getPushups()
+        self.pushups = pushups
         self.pushupsListWidget = PushupList_Widget(self.pushups)
         self.pushupsListWidget.deletePushup.connect(self.deletePushup) 
         

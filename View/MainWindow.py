@@ -24,11 +24,11 @@ class MainWindow(QMainWindow):
         
         self.athlete = athlete
         self.pushups = pushups
-       
+               
         self.pushupCreationDialog = PushupForm(self.athlete)
         self.editDialog = PushupEdit()
         
-        self._initWidth = 800
+        self._initWidth = 1000
         self._initHeight = 600
         self.resize(QSize(self._initWidth, self._initHeight))
         
@@ -52,22 +52,21 @@ class MainWindow(QMainWindow):
         self.editBtn.setDisabled(True)
         self.editBtn.setMaximumWidth(100)
         
-        self.pushupListController = PushupList_Control(self.athlete)
+        self.pushupListController = PushupList_Control(self.athlete, self.pushups)
         self.pushupCreationDialog.pushupAdded.connect(self.pushupListController.refreshList)
         
         pushupsList = self.pushupListController.getListWidget()
         pushupsList.pushupsListWidget.clicked.connect(self._enableEditButton)
         # pushupsList = PushupList_Widget(self.pushups) 
         
-        graphController = GraphPlotter()
-        self.plot = graphController.getGraphWidget()
-        self.plot.setMaximumSize(400, 300)
-        print self.plot
-        
+        graphController = GraphPlotter(self.pushups)
+        self.graphWidget = graphController.getGraphWidget()
+        self.graphWidget.setMaximumSize(400, 300)
+                
         vLayout.addWidget(profileBox)
         
         hLayout.addWidget(pushupsList)
-        innerVLayout.addWidget(self.plot)
+        innerVLayout.addWidget(self.graphWidget)
         hLayout.addLayout(innerVLayout)
         
         vLayout.addLayout(hLayout)
