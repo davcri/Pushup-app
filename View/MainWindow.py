@@ -45,9 +45,9 @@ class MainWindow(QMainWindow):
         innerVLayout = QVBoxLayout()
         
         profileBox = Profile(self.athlete)
-        addPushupBtn = QPushButton("Add Pushup")
-        addPushupBtn.clicked.connect(self._showPushup_DialogForm)
-        addPushupBtn.setMaximumWidth(100)
+        self.addPushupBtn = QPushButton("Add Pushup")
+        #self.addPushupBtn.clicked.connect(self._showPushup_DialogForm)
+        self.addPushupBtn.setMaximumWidth(100)
         self.editBtn = QPushButton("Edit")
         self.editBtn.clicked.connect(self._showEditDialog)
         self.editBtn.setDisabled(True)
@@ -73,7 +73,7 @@ class MainWindow(QMainWindow):
         
         vLayout.addLayout(hLayout)
         
-        vLayout.addWidget(addPushupBtn)
+        vLayout.addWidget(self.addPushupBtn)
         vLayout.addWidget(self.editBtn)
         
         self.mainWidget.setLayout(vLayout)
@@ -87,8 +87,8 @@ class MainWindow(QMainWindow):
         self.pushupListController.refreshList()
         self.graphController.refreshGraph(updatedPushups)
         
-    def _showPushup_DialogForm(self):
-        self.pushupCreationDialog.exec_()    
+#     def _showPushup_DialogForm(self):
+#         self.pushupCreationDialog.exec_()    
         
     def _showEditDialog(self):
         self.editDialog.exec_()

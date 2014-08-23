@@ -1,6 +1,12 @@
 '''
 Created on Aug 11, 2014
 
+This file is the starting point of the application.
+Run this file to to start Pushup-app :)
+
+You can do it from the terminal with the following command : 
+    "python ./main.py"
+
 @author: davide
 '''
 
@@ -11,32 +17,45 @@ from Foundation.Athlete import Athlete as Athlete_Database
 
 from PySide.QtGui import QApplication 
 from os import sys
- 
+
+def getAthleteProfile():
+    database = Athlete_Database()
+    athletes = database.getAthletes()
+    
+    if len(athletes) == 0: 
+        profileCreation = ProfileCreation()    
+        athlete = profileCreation.runCreationDialog()
+        
+        if athlete is not False :
+            database.store(athlete)
+        else :
+            athlete = False
+            print "No athlete created. Pushup-app quitting"
+            
+    elif len(athletes) == 1:
+        athlete = athletes[0]
+        
+    elif len(athletes) > 1:
+        profileSelection = ProfileSelector(athletes)
+        athlete = profileSelection.getSelectedAthlete()
+    
+    return athlete 
+
+#
+# Application starts here !
+#
 qtApplication = QApplication(sys.argv)
 
-database = Athlete_Database()
-athletes = database.getAthletes()
+athlete = getAthleteProfile()
+    
+if athlete is not False :
+    mainController = MainWindow(athlete)
+    mainController.showMainWindow()
+    
+    sys.exit(qtApplication.exec_())
+else :
+    sys.exit(qtApplication.quit())
 
-if len(athletes) == 0:
-    profileCreation = ProfileCreation()    
-    athlete = profileCreation.runCreationDialog()
-    
-    if athlete is not False :
-        database.store(athlete)
-    else :
-        print "No athlete created. Pushup-app quitting"
-        sys.exit(qtApplication.quit())
-        
-elif len(athletes) == 1:
-    athlete = athletes[0]
-    
-elif len(athletes) > 1:
-    profileSelection = ProfileSelector(athletes)
-    athlete = profileSelection.getSelectedAthlete()
-    
-    assert athlete is not False
-        #sys.exit(self.qtApplication.exec_())
 
-mainController = MainWindow(athlete) # calls the MainWindow controller
-mainController.showMainWindow()
-sys.exit(qtApplication.exec_())
+
+    

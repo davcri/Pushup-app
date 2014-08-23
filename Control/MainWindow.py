@@ -4,72 +4,27 @@ Created on Aug 11, 2014
 @author: davide
 '''
 
-# from Model.Exercise import Exercise as Exercise_Model
-# from Model.Athlete import Athlete as Athlete_Model
-# from Model.Pushup import Pushup as Pushup_Model
 from Foundation.Athlete import Athlete as Athlete_Foundation
 from Foundation.Exercise import Exercise as Exercise_Foundation
 from Foundation.Pushup import Pushup as Pushup_Foundation
 
-from PySide.QtGui import QApplication
 from View.MainWindow import MainWindow as Main_View
-from View.Widgets.ProfileSelection import ProfileSelection
 from View.Widgets.ProfileCreation import ProfileCreation
-
-import sys
+from View.Widgets.PushupForm import PushupForm
 
 class MainWindow():
     def __init__(self, athlete): 
         self.athlete = athlete
         self.pushups = athlete.getPushups()
         
+        self.pushupCreationDialog = PushupForm(self.athlete)
+        
         self.showMainWindow()     
     
-    def showMainWindow(self):
-        #qtApplication.setStyleSheet("*{background-color : blue}")
-                    
-        self.mainWindow =  Main_View(self.athlete, self.pushups)  
-        self.mainWindow.show()
-                 
-                    
-        
-    def showMainWindow_Old(self):
-        self.qtApplication = QApplication(sys.argv)
-        #qtApplication.setStyleSheet("*{background-color : blue}")
-        
-        athletesList = self.loadAthletes()
-        
-        if len(athletesList) == 0:            
-            athlete = self.createAthlete()
-            
-            if athlete != False:
-                self.storeAthlete(athlete)
-            
-                emptyPushupList = []
-                mainWindow =  Main_View(athlete, emptyPushupList)   
-                mainWindow.show() 
-            else:
-                print "No athlete created. Pushup-app quitting"
-                sys.exit(self.qtApplication.quit())
-            
-        elif len(athletesList) == 1:
-            athlete = athletesList[0]
-            pushups = self.loadPushups(athlete._name)
-            
-            mainWindow =  Main_View(athlete, pushups)   
-            mainWindow.show()
-            
-        elif len(athletesList) > 1:
-            profileSelection = ProfileSelection(athletesList)
-               
-            if profileSelection.execDialogWindow() == True :
-                selectedAthleteProfile = profileSelection.getSelectedProfile()
-                pushups = self.loadPushups(selectedAthleteProfile._name)
-                           
-                mainWindow =  Main_View(selectedAthleteProfile, pushups)  
-                mainWindow.show()
-                 
-        sys.exit(self.qtApplication.exec_())                   
+    def showMainWindow(self):                    
+        self.mainWindow =  Main_View(self.athlete, self.pushups)
+        self.mainWindow.addPushupBtn.clicked.connect(self._showPushup_DialogForm) 
+        self.mainWindow.show()          
                     
     def createAthlete (self):
         profileCreation = ProfileCreation()
@@ -105,7 +60,7 @@ class MainWindow():
         db = Pushup_Foundation()
         lists = db.getPushupsByAthlete(athleteName)
         
-        return lists
-            
+        return lists  
     
-            
+    def _showPushup_DialogForm(self):
+        self.pushupCreationDialog.exec_()
