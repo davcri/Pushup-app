@@ -19,10 +19,21 @@ from View.Widgets.ProfileCreation import ProfileCreation
 import sys
 
 class MainWindow():
-    def __init__(self):
+    def __init__(self, athlete): 
+        self.athlete = athlete
+        self.pushups = athlete.getPushups()
+        
         self.showMainWindow()     
     
     def showMainWindow(self):
+        #qtApplication.setStyleSheet("*{background-color : blue}")
+                    
+        self.mainWindow =  Main_View(self.athlete, self.pushups)  
+        self.mainWindow.show()
+                 
+                    
+        
+    def showMainWindow_Old(self):
         self.qtApplication = QApplication(sys.argv)
         #qtApplication.setStyleSheet("*{background-color : blue}")
         
