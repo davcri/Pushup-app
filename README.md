@@ -14,9 +14,9 @@ Stores your progresses in physicals exercises, like pushups, on a local database
 - __Python__ _2.7.8_ : Installed by default on most Linux distros
 - __PySide__ _1.2.1_: For _apt-based_ Linux distros, open your terminal and run
 
-  ```sudo apt-get install python-pyside```
+```sudo apt-get install python-pyside```
 
-  Otherwise look at the official documentation: https://pypi.python.org/pypi/PySide#installation
+ Otherwise look at the official documentation: https://pypi.python.org/pypi/PySide#installation
 
 - __PyQtGraph__ _0.9.8_: http://www.pyqtgraph.org/
 
