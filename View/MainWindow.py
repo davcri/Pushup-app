@@ -16,6 +16,7 @@ from View.Widgets.PushupEdit import PushupEdit
 from Control.ProfileCreation import ProfileCreation as ProfileCreation_Control
 from Control.PushupList import PushupList as PushupList_Control
 from Control.GraphPlotter import GraphPlotter
+from Foundation.Pushup import Pushup as Pushup_Database
 
 class MainWindow(QMainWindow):
     def __init__(self, athlete, pushups): 
@@ -53,14 +54,15 @@ class MainWindow(QMainWindow):
         self.editBtn.setMaximumWidth(100)
         
         self.pushupListController = PushupList_Control(self.athlete, self.pushups)
-        self.pushupCreationDialog.pushupAdded.connect(self.pushupListController.refreshList)
+        self.pushupCreationDialog.pushupAdded.connect(self.pushupAdded)
         
         pushupsList = self.pushupListController.getListWidget()
         pushupsList.pushupsListWidget.clicked.connect(self._enableEditButton)
         # pushupsList = PushupList_Widget(self.pushups) 
         
-        graphController = GraphPlotter(self.pushups)
-        self.graphWidget = graphController.getGraphWidget()
+        self.graphController = GraphPlotter(self.pushups)
+        
+        self.graphWidget = self.graphController.getGraphWidget()
         self.graphWidget.setMaximumSize(400, 300)
                 
         vLayout.addWidget(profileBox)
@@ -77,6 +79,14 @@ class MainWindow(QMainWindow):
         self.mainWidget.setLayout(vLayout)
         self.setCentralWidget(self.mainWidget)
     
+    # Slot 
+    # This shouldn't be here but in the MainWindow Control
+    def pushupAdded(self):
+        database = Pushup_Database()
+        updatedPushups = database.getPushupsByAthlete(self.athlete._name) 
+        self.pushupListController.refreshList()
+        self.graphController.refreshGraph(updatedPushups)
+        
     def _showPushup_DialogForm(self):
         self.pushupCreationDialog.exec_()    
         
@@ -84,6 +94,7 @@ class MainWindow(QMainWindow):
         self.editDialog.exec_()
         
     def _enableEditButton(self):
+        print "Edit button needs to be implemented"
         self.editBtn.setDisabled(False)
             
     def _createMenus(self):

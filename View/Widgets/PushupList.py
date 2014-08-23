@@ -85,12 +85,13 @@ class PushupList(QWidget):
         self.pushupsListWidget.setSortingEnabled(True)
         
         pushupDict = self._getPushupDictionary()
-
-        for dayOfExercise in pushupDict:                  
+        
+        i=0
+        for dayOfExercise in sorted(pushupDict.keys()):                  
              
             dateItem = QTreeWidgetItem()
-            dateItem.setText(0, "\n"+dayOfExercise+"\n")
-            
+            dateItem.setText(0, "\n"+dayOfExercise+"\nDay :" + str(i))
+            i += 1
             self.pushupsListWidget.addTopLevelItem(dateItem)
              
             for pushup in pushupDict[dayOfExercise]:
@@ -102,7 +103,7 @@ class PushupList(QWidget):
                 pushupItem.setData(0, Qt.UserRole, pushup)
                 
                 dateItem.addChild(pushupItem)       
-         
+                
     def doubleClick_Test(self):
         selectedPushups = self.pushupsListWidget.selectedItems()[0].data(0, Qt.UserRole)
         print selectedPushups._id            
