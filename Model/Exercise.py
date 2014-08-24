@@ -13,8 +13,8 @@ class Exercise:
         self._date = date
         self._averageHeartRate = avgHeartRate
     
-    def setId(self, id):
-        self._id = id
+    def setId(self, exerciseId):
+        self._id = exerciseId
     
     def __str__(self):
         objectInfo = "Name = " + self._athleteName + "\n"

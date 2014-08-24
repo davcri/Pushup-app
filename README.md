@@ -1,4 +1,4 @@
-# Pushup app (Work in progress)
+# Pushup app
 Stores your progresses in physicals exercises, like pushups, on a local database.
 
 * __Target Platform__ : PC, actually Pushup-app has been tested only on Linux, but it should be portable.

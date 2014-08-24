@@ -6,7 +6,6 @@ Created on Aug 15, 2014
 
 from Foundation.Database import Database
 from Model.Pushup import Pushup as Pushup_Model
-#from Foundation.Exercise import Exercise
 
 class Pushup(Database):
     def __init__(self):
@@ -62,10 +61,10 @@ class Pushup(Database):
         
         return pushupsList
     
-    def deletePushup(self, id):
+    def deletePushup(self, pushupId):
         connection = Database.connect(self)
         
-        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id":id})
+        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id":pushupId})
         connection.commit()
         connection.close()
         

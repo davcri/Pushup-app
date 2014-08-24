@@ -63,7 +63,14 @@ class ProfileCreation(QDialog):
         
         createBtn = QPushButton("Create")
         createBtn.setDefault(True)
-                
+        
+        cancelBtn = QPushButton("Cancel")
+        cancelBtn.clicked.connect(self.reject)
+        
+        btnLayout = QVBoxLayout()
+        btnLayout.addWidget(createBtn)
+        btnLayout.addWidget(cancelBtn)
+        
         self.form.addRow("Name", self.name)
         self.form.addRow("Surname", self.surname)
         self.form.addRow("Birth date",self.birthdate)
@@ -78,7 +85,8 @@ class ProfileCreation(QDialog):
                 
         self.layout.addWidget(QLabel("<h3>Create your profile!</h3><hr>"))
         self.layout.addLayout(self.form)
-        self.layout.addWidget(createBtn)
+        self.layout.addLayout(btnLayout)
+        
         
         createBtn.clicked.connect(self._createProfile)
     

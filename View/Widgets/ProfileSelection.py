@@ -4,7 +4,6 @@ Created on Aug 16, 2014
 @author: davide
 '''
 
-#import PySide
 from PySide.QtGui import QDialog
 from PySide.QtGui import QHBoxLayout, QVBoxLayout
 from PySide.QtGui import QLabel, QPushButton, QListWidget 
@@ -37,8 +36,8 @@ class ProfileSelection(QDialog):
         # List 
         self.list = QListWidget()
         self.list.setSelectionMode(QAbstractItemView.SingleSelection)
-        self.list.itemSelectionChanged.connect(self.activateOkButton) 
         # SingleSelection is the default value, but I prefer to be sure
+        self.list.itemSelectionChanged.connect(self.activateOkButton) 
         
         for athlete in self.athletesList:
             iconW = QIcon.fromTheme("user-available")
@@ -50,8 +49,6 @@ class ProfileSelection(QDialog):
                 
         vLayout.addWidget(self.list)
         
-        # layout fix
-        #vLayout.addStretch(1)
         vLayout.addLayout(hLayout)
         
         # Buttons
@@ -62,10 +59,9 @@ class ProfileSelection(QDialog):
         
         hLayout.addWidget(self.okBtn)
         
-        # cancel = QPushButton("Cancel")      
-        # cancel.clicked.connect(self.dialog.reject)
-        # hLayout.addWidget(cancel)        
-        
+        cancel = QPushButton("Cancel")      
+        cancel.clicked.connect(self.reject)
+        hLayout.addWidget(cancel)        
 
         self.setLayout(vLayout)
         
