@@ -17,7 +17,7 @@ class PushupForm(QDialog):
     '''
     classdocs
     '''
-    pushupAdded = Signal()
+    pushupCreated = Signal(Pushup_Model)
     
     def __init__(self, athlete):
         '''
@@ -74,9 +74,7 @@ class PushupForm(QDialog):
         self.setLayout(layoutWrapper)
         
         
-    def _createPushup(self):
-        print "Storing pushup"
-        
+    def _createPushup(self):        
         exerciseDate = self.date.selectedDate()
         exerciseDate = self.qDate_to_date(exerciseDate)
         
@@ -86,18 +84,13 @@ class PushupForm(QDialog):
             heartRate = None
             
         pushup = Pushup_Model(self.athlete._name, 
-                        exerciseDate, 
-                        heartRate, 
-                        self.series.value(),
-                        self.repetitions.value())
-        
-        db = Pushup_Foundation()
-        db.store(pushup)
-        
-        self.accept()
-        self.pushupAdded.emit()       
-        
-        return pushup
+                              exerciseDate, 
+                              heartRate, 
+                              self.series.value(),
+                              self.repetitions.value())
+
+        self.pushupCreated.emit(pushup)
+        self.accept()       
     
     def _toggleHeartRateSpinBox(self):
         if self.avgHeartRateToggle.isChecked():

@@ -15,7 +15,7 @@ class PushupList(QWidget):
     ''' 
     
     deletePushup = Signal(int)
-    deleteDay = Signal()
+    deletePushups_in_a_day = Signal(tuple)
     
     def __init__(self, pushups):
         '''
@@ -70,7 +70,7 @@ class PushupList(QWidget):
              
                 delete = QAction(self.pushupsListWidget)
                 delete.setText("Delete this day and all of its exercises")
-                delete.triggered.connect(self._populateTree)
+                #delete.triggered.connect(self._populateTree)
                 menu.addAction(delete)
                 menu.exec_(QCursor.pos())
     

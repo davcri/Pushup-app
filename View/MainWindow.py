@@ -4,30 +4,26 @@ Created on Aug 11, 2014
 @author: davide
 '''
 
-from PySide.QtCore import QSize
+from PySide.QtCore import QSize, Signal
 from PySide.QtGui import QApplication, QMainWindow, \
                          QVBoxLayout, QHBoxLayout, \
                          QAction, QPushButton, \
-                         QWidget, QMessageBox, QLabel
+                         QWidget, QMessageBox
 
 from View.Widgets.Profile import Profile
-from View.Widgets.PushupForm import PushupForm
-from View.Widgets.PushupEdit import PushupEdit
-from Control.ProfileCreation import ProfileCreation as ProfileCreation_Control
-from Control.PushupList import PushupList as PushupList_Control
-from Control.GraphPlotter import GraphPlotter
-from Foundation.Pushup import Pushup as Pushup_Database
+from View.Widgets.PushupList import PushupList
+from View.Widgets.GraphWidget import GraphWidget
 
 class MainWindow(QMainWindow):
+    
+    profileCreationMenu_Requested = Signal()
+    
     def __init__(self, athlete, pushups): 
         QMainWindow.__init__(self)
         self.setWindowTitle("Pushup app")       
         
         self.athlete = athlete
         self.pushups = pushups
-               
-        self.pushupCreationDialog = PushupForm(self.athlete)
-        self.editDialog = PushupEdit()
         
         self._initWidth = 1000
         self._initHeight = 600
@@ -46,56 +42,28 @@ class MainWindow(QMainWindow):
         
         profileBox = Profile(self.athlete)
         self.addPushupBtn = QPushButton("Add Pushup")
-        #self.addPushupBtn.clicked.connect(self._showPushup_DialogForm)
         self.addPushupBtn.setMaximumWidth(100)
-        self.editBtn = QPushButton("Edit")
-        self.editBtn.clicked.connect(self._showEditDialog)
-        self.editBtn.setDisabled(True)
-        self.editBtn.setMaximumWidth(100)
         
-        self.pushupListController = PushupList_Control(self.athlete, self.pushups)
-        self.pushupCreationDialog.pushupAdded.connect(self.pushupAdded)
+        self.pushupsListWidget = PushupList(self.pushups) 
         
-        pushupsList = self.pushupListController.getListWidget()
-        pushupsList.pushupsListWidget.clicked.connect(self._enableEditButton)
-        # pushupsList = PushupList_Widget(self.pushups) 
-        
-        self.graphController = GraphPlotter(self.pushups)
-        
-        self.graphWidget = self.graphController.getGraphWidget()
+        self.graphWidget = GraphWidget()
         self.graphWidget.setMaximumSize(400, 300)
                 
         vLayout.addWidget(profileBox)
         
-        hLayout.addWidget(pushupsList)
+        hLayout.addWidget(self.pushupsListWidget)
         innerVLayout.addWidget(self.graphWidget)
         hLayout.addLayout(innerVLayout)
         
         vLayout.addLayout(hLayout)
         
         vLayout.addWidget(self.addPushupBtn)
-        vLayout.addWidget(self.editBtn)
         
         self.mainWidget.setLayout(vLayout)
         self.setCentralWidget(self.mainWidget)
-    
-    # Slot 
-    # This shouldn't be here but in the MainWindow Control
-    def pushupAdded(self):
-        database = Pushup_Database()
-        updatedPushups = database.getPushupsByAthlete(self.athlete._name) 
-        self.pushupListController.refreshList()
-        self.graphController.refreshGraph(updatedPushups)
-        
-#     def _showPushup_DialogForm(self):
-#         self.pushupCreationDialog.exec_()    
         
     def _showEditDialog(self):
         self.editDialog.exec_()
-        
-    def _enableEditButton(self):
-        print "Edit button needs to be implemented"
-        self.editBtn.setDisabled(False)
             
     def _createMenus(self):
         self._createActions()
@@ -113,8 +81,7 @@ class MainWindow(QMainWindow):
         self.close()
     
     def _actionCreateProfile(self): 
-        profileCreation = ProfileCreation_Control()
-        profileCreation.runCreationDialogAndStore()        
+        self.profileCreationMenu_Requested.emit()        
            
     def _actionAboutApplication(self):
         text = "Pushup app is a work in progress application.<br><br>\
@@ -129,7 +96,6 @@ class MainWindow(QMainWindow):
         self.aboutQtAction = QAction("About PySide (Qt)", self)
         self.aboutApplicationAction = QAction("About Pushup App", self)
         self._createProfile = QAction("Create new profile", self)
-        
         self.exit = QAction("Exit", self)   
         
         self.exit.triggered.connect(self._actionExit)

@@ -12,13 +12,12 @@ class GraphPlotter():
     classdocs
     '''
 
-    def __init__(self, pushups):
+    def __init__(self, pushupWidget, pushups):
         '''
         Constructor
         '''
-        self.graphWidget = GraphWidget()
+        self.graphWidget = pushupWidget
         self.pushups = pushups
-        self.initPlotWidget()
     
     def getGraphWidget(self):
         return self.graphWidget

@@ -3,10 +3,10 @@ Created on Aug 15, 2014
 
 @author: davide
 '''
-
+from PySide.QtCore import QObject
 from Model.Exercise import Exercise
 
-class Pushup(Exercise):
+class Pushup(object, Exercise):
     '''
     classdocs
     '''
