@@ -7,7 +7,6 @@ Stores your progresses in physicals exercises, like pushups, on a local database
 1. Download the [source code](https://github.com/davcri/Push-up-app/archive/master.zip).
 2. Extract the archive.
 3. Open the terminal and run
-
   ```python main.py```
 
 # Requirements
