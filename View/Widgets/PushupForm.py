@@ -4,11 +4,10 @@ Created on Aug 17, 2014
 @author: davide
 '''
 
-
 from PySide.QtCore import Qt, QDate, Signal
-from PySide.QtGui import QWidget, QDialog, \
-                         QFormLayout, QVBoxLayout, QSpinBox, QCalendarWidget, \
-                         QPushButton, QCheckBox
+from PySide.QtGui import QDialog, QPushButton, QCheckBox, \
+                         QFormLayout, QVBoxLayout, QSpinBox, QCalendarWidget
+                         
 from Model.Pushup import Pushup as Pushup_Model
 from Foundation.Pushup import Pushup as Pushup_Foundation
 from datetime import date
@@ -71,8 +70,7 @@ class PushupForm(QDialog):
         layoutWrapper.addLayout(self.pushupForm)
         layoutWrapper.addLayout(btnsLayout)
         
-        self.setLayout(layoutWrapper)
-        
+        self.setLayout(layoutWrapper)        
         
     def _createPushup(self):        
         exerciseDate = self.date.selectedDate()

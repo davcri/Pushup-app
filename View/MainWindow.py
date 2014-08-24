@@ -17,6 +17,7 @@ from View.Widgets.GraphWidget import GraphWidget
 class MainWindow(QMainWindow):
     
     profileCreationMenu_Requested = Signal()
+    pushupCreationMenu_Requested = Signal()
     
     def __init__(self, athlete, pushups): 
         QMainWindow.__init__(self)
@@ -61,9 +62,6 @@ class MainWindow(QMainWindow):
         
         self.mainWidget.setLayout(vLayout)
         self.setCentralWidget(self.mainWidget)
-        
-    def _showEditDialog(self):
-        self.editDialog.exec_()
             
     def _createMenus(self):
         self._createActions()
@@ -77,6 +75,17 @@ class MainWindow(QMainWindow):
         about.addAction(self.aboutQtAction)
         about.addAction(self.aboutApplicationAction)
     
+    def _createActions(self):             
+        self.aboutQtAction = QAction("About PySide (Qt)", self)
+        self.aboutApplicationAction = QAction("About Pushup App", self)
+        self._createProfile = QAction("Create new profile", self)
+        self.exit = QAction("Exit", self)   
+        
+        self.exit.triggered.connect(self._actionExit)
+        self._createProfile.triggered.connect(self._actionCreateProfile)
+        self.aboutQtAction.triggered.connect(self._actionAboutQt)
+        self.aboutApplicationAction.triggered.connect(self._actionAboutApplication)  
+        
     def _actionExit(self):
         self.close()
     
@@ -91,19 +100,7 @@ class MainWindow(QMainWindow):
     
     def _actionAboutQt(self):
         QMessageBox.aboutQt(self)
-        
-    def _createActions(self):             
-        self.aboutQtAction = QAction("About PySide (Qt)", self)
-        self.aboutApplicationAction = QAction("About Pushup App", self)
-        self._createProfile = QAction("Create new profile", self)
-        self.exit = QAction("Exit", self)   
-        
-        self.exit.triggered.connect(self._actionExit)
-        self._createProfile.triggered.connect(self._actionCreateProfile)
-        self.aboutQtAction.triggered.connect(self._actionAboutQt)
-        self.aboutApplicationAction.triggered.connect(self._actionAboutApplication)        
-        
-                
+                        
     def _centerWindow(self):
         displayWidth = QApplication.desktop().width()
         displayHeight = QApplication.desktop().height()

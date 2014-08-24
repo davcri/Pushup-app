@@ -5,10 +5,9 @@ Created on Aug 17, 2014
 '''
 
 from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QListWidget, QVBoxLayout, QListWidgetItem,\
+from PySide.QtGui import QWidget, QVBoxLayout, QListWidgetItem,\
                          QTreeWidget, QTreeWidgetItem, QAction, QMenu, QCursor
                          
-
 class PushupList(QWidget):
     '''
     classdocs
@@ -36,8 +35,6 @@ class PushupList(QWidget):
         self.pushupsListWidget.setAlternatingRowColors(True)
         
         self.pushupsListWidget.doubleClicked.connect(self.doubleClick_Test)
-        # WARNING : double click on top level Item is  not handled, so it will 
-        # produce a AttributeError: 'NoneType' object has no attribute '_id'
         
         self.pushupsListWidget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.pushupsListWidget.customContextMenuRequested.connect(self._customMenu)
@@ -58,8 +55,6 @@ class PushupList(QWidget):
             if selectedItem.parent() is not None : # Child Item selected
                 menu = QMenu()
                 
-                self.pushupId = selectedItem.data(0, Qt.UserRole)._id
-                
                 delete = QAction(self.pushupsListWidget)
                 delete.setText("Delete this pushup")
                 delete.triggered.connect(self._emitDeleteSignal)
@@ -70,12 +65,27 @@ class PushupList(QWidget):
              
                 delete = QAction(self.pushupsListWidget)
                 delete.setText("Delete this day and all of its exercises")
-                #delete.triggered.connect(self._populateTree)
+                delete.triggered.connect(self._emitDeleteDaySignal)
                 menu.addAction(delete)
                 menu.exec_(QCursor.pos())
     
     def _emitDeleteSignal(self):
-        self.deletePushup.emit(self.pushupId)
+        selectedItem = self.pushupsListWidget.selectedItems()[0]
+        pushupId = selectedItem.data(0, Qt.UserRole)._id
+        
+        self.deletePushup.emit(pushupId)
+    
+    def _emitDeleteDaySignal(self):
+        selectedItem = self.pushupsListWidget.selectedItems()[0]
+        
+        treeWidgetItems = selectedItem.takeChildren()
+        
+        pushupsIdList = []
+        for item in treeWidgetItems:
+            pushup = item.data(0, Qt.UserRole)._id
+            pushupsIdList.append(pushup)
+            
+        self.deletePushups_in_a_day.emit(pushupsIdList)
 
     def _populateTree(self):
         self.pushupsListWidget.clear()
@@ -105,8 +115,16 @@ class PushupList(QWidget):
                 dateItem.addChild(pushupItem)       
                 
     def doubleClick_Test(self):
-        selectedPushups = self.pushupsListWidget.selectedItems()[0].data(0, Qt.UserRole)
-        print selectedPushups._id            
+        selectedItems = self.pushupsListWidget.selectedItems()
+        
+        if selectedItems is not None :
+            selectedItem = selectedItems[0] 
+            
+            if selectedItem.parent() is not None : # Child Item selected
+                selectedPushups = self.pushupsListWidget.selectedItems()[0].data(0, Qt.UserRole)
+                print selectedPushups._id    
+            else :
+                print "Top level widget double clicked"                
         
     def reloadPushupsList(self, pushups):
         self.pushups = pushups

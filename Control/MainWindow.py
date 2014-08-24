@@ -5,49 +5,46 @@ Created on Aug 11, 2014
 '''
 from PySide.QtCore import Slot
 
-from Model.Pushup import Pushup as Pushup_Model
-
 from Foundation.Pushup import Pushup as Pushup_Foundation
 
 from Control.GraphPlotter import GraphPlotter
 from Control.ProfileCreation import ProfileCreation
+from Control.PushupCreator import PushupCreator
 
-from View.MainWindow import MainWindow as Main_View
-from View.Widgets.PushupForm import PushupForm
+from View.MainWindow import MainWindow as MainWindow_View
+
 
 class MainWindow():
     def __init__(self, athlete): 
         self.athlete = athlete
         self.pushups = athlete.getPushups()
-        self.mainWindow =  Main_View(self.athlete, self.pushups)
-        
-        self.pushupCreationDialog = PushupForm(self.athlete)
+        self.mainWindow =  MainWindow_View(self.athlete, self.pushups)
         
         self.graphController = GraphPlotter(self.mainWindow.graphWidget, self.pushups)
         self.graphController.initPlotWidget()
         
-        self.initSlots()
-        self.showMainWindow()     
+        self._initComponents()
+        self._initSlots()
         
-    def showMainWindow(self):                            
-        self.mainWindow.show()          
-    
-    def initSlots(self):
-        self.pushupCreationDialog.pushupCreated.connect(self.storePushup)
+        self.showMainWindow()     
+            
+    def _initComponents(self):
+        self.pushupCreation_Controller = PushupCreator(self.athlete)
+        self.pushupCreation_Controller.pushupStored.connect(self.refreshGUI)
+        
+    def _initSlots(self):
         self.mainWindow.addPushupBtn.clicked.connect(self._showPushup_DialogForm) 
         self.mainWindow.pushupsListWidget.deletePushup.connect(self.deletePushup)
+        self.mainWindow.pushupsListWidget.deletePushups_in_a_day.connect(self.deleteDay)
         self.mainWindow.profileCreationMenu_Requested.connect(self.profileCreation)
-        
-    @Slot()
-    def _showPushup_DialogForm(self):
-        self.pushupCreationDialog.exec_()             
     
-    @Slot(Pushup_Model)
-    def storePushup(self, pushup):
-        database = Pushup_Foundation()
-        database.store(pushup)
-        
-        self.refreshGUI()
+    def showMainWindow(self):                            
+        self.mainWindow.show()            
+    
+    @Slot()
+    def _showPushup_DialogForm(self):        
+        self.pushupCreation_Controller.showCreationDialog()
+        #self.pushupCreationDialog.exec_()             
     
     @Slot(int)
     def deletePushup(self, pushupId):
@@ -56,6 +53,15 @@ class MainWindow():
         
         self.refreshGUI()
     
+    @Slot(tuple)
+    def deleteDay(self, pushupsId):        
+        database = Pushup_Foundation()
+        
+        for pushupId in pushupsId:
+            database.deletePushup(pushupId)
+        
+        self.refreshGUI()
+        
     @Slot()
     def profileCreation(self):
         profileCreationDialog = ProfileCreation()
