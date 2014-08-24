@@ -4,11 +4,10 @@ Stores your progresses in physicals exercises, like pushups, on a local database
 * __Target Platform__ : PC, actually Pushup-app has been tested only on Linux, but it should be portable.
 
 # Run the application
-1. Download the [source code](https://github.com/davcri/Push-up-app/archive/master.zip).
-2. Extract the archive.
-3. Open the terminal and run
-
-  ```python main.py```
+1. Download the [source code](https://github.com/davcri/Push-up-app/archive/master.zip)
+2. Extract the archive
+3. Open the terminal and run 
+    ```python main.py```
 
 # Requirements
 - __Python__ _2.7.8_ : Installed by default on most Linux distros
