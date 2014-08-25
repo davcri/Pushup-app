@@ -21,30 +21,39 @@ class Profile(QWidget):
         self.initGUI()
         
     def initGUI(self):
-        vLayout = QVBoxLayout()
+        self.vLayout = QVBoxLayout()
         
         text = QLabel("<h3><b>Your profile</b></h3>")
         
         profileLayout = QFormLayout()
         
-        nameLabel = QLabel(self.athlete._name)
-        surnameLabel = QLabel(self.athlete._surname)
-        ageLabel = QLabel(str(self.athlete.getAge()))
-        bmiLabel = QLabel(str(self.athlete.getBMI()))
-        heightLabel = QLabel(str(self.athlete._height) + " cm")
-        massLabel = QLabel(str(self.athlete._mass) + " Kg")
+        self.nameLabel = QLabel(self.athlete._name)
+        self.surnameLabel = QLabel(self.athlete._surname)
+        self.ageLabel = QLabel(str(self.athlete.getAge()))
+        self.bmiLabel = QLabel(str(self.athlete.getBMI()))
+        self.heightLabel = QLabel(str(self.athlete._height) + " cm")
+        self.massLabel = QLabel(str(self.athlete._mass) + " Kg")
         
-        profileLayout.addRow("Name", nameLabel)        
-        profileLayout.addRow("Surname", surnameLabel)
-        profileLayout.addRow("Age", ageLabel)
-        profileLayout.addRow("Body Mass Index", bmiLabel)
-        profileLayout.addRow("Height", heightLabel)
-        profileLayout.addRow("Mass", massLabel)
+        profileLayout.addRow("Name", self.nameLabel)        
+        profileLayout.addRow("Surname", self.surnameLabel)
+        profileLayout.addRow("Age", self.ageLabel)
+        profileLayout.addRow("Body Mass Index", self.bmiLabel)
+        profileLayout.addRow("Height", self.heightLabel)
+        profileLayout.addRow("Mass", self.massLabel)
                 
-        vLayout.addWidget(text)
-        vLayout.addLayout(profileLayout)
+        self.vLayout.addWidget(text)
+        self.vLayout.addLayout(profileLayout)
         
-        vLayout.addStretch(1)
-        self.setLayout(vLayout)
+        self.vLayout.addStretch(1)
+        self.setLayout(self.vLayout)
     
+    def refreshProfile(self, athlete):
+        self.athlete = athlete
+        
+        self.nameLabel.setText(self.athlete._name)
+        self.surnameLabel.setText(self.athlete._surname)      
+        self.ageLabel.setText(str(self.athlete.getAge()))
+        self.bmiLabel.setText(str(self.athlete.getBMI()))
+        self.heightLabel.setText(str(self.athlete._height) + " cm")
+        self.massLabel.setText(str(self.athlete._mass) + " Kg")
         

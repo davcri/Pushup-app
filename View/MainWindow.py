@@ -17,6 +17,7 @@ from View.Widgets.GraphWidget import GraphWidget
 class MainWindow(QMainWindow):
     
     profileCreationMenu_Requested = Signal()
+    profileSelectionDialog_Requested = Signal()
     pushupCreationMenu_Requested = Signal()
     
     def __init__(self, athlete, pushups): 
@@ -41,7 +42,7 @@ class MainWindow(QMainWindow):
         vLayout = QVBoxLayout()
         innerVLayout = QVBoxLayout()
         
-        profileBox = Profile(self.athlete)
+        self.profileBox = Profile(self.athlete)
         self.addPushupBtn = QPushButton("Add Pushup")
         self.addPushupBtn.setMaximumWidth(100)
         
@@ -50,7 +51,7 @@ class MainWindow(QMainWindow):
         self.graphWidget = GraphWidget()
         self.graphWidget.setMaximumSize(400, 300)
                 
-        vLayout.addWidget(profileBox)
+        vLayout.addWidget(self.profileBox)
         
         hLayout.addWidget(self.pushupsListWidget)
         innerVLayout.addWidget(self.graphWidget)
@@ -66,11 +67,12 @@ class MainWindow(QMainWindow):
     def _createMenus(self):
         self._createActions()
         
-        fileMenu = self.menuBar().addMenu("File")
-        profile = self.menuBar().addMenu("Profile")
-        about = self.menuBar().addMenu("About")
+        fileMenu = self.menuBar().addMenu("&File")
+        profile = self.menuBar().addMenu("&Profile")
+        about = self.menuBar().addMenu("&About")
         
         fileMenu.addAction(self.exit)
+        profile.addAction(self._switchProfile)
         profile.addAction(self._createProfile)
         about.addAction(self.aboutQtAction)
         about.addAction(self.aboutApplicationAction)
@@ -79,10 +81,12 @@ class MainWindow(QMainWindow):
         self.aboutQtAction = QAction("About PySide (Qt)", self)
         self.aboutApplicationAction = QAction("About Pushup App", self)
         self._createProfile = QAction("Create new profile", self)
+        self._switchProfile = QAction("Switch profile", self)
         self.exit = QAction("Exit", self)   
         
         self.exit.triggered.connect(self._actionExit)
         self._createProfile.triggered.connect(self._actionCreateProfile)
+        self._switchProfile.triggered.connect(self._actionSwitchProfile)
         self.aboutQtAction.triggered.connect(self._actionAboutQt)
         self.aboutApplicationAction.triggered.connect(self._actionAboutApplication)  
         
@@ -91,7 +95,10 @@ class MainWindow(QMainWindow):
     
     def _actionCreateProfile(self): 
         self.profileCreationMenu_Requested.emit()        
-           
+    
+    def _actionSwitchProfile(self):
+        self.profileSelectionDialog_Requested.emit()
+        
     def _actionAboutApplication(self):
         text = "Pushup app is a work in progress application.<br><br>\
                 For developmente info look at the \

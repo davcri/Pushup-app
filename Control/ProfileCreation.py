@@ -22,9 +22,11 @@ class ProfileCreation():
         
     def runCreationDialogAndStore(self):
         athlete = self.pushupCreationDialog.getAthleteProfile()
-        database = Athlete()
-        
-        database.store(athlete)
+        print athlete
+         
+        if athlete is not False :
+            database = Athlete()
+            database.store(athlete)
         
     
         

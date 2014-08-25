@@ -21,7 +21,7 @@ class PushupList():
         self.athlete = athlete    
         self.pushups = pushups
         self.pushupsListWidget = PushupList_Widget(self.pushups)
-        self.pushupsListWidget.deletePushup.connect(self.deletePushup) 
+        self.pushupsListWidget._deletePushup.connect(self._deletePushup) 
         
     # Slot    
     def refreshList(self):
@@ -30,9 +30,9 @@ class PushupList():
     
     # Slot
     @Slot(int)
-    def deletePushup(self, pushupId):
+    def _deletePushup(self, pushupId):
         database = Pushup_Database()
-        database.deletePushup(pushupId)
+        database._deletePushup(pushupId)
         self.refreshList() 
                 
     def getListWidget(self):

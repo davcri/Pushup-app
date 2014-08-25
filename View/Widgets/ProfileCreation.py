@@ -102,6 +102,7 @@ class ProfileCreation(QDialog):
         
         qDate = self.birthdate.selectedDate()
         birthDate = self.qDate_to_date(qDate)
+        print birthDate
         
         self.athleteProfile = Athlete(self.name.text(),
                                  self.surname.text(),

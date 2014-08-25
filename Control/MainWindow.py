@@ -6,10 +6,12 @@ Created on Aug 11, 2014
 from PySide.QtCore import Slot
 
 from Foundation.Pushup import Pushup as Pushup_Foundation
+from Foundation.Athlete import Athlete as Athlete_Database
 
 from Control.GraphPlotter import GraphPlotter
 from Control.ProfileCreation import ProfileCreation
 from Control.PushupCreator import PushupCreator
+from Control.ProfileSelector import ProfileSelector
 
 from View.MainWindow import MainWindow as MainWindow_View
 
@@ -18,7 +20,7 @@ class MainWindow():
     def __init__(self, athlete): 
         self.athlete = athlete
         self.pushups = athlete.getPushups()
-        self.mainWindow =  MainWindow_View(self.athlete, self.pushups)
+        self.mainWindow = MainWindow_View(self.athlete, self.pushups)
         
         self.graphController = GraphPlotter(self.mainWindow.graphWidget, self.pushups)
         self.graphController.initPlotWidget()
@@ -34,82 +36,58 @@ class MainWindow():
         
     def _initSlots(self):
         self.mainWindow.addPushupBtn.clicked.connect(self._showPushup_DialogForm) 
-        self.mainWindow.pushupsListWidget.deletePushup.connect(self.deletePushup)
-        self.mainWindow.pushupsListWidget.deletePushups_in_a_day.connect(self.deleteDay)
-        self.mainWindow.profileCreationMenu_Requested.connect(self.profileCreation)
+        self.mainWindow.pushupsListWidget._deletePushup.connect(self._deletePushup)
+        self.mainWindow.pushupsListWidget.deletePushups_in_a_day.connect(self._deleteDay)
+        self.mainWindow.profileCreationMenu_Requested.connect(self._profileCreation)
+        self.mainWindow.profileSelectionDialog_Requested.connect(self._profileSelection)
     
     def showMainWindow(self):                            
         self.mainWindow.show()            
     
     @Slot()
     def _showPushup_DialogForm(self):        
-        self.pushupCreation_Controller.showCreationDialog()
-        #self.pushupCreationDialog.exec_()             
+        self.pushupCreation_Controller.showCreationDialog()      
     
     @Slot(int)
-    def deletePushup(self, pushupId):
+    def _deletePushup(self, pushupId):
         database = Pushup_Foundation()
-        database.deletePushup(pushupId)
+        database._deletePushup(pushupId)
         
         self.refreshGUI()
     
     @Slot(tuple)
-    def deleteDay(self, pushupsId):        
+    def _deleteDay(self, pushupsId):        
         database = Pushup_Foundation()
         
         for pushupId in pushupsId:
-            database.deletePushup(pushupId)
+            database._deletePushup(pushupId)
         
         self.refreshGUI()
         
     @Slot()
-    def profileCreation(self):
+    def _profileCreation(self):
         profileCreationDialog = ProfileCreation()
         profileCreationDialog.runCreationDialogAndStore()
+    
+    @Slot()
+    def _profileSelection(self):
+        database = Athlete_Database()
+        athletes = database.getAthletes()
+        
+        profileSelector = ProfileSelector(athletes)
+        athleteSelected = profileSelector.getSelectedAthlete()
+        
+        if athleteSelected != self.athlete and athleteSelected is not False:
+            self.athlete = athleteSelected
+            self._initComponents()
+            self.refreshGUI()
+            
         
     def refreshGUI(self):
         database = Pushup_Foundation()
         updatedPushups = database.getPushupsByAthlete(self.athlete._name)
         
         self.mainWindow.pushupsListWidget.reloadPushupsList(updatedPushups)
+        self.mainWindow.profileBox.refreshProfile(self.athlete)
         self.graphController.refreshGraph(updatedPushups)
-        
-    
-    
-    
-    # Unused methods
-    #__________________________________________
-    
-#     def createAthlete (self):
-#         profileCreation = ProfileCreation()
-#         athlete = profileCreation.getAthleteProfile() 
-#         
-#         return athlete
-#     
-#     def storeAthlete(self, athlete):
-#         database = Athlete_Foundation()
-#         database.store(athlete)
-#     
-#     def loadAthlete(self, selectedProfile):
-#         athleteDb = Athlete_Foundation()
-#         return athleteDb.load(selectedProfile)
-#     
-#     def loadAthletes(self):
-#         athleteDb = Athlete_Foundation()
-#         return athleteDb.getAthletes()
-#     
-#     def storeExercise(self, exercise):
-#         database = Exercise_Foundation()
-#         database.add(exercise)
-#         
-#     def loadExercises(self, athleteName):
-#         database = Exercise_Foundation()        
-#         return database.getExercisesByAthleteName(athleteName)
-#     
-#     def loadPushups(self, athleteName):
-#         db = Pushup_Foundation()
-#         lists = db.getPushupsByAthlete(athleteName)
-#         
-#         return lists  
-    
 

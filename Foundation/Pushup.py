@@ -61,7 +61,7 @@ class Pushup(Database):
         
         return pushupsList
     
-    def deletePushup(self, pushupId):
+    def _deletePushup(self, pushupId):
         connection = Database.connect(self)
         
         connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id":pushupId})

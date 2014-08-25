@@ -59,9 +59,15 @@ class ProfileSelection(QDialog):
         
         hLayout.addWidget(self.okBtn)
         
-        cancel = QPushButton("Cancel")      
-        cancel.clicked.connect(self.reject)
-        hLayout.addWidget(cancel)        
+        cancelBtn = QPushButton("Cancel")      
+        cancelBtn.clicked.connect(self.reject)
+        
+        removeProfileBtn = QPushButton("Remove Profile")
+        removeProfileBtn.setDisabled(True)
+        #removeProfileBtn.clicked.connect()
+        
+        hLayout.addWidget(cancelBtn)
+        hLayout.addWidget(removeProfileBtn)        
 
         self.setLayout(vLayout)
         
@@ -78,7 +84,6 @@ class ProfileSelection(QDialog):
                 selectedAthlete = athlete
         
         return selectedAthlete
-    
     
     def activateOkButton(self):
         self.okBtn.setDisabled(False)
