@@ -1,4 +1,6 @@
 # Pushup app
+![Pushup-app Main Window screenshot](https://github.com/davcri/Push-up-app/blob/profile_deletion/Screenshots/Pushup-app%20-%20Main%20Window%20Screenshot.png "Pushup-app MainWindow screenshot")
+
 Stores your progresses in physicals exercises, like pushups, on a local database.
 
 * __Target Platform__ : PC, actually Pushup-app has been tested only on Linux, but it should be portable.
