@@ -61,10 +61,12 @@ class Pushup(Database):
         
         return pushupsList
     
-    def _deletePushup(self, pushupId):
+    def deletePushup(self, exerciseId):
         connection = Database.connect(self)
         
-        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id": pushupId})
+        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id": exerciseId})
+        connection.execute("DELETE FROM exercise WHERE id=:id",{"id": exerciseId})
+
         connection.commit()
         connection.close()
         
