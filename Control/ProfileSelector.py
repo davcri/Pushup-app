@@ -4,9 +4,15 @@ Created on Aug 23, 2014
 @author: davide
 '''
 
-from View.Widgets.ProfileSelection import ProfileSelection
+from PySide.QtCore import Slot, QObject
 
-class ProfileSelector():
+from View.Widgets.ProfileSelection import ProfileSelection as ProfileSelectionWidget
+
+from Foundation.Athlete import Athlete as Athlete_Database
+
+from Model.Athlete import Athlete as Athlete_Model
+
+class ProfileSelector(QObject):
     '''
     classdocs
     '''
@@ -15,16 +21,35 @@ class ProfileSelector():
         '''
         Constructor
         '''
+        QObject.__init__(self)
+        
         self.athletesList = athletes
-        self._profileSelection = ProfileSelection(self.athletesList)
+        self._profileSelection = ProfileSelectionWidget(self.athletesList)
+        
+        self._profileSelection.profileSelected.connect(self.saveSelectedProfile)
+        self._profileSelection.removeProfile.connect(self.removeProfile)
+        
+        self._profileSelection.exec_()
         
     def getSelectedAthlete(self):
-        if self._profileSelection.execDialogWindow() == True :
-            selectedAthleteProfile = self._profileSelection.getSelectedProfile()
-        else :
-            selectedAthleteProfile = False         
+        return self.selectedProfile
+#         if self._profileSelection.execDialogWindow() == True :
+#             selectedAthleteProfile = self._profileSelection.getSelectedProfile()
+#         else :
+#             selectedAthleteProfile = False         
+    
+    @Slot(Athlete_Model)
+    def saveSelectedProfile(self, selectedProfile):
+        self.selectedProfile = selectedProfile
+    
+    @Slot(Athlete_Model)
+    def removeProfile(self, athlete):
+        database = Athlete_Database()
+        print "sto cancellando " + athlete._name
         
-        return selectedAthleteProfile
+        database.delete(athlete._name)
+        
+        
                            
         
         

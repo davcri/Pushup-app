@@ -7,7 +7,7 @@ Created on Aug 11, 2014
 from Model.Person import Person
 from Foundation.Pushup import Pushup
 
-class Athlete(Person):
+class Athlete(object, Person):
     def __init__(self, name, surname, sex, birthDate, height, mass):
         Person.__init__(self, name, surname, sex, birthDate, height, mass)
         
