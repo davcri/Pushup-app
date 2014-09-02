@@ -13,7 +13,7 @@ class PushupList(QWidget):
     classdocs
     ''' 
     
-    _deletePushup = Signal(int)
+    deletePushup = Signal(int)
     deletePushups_in_a_day = Signal(tuple)
     
     def __init__(self, pushups):
@@ -73,7 +73,7 @@ class PushupList(QWidget):
         selectedItem = self.pushupsListWidget.selectedItems()[0]
         pushupId = selectedItem.data(0, Qt.UserRole)._id
         
-        self._deletePushup.emit(pushupId)
+        self.deletePushup.emit(pushupId)
     
     def _emitDeleteDaySignal(self):
         selectedItem = self.pushupsListWidget.selectedItems()[0]

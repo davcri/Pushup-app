@@ -36,7 +36,7 @@ class MainWindow():
         
     def _initSlots(self):
         self.mainWindow.addPushupBtn.clicked.connect(self._showPushup_DialogForm) 
-        self.mainWindow.pushupsListWidget._deletePushup.connect(self._deletePushup)
+        self.mainWindow.pushupsListWidget.deletePushup.connect(self.deletePushup)
         self.mainWindow.pushupsListWidget.deletePushups_in_a_day.connect(self._deleteDay)
         self.mainWindow.profileCreationMenu_Requested.connect(self._profileCreation)
         self.mainWindow.profileSelectionDialog_Requested.connect(self._profileSelection)
@@ -49,9 +49,9 @@ class MainWindow():
         self.pushupCreation_Controller.showCreationDialog()      
     
     @Slot(int)
-    def _deletePushup(self, pushupId):
+    def deletePushup(self, pushupId):
         database = Pushup_Foundation()
-        database._deletePushup(pushupId)
+        database.deletePushup(pushupId)
         
         self.refreshGUI()
     
@@ -59,10 +59,13 @@ class MainWindow():
     def _deleteDay(self, pushupsId):        
         database = Pushup_Foundation()
         
-        for pushupId in pushupsId:
-            database._deletePushup(pushupId)
-        
+        database.deletePushups(pushupsId)
+                
         self.refreshGUI()
+#         for pushupId in pushupsId:
+#             database.deletePushup(pushupId)
+#         
+#         self.refreshGUI()
         
     @Slot()
     def _profileCreation(self):
@@ -74,14 +77,14 @@ class MainWindow():
         database = Athlete_Database()
         athletes = database.getAthletes()
         
-        profileSelector = ProfileSelector(athletes)
-        athleteSelected = profileSelector.getSelectedAthlete()
+        profileSelector = ProfileSelector(athletes) # Modal window appears
         
+        athleteSelected = profileSelector.getSelectedAthlete()
+                 
         if athleteSelected != self.athlete and athleteSelected is not False:
             self.athlete = athleteSelected
             self._initComponents()
-            self.refreshGUI()
-            
+            self.refreshGUI()            
         
     def refreshGUI(self):
         database = Pushup_Foundation()
