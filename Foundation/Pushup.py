@@ -64,7 +64,7 @@ class Pushup(Database):
     def _deletePushup(self, pushupId):
         connection = Database.connect(self)
         
-        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id":pushupId})
+        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id": pushupId})
         connection.commit()
         connection.close()
         

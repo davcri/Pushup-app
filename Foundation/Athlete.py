@@ -59,7 +59,14 @@ class Athlete(Database):
                    
             database.commit()
             database.close()
-
+    
+    def delete(self, athleteName):
+        database = Database.connect(self)
+        database.execute("DELETE FROM athlete WHERE name=:name", {"name": athleteName})
+        database.commit()
+        database.close()
+        
+        
     def _nameAlreadyExists(self, name):
         connection = Database.connect(self)
         
