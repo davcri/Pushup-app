@@ -28,7 +28,35 @@ class Pushup(Database):
         connection.commit()
         connection.close()
     
+    def deletePushup(self, exerciseId):
+        connection = Database.connect(self)
+        
+        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id": exerciseId})
+        connection.execute("DELETE FROM exercise WHERE id=:id",{"id": exerciseId})
+
+        connection.commit()
+        connection.close()
     
+    def deletePushups(self, exercisesIdList):
+        connection = Database.connect(self)
+        
+        for exerciseId in exercisesIdList:
+            connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id": exerciseId})
+            connection.execute("DELETE FROM exercise WHERE id=:id",{"id": exerciseId})
+
+        connection.commit()
+        connection.close()
+    
+    def deletePushupsByAthlete(self, athleteName):
+        puhsupsList = self.getPushupsByAthlete(athleteName)
+
+        pushupsIdList = []
+                
+        for pushup in puhsupsList:
+            pushupsIdList.append(pushup._id)
+        
+        self.deletePushups(pushupsIdList)
+        
     def getPushupsByAthlete(self, athleteName):
         connection = Database.connect(self)
         
@@ -60,16 +88,6 @@ class Pushup(Database):
             pushupsList.append(pushupObj)   
         
         return pushupsList
-    
-    def deletePushup(self, exerciseId):
-        connection = Database.connect(self)
-        
-        connection.execute("DELETE FROM pushup WHERE exerciseId=:id ", {"id": exerciseId})
-        connection.execute("DELETE FROM exercise WHERE id=:id",{"id": exerciseId})
-
-        connection.commit()
-        connection.close()
-        
         
     def _getPushupFromRow(self, row):
         pushupObj = Pushup_Model(row["athleteName"],
@@ -80,4 +98,3 @@ class Pushup(Database):
         pushupObj.setId(row["exerciseId"])
            
         return pushupObj
-        

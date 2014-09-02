@@ -5,6 +5,8 @@ Created on Aug 12, 2014
 '''
 
 from Foundation.Database import Database
+from Foundation.Pushup import Pushup as Pushup_Foundation
+
 import Model.Athlete
 
 import datetime
@@ -62,10 +64,13 @@ class Athlete(Database):
     
     def delete(self, athleteName):
         database = Database.connect(self)
+        pushupDatabase = Pushup_Foundation()
+        pushupDatabase.deletePushupsByAthlete(athleteName)
+                        
         database.execute("DELETE FROM athlete WHERE name=:name", {"name": athleteName})
-        database.commit()
-        database.close()
         
+        database.commit()
+        database.close()        
         
     def _nameAlreadyExists(self, name):
         connection = Database.connect(self)

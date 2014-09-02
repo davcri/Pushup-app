@@ -45,7 +45,6 @@ class ProfileSelector(QObject):
     @Slot(Athlete_Model)
     def removeProfile(self, athlete):
         database = Athlete_Database()
-        print "sto cancellando " + athlete._name
         
         database.delete(athlete._name)
         
