@@ -9,7 +9,7 @@ from PySide.QtGui import QDialog, QPushButton, QCheckBox, \
                          QFormLayout, QVBoxLayout, QSpinBox, QCalendarWidget
                          
 from Model.Pushup import Pushup as Pushup_Model
-from Foundation.Pushup import Pushup as Pushup_Foundation
+
 from datetime import date
 
 class PushupForm(QDialog):
