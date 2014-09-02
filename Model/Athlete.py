@@ -30,6 +30,14 @@ class Athlete(Person):
         
         return athleteInfo
     
-    
+    def __eq__(self, other):
+        if self._name == other._name :
+            
+            return True
+        else :
+            return False
+        
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
         
