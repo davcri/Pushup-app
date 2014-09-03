@@ -93,4 +93,3 @@ class MainWindow():
         self.mainWindow.pushupsListWidget.reloadPushupsList(updatedPushups)
         self.mainWindow.profileBox.refreshProfile(self.athlete)
         self.graphController.refreshGraph(updatedPushups)
-

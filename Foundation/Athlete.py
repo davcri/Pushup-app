@@ -106,5 +106,4 @@ class Athlete(Database):
                                         birthDate,
                                         row["height"],
                                         row["mass"])
-        return athlete
-        
+        return athlete        

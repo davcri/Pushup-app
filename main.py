@@ -55,7 +55,3 @@ if athlete is not False :
     sys.exit(qtApplication.exec_())
 else :
     sys.exit(qtApplication.quit())
-
-
-
-    

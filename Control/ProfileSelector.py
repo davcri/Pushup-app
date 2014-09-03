@@ -47,9 +47,3 @@ class ProfileSelector(QObject):
         database = Athlete_Database()
         
         database.delete(athlete._name)
-        
-        
-                           
-        
-        
-        
