@@ -1,11 +1,14 @@
 # Pushup app
 ![Pushup-app Main Window screenshot](https://github.com/davcri/Push-up-app/blob/master/Screenshots/Pushup-app%20-%20Main%20Window%20Screenshot.png "Pushup-app MainWindow screenshot")
 
-Stores your progresses in physicals exercises, like pushups, on a local database.
+This application stores your progresses in physicals exercises, like pushups, on a local database. 
+
+Any help, pull-request or question about this application is welcome :smile:
 
 * __Target Platform__ : PC, actually Pushup-app has been tested only on Linux, but it should be portable.
 
 # Run the application
+First check your requirements ! If all libraries are installed on your system then :   
 1. Download the [source code](https://github.com/davcri/Push-up-app/archive/master.zip).
 2. Extract the archive.
 3. Open the terminal and run
@@ -27,3 +30,5 @@ I'm developing this application on __Linux__ (Mint 17) with :
 - __Programming language__ : Python 2.7.6
 - __Database__ : Sqlite3
 - __GUI__ : Pyside 1.2.1 (Qt 4.8)
+- __Graph__ : PyQtGraph (0.9.8), maybe I'll switch to Matplotlib.
+
