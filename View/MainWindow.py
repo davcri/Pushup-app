@@ -115,3 +115,16 @@ class MainWindow(QMainWindow):
         self.move(displayWidth/2.0 - self._initWidth/2.0, 
                   displayHeight/2.0 - self._initHeight/2.0 - 50)        
     
+    def cleanUI(self):
+        self.profileBox.ageLabel.setText("")
+        self.profileBox.nameLabel.setText("")
+        self.profileBox.surnameLabel.setText("")
+        self.profileBox.bmiLabel.setText("")
+        self.profileBox.heightLabel.setText("")
+        self.profileBox.massLabel.setText("")
+        
+        self.pushupsListWidget.pushupsListWidget.clear()
+        # the first pushupListWidget is the name of the PushupList instance
+        # the second is the name of a property of the PushupList instance
+        
+        self.graphWidget.clear()

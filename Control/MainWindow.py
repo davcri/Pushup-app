@@ -14,7 +14,7 @@ from Control.PushupCreator import PushupCreator
 from Control.ProfileSelector import ProfileSelector
 
 from View.MainWindow import MainWindow as MainWindow_View
-
+#from Model.Athlete import Athlete
 
 class MainWindow():
     def __init__(self, athlete): 
@@ -81,10 +81,15 @@ class MainWindow():
         
         athleteSelected = profileSelector.getSelectedAthlete()
                  
-        if athleteSelected is not False and athleteSelected != self.athlete :
-            self.athlete = athleteSelected
-            self._initComponents()
-            self.refreshGUI()            
+        if athleteSelected is not False: 
+            if athleteSelected != self.athlete :
+                self.athlete = athleteSelected
+                self._initComponents()
+                self.refreshGUI()     
+        else:
+            self.mainWindow.cleanUI()            
+            #self._initComponents()
+            #self.refreshGUI()       
         
     def refreshGUI(self):
         database = Pushup_Foundation()

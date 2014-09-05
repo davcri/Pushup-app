@@ -5,7 +5,6 @@ Created on Aug 21, 2014
 '''
 
 from View.Widgets.GraphWidget import GraphWidget
-#import pyqtgraph as pqt_graph
 
 class GraphPlotter():
     '''
