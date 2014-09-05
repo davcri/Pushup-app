@@ -23,6 +23,7 @@ class ProfileSelector(QObject):
         '''
         QObject.__init__(self)
         
+        self.selectedProfile = False
         self.athletesList = athletes
         self._profileSelection = ProfileSelectionWidget(self.athletesList)
         

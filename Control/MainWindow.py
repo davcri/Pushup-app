@@ -81,7 +81,7 @@ class MainWindow():
         
         athleteSelected = profileSelector.getSelectedAthlete()
                  
-        if athleteSelected != self.athlete and athleteSelected is not False:
+        if athleteSelected is not False and athleteSelected != self.athlete :
             self.athlete = athleteSelected
             self._initComponents()
             self.refreshGUI()            
