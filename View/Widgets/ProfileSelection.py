@@ -84,12 +84,12 @@ class ProfileSelection(QDialog):
         selectedListItem = self.list.selectedItems()[0]
         athlete = selectedListItem.data(Qt.UserRole)
         
-        rowToDelte = 0
+        rowToDelete = 0
         for index, element in enumerate(self.athletesList):
             if element == athlete:
-                rowToDelte = index
+                rowToDelete = index
                 
-        self.list.takeItem(rowToDelte)        
+        self.list.takeItem(rowToDelete)        
         self.removeProfile.emit(athlete)
     
     def okButtonSlot(self):
