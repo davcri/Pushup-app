@@ -20,13 +20,11 @@ class Database:
             connection.execute("CREATE TABLE athlete(name text primary key, surname text, sex text, birthDate text, height real, mass real)")                
             connection.execute("CREATE TABLE exercise(id INTEGER primary key, athleteName text, date text, avgHeartRate real, FOREIGN KEY(athleteName) REFERENCES athlete(name))")
             connection.execute("CREATE TABLE pushup(exerciseId int, repetitions int, series int, FOREIGN KEY(exerciseId) REFERENCES exercise(id))") 
-                
-            print "Database created"
-        else :
-            connection = sqlite3.connect(self._databaseFileName)
             
-        connection.commit()    
-        connection.close()      
+            connection.commit()    
+            connection.close()           
+            
+            print "Database created in " + self._databaseFileName
     
     def connect(self):
         connection = sqlite3.connect(self._databaseFileName)
