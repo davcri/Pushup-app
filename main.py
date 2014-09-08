@@ -37,6 +37,8 @@ def getAthleteProfile():
         
     elif len(athletes) > 1:
         profileSelection = ProfileSelector(athletes)
+        profileSelection.runSelectionDialog()
+        
         athlete = profileSelection.getSelectedAthlete()
     
     return athlete 
@@ -55,7 +57,3 @@ if athlete is not False :
     sys.exit(qtApplication.exec_())
 else :
     sys.exit(qtApplication.quit())
-
-
-
-    

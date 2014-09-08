@@ -29,10 +29,3 @@ class GraphWidget(pqt_graph.PlotWidget):
         self.setLabel('left', "Total Pushups")
         self.setLabel('bottom', "Day")
         self.plot(x, y, pen=penStyle, symbolBrush=(80,100,255), symbolPen='w')
-        
-
-        
-        
-        
-            
-        

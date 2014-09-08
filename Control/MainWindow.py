@@ -15,6 +15,7 @@ from Control.ProfileSelector import ProfileSelector
 
 from View.MainWindow import MainWindow as MainWindow_View
 
+from Model.Athlete import Athlete as Athlete_Model
 
 class MainWindow():
     def __init__(self, athlete): 
@@ -68,23 +69,40 @@ class MainWindow():
 #         self.refreshGUI()
         
     @Slot()
-    def _profileCreation(self):
-        profileCreationDialog = ProfileCreation()
-        profileCreationDialog.runCreationDialogAndStore()
-    
-    @Slot()
     def _profileSelection(self):
         database = Athlete_Database()
         athletes = database.getAthletes()
         
-        profileSelector = ProfileSelector(athletes) # Modal window appears
-        
-        athleteSelected = profileSelector.getSelectedAthlete()
-                 
-        if athleteSelected != self.athlete and athleteSelected is not False:
-            self.athlete = athleteSelected
+        profileSelector = ProfileSelector(athletes) 
+        profileSelector.profileSelected.connect(self._profileChange)
+        profileSelector.lastProfileDeleted.connect(self._clearUI)
+        profileSelector.profileDeleted.connect(self._handleActiveProfileDeletion)
+        profileSelector.runSelectionDialog() # Modal window appears
+    
+    @Slot()
+    def _profileCreation(self):
+        profileCreationDialog = ProfileCreation()
+        profileCreationDialog.runCreationDialogAndStore()
+    
+    @Slot(Athlete_Model)
+    def _handleActiveProfileDeletion(self, deletedAthlete):
+        if self.athlete == deletedAthlete :
+            self.mainWindow.cleanUI()  
+            self.mainWindow.addPushupBtn.setDisabled(True)
+            
+    @Slot(Athlete_Model)
+    def _profileChange(self, athleteSelected):                     
+        if athleteSelected != self.athlete :
+            self.athlete = athleteSelected  
             self._initComponents()
-            self.refreshGUI()            
+            self.refreshGUI()     
+
+    @Slot()   
+    def _clearUI(self):        
+        self.mainWindow.cleanUI()  
+            
+        #self._initComponents()
+        #self.refreshGUI()       
         
     def refreshGUI(self):
         database = Pushup_Foundation()
@@ -92,5 +110,5 @@ class MainWindow():
         
         self.mainWindow.pushupsListWidget.reloadPushupsList(updatedPushups)
         self.mainWindow.profileBox.refreshProfile(self.athlete)
+        self.mainWindow.addPushupBtn.setDisabled(False)
         self.graphController.refreshGraph(updatedPushups)
-

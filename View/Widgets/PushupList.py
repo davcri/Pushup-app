@@ -31,7 +31,7 @@ class PushupList(QWidget):
         self.pushupsListWidget = QTreeWidget(self)
         
         self.pushupsListWidget.setMinimumHeight(250)        
-        self.pushupsListWidget.setMaximumWidth(500)
+        #self.pushupsListWidget.setMaximumWidth(500)
         self.pushupsListWidget.setAlternatingRowColors(True)
         
         self.pushupsListWidget.doubleClicked.connect(self.doubleClick_Test)

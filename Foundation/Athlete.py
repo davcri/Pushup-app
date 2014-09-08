@@ -27,6 +27,14 @@ class Athlete(Database):
             athletesList.append(athlete)
         
         return athletesList
+    
+    def countAthletes(self):
+        connection = Database.connect(self)
+        
+        result = connection.execute("SELECT count(name) as 'athletes_count' FROM athlete")
+        result = result.fetchone()
+        
+        return result['athletes_count']
         
     def load(self, athleteName):
         connection = Database.connect(self)
@@ -106,5 +114,4 @@ class Athlete(Database):
                                         birthDate,
                                         row["height"],
                                         row["mass"])
-        return athlete
-        
+        return athlete        
