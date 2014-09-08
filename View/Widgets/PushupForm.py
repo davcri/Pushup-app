@@ -34,12 +34,13 @@ class PushupForm(QDialog):
         self.series.setMinimum(1)
         
         self.repetitions = QSpinBox()
+        self.repetitions.setMaximum(512)
         
         self.avgHeartRateToggle = QCheckBox()
         self.avgHeartRateToggle.toggled.connect(self._toggleHeartRateSpinBox)
         
         self.avgHeartRate = QSpinBox()
-        self.avgHeartRate.setMinimum(40)
+        self.avgHeartRate.setMinimum(30)
         self.avgHeartRate.setMaximum(250)
         self.avgHeartRate.setValue(120)
         self.avgHeartRate.setDisabled(True)
