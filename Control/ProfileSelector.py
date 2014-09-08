@@ -33,11 +33,7 @@ class ProfileSelector(QObject):
         self._profileSelection.exec_()
         
     def getSelectedAthlete(self):
-        return self.selectedProfile
-#         if self._profileSelection.execDialogWindow() == True :
-#             selectedAthleteProfile = self._profileSelection.getSelectedProfile()
-#         else :
-#             selectedAthleteProfile = False         
+        return self.selectedProfile 
     
     @Slot(Athlete_Model)
     def saveSelectedProfile(self, selectedProfile):

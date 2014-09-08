@@ -103,5 +103,12 @@ class ProfileSelection(QDialog):
         self.profileSelected.emit(athlete)
     
     def activateButtons(self):
-        self.okBtn.setDisabled(False)
-        self.removeProfileBtn.setDisabled(False)
+        selectedItems = self.list.selectedItems()
+        
+        if len(selectedItems)!=0 :
+            self.okBtn.setDisabled(False)
+            self.removeProfileBtn.setDisabled(False)
+        else :
+            self.okBtn.setDisabled(True)
+            self.removeProfileBtn.setDisabled(True)
+        
