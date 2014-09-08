@@ -15,7 +15,8 @@ class ProfileSelector(QObject):
     '''
     
     profileSelected = Signal(Athlete_Model)
-    allProfilesDeleted = Signal()
+    profileDeleted = Signal(Athlete_Model)
+    lastProfileDeleted = Signal()
     
     def __init__(self, athletes):
         '''
@@ -44,8 +45,9 @@ class ProfileSelector(QObject):
     @Slot(Athlete_Model)
     def removeProfile(self, athlete):
         database = Athlete_Database()
-        
         database.delete(athlete._name)
         
+        self.profileDeleted.emit(athlete)
+        
         if database.countAthletes() == 0 :
-            self.allProfilesDeleted.emit()
+            self.lastProfileDeleted.emit()

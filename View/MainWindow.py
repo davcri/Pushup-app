@@ -127,4 +127,5 @@ class MainWindow(QMainWindow):
         # the first pushupListWidget is the name of the PushupList instance
         # the second is the name of a property of the PushupList instance
         
+        self.addPushupBtn.setDisabled(True)
         self.graphWidget.clear()
