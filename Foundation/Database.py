@@ -8,9 +8,12 @@ import sqlite3
 import os
    
 class Database:    
-    _databaseName = "Push app.db"
+    _databaseName = "Pushup-app.db"
+    _databasePath = os.path.dirname(os.path.dirname(__file__)) + "/"
     
     def __init__(self):      
+        self._databaseFileName = self._databasePath + self._databaseName
+        
         if not self.databaseExists():
             connection = self.connect()
 
@@ -20,13 +23,13 @@ class Database:
                 
             print "Database created"
         else :
-            connection = sqlite3.connect(self._databaseName)
+            connection = sqlite3.connect(self._databaseFileName)
             
         connection.commit()    
         connection.close()      
     
     def connect(self):
-        connection = sqlite3.connect(self._databaseName)
+        connection = sqlite3.connect(self._databaseFileName)
         # Uses a different row_factory. "Row" enables access to row by name
         connection.row_factory = sqlite3.Row
         # Enables foreign key support
@@ -35,4 +38,4 @@ class Database:
         return connection
     
     def databaseExists(self):
-        return os.path.isfile(Database._databaseName)
+        return os.path.isfile(self._databaseFileName)
