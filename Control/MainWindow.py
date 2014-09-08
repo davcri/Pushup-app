@@ -14,7 +14,8 @@ from Control.PushupCreator import PushupCreator
 from Control.ProfileSelector import ProfileSelector
 
 from View.MainWindow import MainWindow as MainWindow_View
-#from Model.Athlete import Athlete
+
+from Model.Athlete import Athlete as Athlete_Model
 
 class MainWindow():
     def __init__(self, athlete): 
@@ -77,19 +78,28 @@ class MainWindow():
         database = Athlete_Database()
         athletes = database.getAthletes()
         
-        profileSelector = ProfileSelector(athletes) # Modal window appears
+        profileSelector = ProfileSelector(athletes) 
+        profileSelector.profileSelected.connect(self._profileChange)
+        profileSelector.allProfilesDeleted.connect(self._clearUI)
+        profileSelector.runSelectionDialog() # Modal window appears
         
-        athleteSelected = profileSelector.getSelectedAthlete()
-                 
+    @Slot(Athlete_Model)
+    def _profileChange(self, athleteSelected):                     
         if athleteSelected is not False: 
             if athleteSelected != self.athlete :
                 self.athlete = athleteSelected
                 self._initComponents()
                 self.refreshGUI()     
-        else:
-            self.mainWindow.cleanUI()            
-            #self._initComponents()
-            #self.refreshGUI()       
+    
+    @Slot()   
+    def _clearUI(self):
+        self.mainWindow.cleanUI()  
+        self.mainWindow.addPushupBtn.setDisabled(True)
+        
+        # remove athlete variable ! 
+            
+        #self._initComponents()
+        #self.refreshGUI()       
         
     def refreshGUI(self):
         database = Pushup_Foundation()

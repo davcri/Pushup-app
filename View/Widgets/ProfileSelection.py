@@ -20,6 +20,7 @@ class ProfileSelection(QDialog):
     
     removeProfile = Signal(Athlete_Model)
     profileSelected = Signal(Athlete_Model)
+    lastProfileDeleted = Signal()
     
     def __init__(self, athletesList):
         '''
@@ -45,7 +46,7 @@ class ProfileSelection(QDialog):
         self.list = QListWidget()
         self.list.setSelectionMode(QAbstractItemView.SingleSelection)
         # SingleSelection is the default value, but I prefer to be sure
-        self.list.itemSelectionChanged.connect(self.activateButtons) 
+        self.list.itemSelectionChanged.connect(self._activateButtons) 
         
         for athlete in self.athletesList:
             iconW = QIcon.fromTheme("user-available")
@@ -64,11 +65,11 @@ class ProfileSelection(QDialog):
         # Buttons
         self.okBtn = QPushButton("Ok")
         self.okBtn.setDisabled(True)
-        self.okBtn.clicked.connect(self.okButtonSlot)
-        self.list.itemDoubleClicked.connect(self.okButtonSlot)
+        self.okBtn.clicked.connect(self._okButtonSlot)
+        self.list.itemDoubleClicked.connect(self._okButtonSlot)
                 
         cancelBtn = QPushButton("Cancel")      
-        cancelBtn.clicked.connect(self.reject)
+        cancelBtn.clicked.connect(self._cancelButtonSlot)
         
         self.removeProfileBtn = QPushButton("Remove Profile")
         self.removeProfileBtn.setDisabled(True)
@@ -89,10 +90,11 @@ class ProfileSelection(QDialog):
             if element == athlete:
                 rowToDelete = index
                 
-        self.list.takeItem(rowToDelete)        
+        self.list.takeItem(rowToDelete)
+        self.athletesList.remove(athlete)        
         self.removeProfile.emit(athlete)
     
-    def okButtonSlot(self):
+    def _okButtonSlot(self):
         athlete = self.list.selectedItems()[0].data(Qt.UserRole)
         
         self.accept() # is it correct ? Maybe self.close() is better ?
@@ -102,7 +104,13 @@ class ProfileSelection(QDialog):
         
         self.profileSelected.emit(athlete)
     
-    def activateButtons(self):
+    def _cancelButtonSlot(self):
+        if len(self.athletesList) == 0:
+            self.lastProfileDeleted.emit()
+        
+        self.reject()
+    
+    def _activateButtons(self):
         selectedItems = self.list.selectedItems()
         
         if len(selectedItems)!=0 :

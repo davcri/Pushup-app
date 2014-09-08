@@ -37,6 +37,8 @@ def getAthleteProfile():
         
     elif len(athletes) > 1:
         profileSelection = ProfileSelector(athletes)
+        profileSelection.runSelectionDialog()
+        
         athlete = profileSelection.getSelectedAthlete()
     
     return athlete 
