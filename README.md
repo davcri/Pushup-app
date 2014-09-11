@@ -1,5 +1,5 @@
 # Pushup app
-![Pushup-app Main Window screenshot](http://imgur.com/ngrWVMJ "Pushup-app MainWindow screenshot")
+![Pushup-app Main Window screenshot](http://imgur.com/ngrWVMJ.jpg "Pushup-app MainWindow screenshot")
 
 This application stores your progresses in physicals exercises, like pushups, on a local database. 
 
