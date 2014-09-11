@@ -3,18 +3,16 @@ Created on Aug 11, 2014
 
 @author: davide
 '''
+
 from PySide.QtCore import Slot
 
 from Foundation.Pushup import Pushup as Pushup_Foundation
 from Foundation.Athlete import Athlete as Athlete_Database
-
 from Control.GraphPlotter import GraphPlotter
 from Control.ProfileCreation import ProfileCreation
 from Control.PushupCreator import PushupCreator
 from Control.ProfileSelector import ProfileSelector
-
 from View.MainWindow import MainWindow as MainWindow_View
-
 from Model.Athlete import Athlete as Athlete_Model
 
 class MainWindow():

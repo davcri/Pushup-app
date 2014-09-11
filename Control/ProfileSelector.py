@@ -5,6 +5,7 @@ Created on Aug 23, 2014
 '''
 
 from PySide.QtCore import Slot, Signal, QObject
+
 from View.Widgets.ProfileSelection import ProfileSelection as ProfileSelectionWidget
 from Foundation.Athlete import Athlete as Athlete_Database
 from Model.Athlete import Athlete as Athlete_Model

@@ -10,13 +10,15 @@ You can do it opening the terminal in the Pushup-app folder and typing :
 @author: davide
 '''
 
+from os import sys
+
+from PySide.QtGui import QApplication 
+
 from Control.MainWindow import MainWindow
 from Control.ProfileSelector import ProfileSelector
 from Control.ProfileCreation import ProfileCreation
 from Foundation.Athlete import Athlete as Athlete_Database
 
-from PySide.QtGui import QApplication 
-from os import sys
 
 def getAthleteProfile():
     database = Athlete_Database()

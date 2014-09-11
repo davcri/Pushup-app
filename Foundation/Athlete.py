@@ -4,12 +4,12 @@ Created on Aug 12, 2014
 @author: davide
 '''
 
+import datetime
+
 from Foundation.Database import Database
 from Foundation.Pushup import Pushup as Pushup_Foundation
-
 import Model.Athlete
 
-import datetime
 
 class Athlete(Database):    
     def __init__(self):              

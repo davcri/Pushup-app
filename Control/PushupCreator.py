@@ -8,7 +8,6 @@ from PySide.QtCore import Slot, Signal, QObject
 
 from Model.Pushup import Pushup as Pushup_Model
 from Foundation.Pushup import Pushup as Pushup_Database
-
 from View.Widgets.PushupForm import PushupForm
 
 class PushupCreator(QObject):

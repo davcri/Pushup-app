@@ -4,7 +4,6 @@ Created on Aug 21, 2014
 @author: davide
 '''
 
-from View.Widgets.GraphWidget import GraphWidget
 
 class GraphPlotter():
     '''

@@ -3,8 +3,8 @@ Created on Aug 16, 2014
 
 @author: davide
 '''
-from PySide.QtCore import Signal, Qt
 
+from PySide.QtCore import Signal, Qt
 from PySide.QtGui import QDialog
 from PySide.QtGui import QHBoxLayout, QVBoxLayout
 from PySide.QtGui import QLabel, QPushButton, QListWidget 

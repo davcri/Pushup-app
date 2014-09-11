@@ -4,13 +4,13 @@ Created on Aug 16, 2014
 @author: davide
 '''
 
+from datetime import date
+
 from PySide.QtGui import QDialog, QLabel
 from PySide.QtGui import QFormLayout, QVBoxLayout,QHBoxLayout, QPushButton
 from PySide.QtGui import QLineEdit, QCalendarWidget, QRadioButton
 from PySide.QtGui import QDoubleSpinBox
 from PySide.QtCore import QDate
-
-from datetime import date
 
 from Model.Athlete import Athlete
  

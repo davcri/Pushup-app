@@ -4,13 +4,14 @@ Created on Aug 17, 2014
 @author: davide
 '''
 
+from datetime import date
+
 from PySide.QtCore import Qt, QDate, Signal
-from PySide.QtGui import QDialog, QPushButton, QCheckBox, \
-                         QFormLayout, QVBoxLayout, QSpinBox, QCalendarWidget
+from PySide.QtGui import QDialog, QPushButton, QCheckBox
+from PySide.QtGui import QFormLayout, QVBoxLayout, QSpinBox, QCalendarWidget
                          
 from Model.Pushup import Pushup as Pushup_Model
 
-from datetime import date
 
 class PushupForm(QDialog):
     '''

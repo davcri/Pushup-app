@@ -5,8 +5,8 @@ Created on Aug 17, 2014
 '''
 
 from PySide.QtCore import Qt, Signal
-from PySide.QtGui import QWidget, QVBoxLayout, QListWidgetItem,\
-                         QTreeWidget, QTreeWidgetItem, QAction, QMenu, QCursor
+from PySide.QtGui import QWidget, QVBoxLayout, QListWidgetItem
+from PySide.QtGui import QTreeWidget, QTreeWidgetItem, QAction, QMenu, QCursor
                          
 class PushupList(QWidget):
     '''

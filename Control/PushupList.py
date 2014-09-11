@@ -5,6 +5,7 @@ Created on Aug 18, 2014
 '''
 
 from PySide.QtCore import Slot 
+
 from View.Widgets.PushupList import PushupList as PushupList_Widget 
 from Foundation.Pushup import Pushup as Pushup_Database
 

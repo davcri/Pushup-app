@@ -4,10 +4,11 @@ Created on Aug 15, 2014
 @author: davide
 '''
 
+from datetime import datetime
+
 from Foundation.Database import Database
 from Model.Pushup import Pushup as Pushup_Model
 
-from datetime import date, datetime
 
 class Pushup(Database):
     def __init__(self):

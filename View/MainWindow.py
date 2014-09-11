@@ -5,10 +5,10 @@ Created on Aug 11, 2014
 '''
 
 from PySide.QtCore import QSize, Signal
-from PySide.QtGui import QApplication, QMainWindow, \
-                         QVBoxLayout, QHBoxLayout, \
-                         QAction, QPushButton, \
-                         QWidget, QMessageBox
+from PySide.QtGui import QApplication, QMainWindow
+from PySide.QtGui import QVBoxLayout, QHBoxLayout
+from PySide.QtGui import QAction, QPushButton
+from PySide.QtGui import QWidget, QMessageBox
 
 from View.Widgets.Profile import Profile
 from View.Widgets.PushupList import PushupList
