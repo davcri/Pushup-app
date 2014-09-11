@@ -7,6 +7,8 @@ Created on Aug 15, 2014
 from Foundation.Database import Database
 from Model.Pushup import Pushup as Pushup_Model
 
+from datetime import date, datetime
+
 class Pushup(Database):
     def __init__(self):
         Database.__init__(self)
@@ -90,8 +92,12 @@ class Pushup(Database):
         return pushupsList
         
     def _getPushupFromRow(self, row):
+        dateString = row["date"]
+        
+        dateObj = datetime.strptime(dateString, "%Y-%m-%d").date()
+        
         pushupObj = Pushup_Model(row["athleteName"],
-                                 row["date"], 
+                                 dateObj, 
                                  row["avgHeartRate"], 
                                  row["series"],
                                  row["repetitions"])

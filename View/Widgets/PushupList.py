@@ -90,26 +90,30 @@ class PushupList(QWidget):
     def _populateTree(self):
         self.pushupsListWidget.clear()
         self.pushupsListWidget.setColumnCount(4)
-        self.pushupsListWidget.setHeaderLabels(["Date", "Series", "Repetitions",
+        self.pushupsListWidget.setHeaderLabels(["Date", "TotalPushups", 
+                                                "Series", "Repetitions",
                                                 "Average Heart Rate"])
         self.pushupsListWidget.setSortingEnabled(True)
+        self.pushupsListWidget.setColumnWidth(0,180)
         
         pushupDict = self._getPushupDictionary()
         
-        i=0
-        for dayOfExercise in sorted(pushupDict.keys()):                  
+        for it, dayOfExercise in enumerate(sorted(pushupDict.keys())):                  
              
             dateItem = QTreeWidgetItem()
-            dateItem.setText(0, "\n"+dayOfExercise+"\nDay :" + str(i))
-            i += 1
+            
+            dayLabel = dayOfExercise.strftime("%d/%B/%Y")
+            
+            dateItem.setText(0, "\n" + dayLabel + "\nDay : " + str(it))
+            
             self.pushupsListWidget.addTopLevelItem(dateItem)
-             
+            
             for pushup in pushupDict[dayOfExercise]:
                 pushupItem = QTreeWidgetItem()
                 
-                pushupItem.setText(1, str(pushup._series))
-                pushupItem.setText(2, str(pushup._repetitions))
-                pushupItem.setText(3, str(pushup._averageHeartRate))
+                pushupItem.setText(2, "#" + str(pushup._series))
+                pushupItem.setText(3, str(pushup._repetitions))
+                pushupItem.setText(4, str(pushup._averageHeartRate))
                 pushupItem.setData(0, Qt.UserRole, pushup)
                 
                 dateItem.addChild(pushupItem)       
