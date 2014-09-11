@@ -27,6 +27,7 @@ class ProfileSelection(QDialog):
         Constructor
         '''  
         QDialog.__init__(self)
+        self.setWindowTitle("Profile Selection")
         
         self.athletesList = athletesList
         self.selectedProfile = False

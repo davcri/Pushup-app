@@ -24,6 +24,7 @@ class ProfileCreation(QDialog):
         Constructor
         '''
         QDialog.__init__(self)
+        self.setWindowTitle("Profile Creation")
         self.athleteProfile = False
         
     def getAthleteProfile(self):
