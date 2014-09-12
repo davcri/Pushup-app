@@ -108,6 +108,7 @@ class PushupList(QWidget):
             
             self.pushupsListWidget.addTopLevelItem(dateItem)
             
+            totalPushups = 0
             for pushup in pushupDict[dayOfExercise]:
                 pushupItem = QTreeWidgetItem()
                 
@@ -116,7 +117,12 @@ class PushupList(QWidget):
                 pushupItem.setText(4, str(pushup._averageHeartRate))
                 pushupItem.setData(0, Qt.UserRole, pushup)
                 
-                dateItem.addChild(pushupItem)       
+                totalPushups = totalPushups + pushup._repetitions 
+                
+                dateItem.addChild(pushupItem)  
+            
+            dateItem.setText(1, str(totalPushups))
+                 
                 
     def doubleClick_Test(self):
         selectedItems = self.pushupsListWidget.selectedItems()
@@ -144,8 +150,8 @@ class PushupList(QWidget):
         pushupDict = self._getPushupDictionary()
         
         for dayOfExercise in pushupDict:                  
-            listItemString = "Date : "+ dayOfExercise + "\n"
-            listItem_Data =[]
+            listItemString = "Date : " + dayOfExercise + "\n"
+            listItem_Data = []
             
             for pushup in pushupDict[dayOfExercise]:
                 listItemString += "Series : " + str(pushup._series) + \

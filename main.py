@@ -28,7 +28,7 @@ def getAthleteProfile():
         _profileCreation = ProfileCreation()    
         athlete = _profileCreation.runCreationDialog()
         
-        if athlete is not False :
+        if athlete is not False:
             database.store(athlete)
         else :
             athlete = False
@@ -52,10 +52,10 @@ qtApplication = QApplication(sys.argv)
 
 athlete = getAthleteProfile()
     
-if athlete is not False :
+if athlete is not False:
     mainController = MainWindow(athlete)
     mainController.showMainWindow()
     
     sys.exit(qtApplication.exec_())
-else :
+else:
     sys.exit(qtApplication.quit())
