@@ -46,8 +46,8 @@ class PushupForm(QDialog):
         self.avgHeartRate.setValue(120)
         self.avgHeartRate.setDisabled(True)
         
-        self.date = QCalendarWidget()
-        self.date.setMaximumDate(QDate.currentDate())
+        self.dateSelector_widget = QCalendarWidget()
+        self.dateSelector_widget.setMaximumDate(QDate.currentDate())
         
         self.addButton = QPushButton("Add pushup")
         self.addButton.setMaximumWidth(90)
@@ -61,7 +61,7 @@ class PushupForm(QDialog):
         self.pushupForm.addRow("Repetitions", self.repetitions)
         self.pushupForm.addRow("Store average heart rate ? ", self.avgHeartRateToggle)
         self.pushupForm.addRow("Average Heart Rate", self.avgHeartRate)
-        self.pushupForm.addRow("Exercise Date", self.date)
+        self.pushupForm.addRow("Exercise Date", self.dateSelector_widget)
         
         btnsLayout = QVBoxLayout()
         btnsLayout.addWidget(self.addButton)
@@ -75,7 +75,7 @@ class PushupForm(QDialog):
         self.setLayout(layoutWrapper)        
         
     def _createPushup(self):        
-        exerciseDate = self.date.selectedDate()
+        exerciseDate = self.dateSelector_widget.selectedDate()
         exerciseDate = self.qDate_to_date(exerciseDate)
         
         if self.avgHeartRateToggle.isChecked():
