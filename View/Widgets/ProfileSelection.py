@@ -12,6 +12,7 @@ from PySide.QtGui import QListWidgetItem, QIcon
 from PySide.QtGui import QAbstractItemView
 
 from Model.Athlete import Athlete as Athlete_Model
+from View.Widgets.ProfileWidget import ProfileWidget
  
 class ProfileSelection(QDialog):
     '''
