@@ -3,6 +3,7 @@ Created on Sep 30, 2014
 
 @author: davide
 '''
+from datetime import date
 
 from PySide.QtCore import QDate
 from PySide.QtGui import QLabel
@@ -10,12 +11,13 @@ from PySide.QtGui import QDoubleSpinBox
 from PySide.QtGui import QFormLayout, QVBoxLayout, QHBoxLayout
 from PySide.QtGui import QLineEdit, QCalendarWidget, QRadioButton
 
+from Model.Athlete import Athlete
 
 class ProfileWidget():
     '''
     classdocs
     '''
-
+    
     def __init__(self):
         '''
         Constructor
@@ -69,3 +71,29 @@ class ProfileWidget():
         self.layout.addLayout(btnLayout)
         
         return self.layout
+    
+    def getProfile(self):        
+        qDate = self.birthdate.selectedDate()
+        birthDate = self.qDate_to_date(qDate)
+        print birthDate
+        
+        athleteProfile = Athlete(self.name.text(),
+                                 self.surname.text(),
+                                 self._getSex(),
+                                 birthDate,
+                                 self.height.value(),
+                                 self.mass.value())
+        return athleteProfile 
+    
+    def qDate_to_date(self, qDate):        
+        return date(qDate.year(), qDate.month(),qDate.day())
+     
+    def _getSex(self):
+        if (self.male.isChecked()):
+            return "Male"
+        elif (self.female.isChecked()):
+            return "Female"
+        else :
+            print "Error: No sex selected"
+            return False
+    

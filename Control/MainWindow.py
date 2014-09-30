@@ -80,7 +80,7 @@ class MainWindow():
     @Slot()
     def _profileCreation(self):
         profileCreationDialog = ProfileCreation()
-        profileCreationDialog.runCreationDialogAndStore()
+        profileCreationDialog.run()
     
     @Slot(Athlete_Model)
     def _handleActiveProfileDeletion(self, deletedAthlete):

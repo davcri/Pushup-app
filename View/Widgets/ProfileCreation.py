@@ -4,13 +4,11 @@ Created on Aug 16, 2014
 @author: davide
 '''
 
-from datetime import date
-
-from PySide.QtGui import QDialog, QLabel
-from PySide.QtGui import QFormLayout, QVBoxLayout,QHBoxLayout, QPushButton
-from PySide.QtGui import QLineEdit, QCalendarWidget, QRadioButton
-from PySide.QtGui import QDoubleSpinBox
-from PySide.QtCore import QDate
+from PySide.QtCore import Signal
+from PySide.QtGui import QDialog
+from PySide.QtGui import QDialogButtonBox
+from PySide.QtGui import QVBoxLayout
+from PySide.QtGui import QPushButton
 
 from Model.Athlete import Athlete
 from View.Widgets.ProfileWidget import ProfileWidget
@@ -19,53 +17,56 @@ class ProfileCreation(QDialog):
     '''
     classdocs
     '''
-
+    profileCreated = Signal(Athlete)
+    
     def __init__(self):
         '''
         Constructor
         '''
         QDialog.__init__(self)
-        self.setWindowTitle("Profile Creation")
+        
+        self._initGUI()
         self.athleteProfile = False
-        
-    def getAthleteProfile(self):
-        self._execProfileCreation() # Modal dialog
-        # execProfileCreation sets the self.athleteProfile variable !
-        
-        return self.athleteProfile
-        
-    def _execProfileCreation(self):
-        profileWidget = ProfileWidget()
-        
-        self.setLayout(profileWidget.getLayout())
-        
-        return self.exec_()
     
+    def _initGUI(self):
+        self.setWindowTitle("Profile Creation")
+        self.profileWidget = ProfileWidget()
+        
+        self.profileLayout = self.profileWidget.getLayout()
+        self.buttonBox = QDialogButtonBox(QDialogButtonBox.Cancel)
+        self.okBtn = QPushButton("Ok")
+        self.okBtn.setDefault(True)
+        self.okBtn.clicked.connect(self._createProfile)
+        self.buttonBox.addButton(self.okBtn, QDialogButtonBox.AcceptRole)
+        
+        vLayout = QVBoxLayout()
+        vLayout.addLayout(self.profileLayout)
+        vLayout.addWidget(self.buttonBox)
+        
+        self.setLayout(vLayout)        
+
+    def _createProfile(self):
+        athleteProfile = self.profileWidget.getProfile()
+        self.profileCreated.emit(athleteProfile)
+        
+#     def getAthleteProfile(self):
+#         self.exec_() # Modal dialog
+#         # execProfileCreation sets the self.athleteProfile variable !
+#         
+#         return self.athleteProfile
+        
     # Slot     
-    def _createProfile(self):                
-        print "Profile creation"
-        
-        qDate = self.birthdate.selectedDate()
-        birthDate = self.qDate_to_date(qDate)
-        print birthDate
-        
-        self.athleteProfile = Athlete(self.name.text(),
-                                 self.surname.text(),
-                                 self._getSex(),
-                                 birthDate,
-                                 self.height.value(),
-                                 self.mass.value()) 
-        
-        self.accept()
-        
-    def qDate_to_date(self, qDate):        
-        return date(qDate.year(), qDate.month(),qDate.day())
-    
-    def _getSex(self):
-        if (self.male.isChecked()):
-            return "Male"
-        elif (self.female.isChecked()):
-            return "Female"
-        else :
-            print "Error: No sex selected"
-            return False
+#     def _createProfile(self):                
+#                 
+#         qDate = self.birthdate.selectedDate()
+#         birthDate = self.qDate_to_date(qDate)
+#         print birthDate
+#         
+#         self.athleteProfile = Athlete(self.name.text(),
+#                                  self.surname.text(),
+#                                  self._getSex(),
+#                                  birthDate,
+#                                  self.height.value(),
+#                                  self.mass.value()) 
+#         
+#         self.accept()
