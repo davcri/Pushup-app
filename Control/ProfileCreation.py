@@ -15,7 +15,7 @@ class ProfileCreation():
         '''
         Constructor
         '''
-        self.profileCreation = ProfileCreationWidget()   
+        self.profileCreationDialog = ProfileCreationWidget()   
         #      
         
     def runCreationDialog(self):
