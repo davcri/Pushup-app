@@ -40,6 +40,7 @@ class ProfileSelector(QObject):
     
     @Slot(Athlete_Model)
     def _propagateProfileSelected(self, selectedProfile):
+        """ Propagates the profileSelected signal """
         self.selectedProfile = selectedProfile
         self.profileSelected.emit(selectedProfile)
         

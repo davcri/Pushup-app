@@ -78,10 +78,15 @@ class MainWindow(QMainWindow):
         about.addAction(self.aboutApplicationAction)
     
     def _createActions(self):             
+        # About Menu
         self.aboutQtAction = QAction("About PySide (Qt)", self)
         self.aboutApplicationAction = QAction("About Pushup App", self)
+        
+        # Profile Menu
         self._createProfile = QAction("Create new profile", self)
         self._switchProfile = QAction("Switch profile", self)
+        
+        #File Menu
         self.exit = QAction("Exit", self)   
         
         self.exit.triggered.connect(self._actionExit)

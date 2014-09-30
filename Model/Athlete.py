@@ -32,7 +32,6 @@ class Athlete(object, Person):
     
     def __eq__(self, other):
         if self._name == other._name :
-            
             return True
         else :
             return False

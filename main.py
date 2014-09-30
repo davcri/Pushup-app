@@ -2,9 +2,10 @@
 Created on Aug 11, 2014
 
 This file is the starting point of the application.
-Run this file to to start Pushup-app :)
+Run this file to to start Pushup-app.
 
-You can do it opening the terminal in the Pushup-app folder and typing : 
+On most linux distros, you can do it by opening the terminal in the Pushup-app 
+folder and typing : 
     "python ./main.py"
 
 @author: davide
