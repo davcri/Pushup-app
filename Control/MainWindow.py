@@ -61,10 +61,6 @@ class MainWindow():
         database.deletePushups(pushupsId)
                 
         self.refreshGUI()
-#         for pushupId in pushupsId:
-#             database.deletePushup(pushupId)
-#         
-#         self.refreshGUI()
         
     @Slot()
     def _profileSelection(self):
@@ -79,9 +75,10 @@ class MainWindow():
     
     @Slot()
     def _profileCreation(self):
-        profileCreationDialog = ProfileCreation()
-        profileCreationDialog.run()
-    
+        profileCreationController = ProfileCreation()
+        profileCreationController.profileCreated.connect(self._profileChange)
+        profileCreationController.run()
+        
     @Slot(Athlete_Model)
     def _handleActiveProfileDeletion(self, deletedAthlete):
         if self.athlete == deletedAthlete :
@@ -98,9 +95,6 @@ class MainWindow():
     @Slot()   
     def _clearUI(self):        
         self.mainWindow.cleanUI()  
-            
-        #self._initComponents()
-        #self.refreshGUI()       
         
     def refreshGUI(self):
         database = Pushup_Foundation()

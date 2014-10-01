@@ -27,7 +27,6 @@ class ProfileWidget():
         self.layout = QVBoxLayout()
         self.form = QFormLayout()
         
-        #--------------------------------
         self.name = QLineEdit()
         self.surname = QLineEdit()
         
