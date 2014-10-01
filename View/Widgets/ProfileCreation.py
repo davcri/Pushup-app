@@ -48,25 +48,3 @@ class ProfileCreation(QDialog):
     def _createProfile(self):
         athleteProfile = self.profileWidget.getProfile()
         self.profileCreated.emit(athleteProfile)
-        
-#     def getAthleteProfile(self):
-#         self.exec_() # Modal dialog
-#         # execProfileCreation sets the self.athleteProfile variable !
-#         
-#         return self.athleteProfile
-        
-    # Slot     
-#     def _createProfile(self):                
-#                 
-#         qDate = self.birthdate.selectedDate()
-#         birthDate = self.qDate_to_date(qDate)
-#         print birthDate
-#         
-#         self.athleteProfile = Athlete(self.name.text(),
-#                                  self.surname.text(),
-#                                  self._getSex(),
-#                                  birthDate,
-#                                  self.height.value(),
-#                                  self.mass.value()) 
-#         
-#         self.accept()

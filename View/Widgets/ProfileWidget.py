@@ -75,7 +75,6 @@ class ProfileWidget():
     def getProfile(self):        
         qDate = self.birthdate.selectedDate()
         birthDate = self.qDate_to_date(qDate)
-        print birthDate
         
         athleteProfile = Athlete(self.name.text(),
                                  self.surname.text(),
