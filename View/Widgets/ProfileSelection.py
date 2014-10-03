@@ -37,6 +37,7 @@ class ProfileSelection(QDialog):
         self._initGUI()      
     
     def _initGUI(self):
+        topHLayout = QHBoxLayout()
         hLayout = QHBoxLayout()
         vLayout = QVBoxLayout()
         
@@ -60,9 +61,11 @@ class ProfileSelection(QDialog):
             listW.setData(Qt.UserRole, athlete)
             
             self.list.addItem(listW)
-                
-        vLayout.addWidget(self.list)
         
+        topHLayout.addWidget(self.list)
+        profileWidget = ProfileWidget()
+        topHLayout.addLayout(profileWidget.getLayout())    
+        vLayout.addLayout(topHLayout)        
         vLayout.addLayout(hLayout)
         
         # Buttons
@@ -76,7 +79,9 @@ class ProfileSelection(QDialog):
         cancelBtn.clicked.connect(self._cancelButtonSlot)
         
         self.editBtn = QPushButton("Edit")
+        self.editBtn.setDisabled(True)
         self.editBtn.setCheckable(True)
+        self.editBtn.clicked.connect(self._toggleProfileEdit)
         
         self.removeProfileBtn = QPushButton("Remove Profile")
         self.removeProfileBtn.setDisabled(True)
@@ -130,13 +135,20 @@ class ProfileSelection(QDialog):
         
         self.reject()
     
+    def _toggleProfileEdit(self):
+        if self.editBtn.isChecked():
+            print "show"
+        else:
+            print "hide"
+    
     def _activateButtons(self):
         selectedItems = self.list.selectedItems()
         
         if len(selectedItems)!=0 :
             self.okBtn.setDisabled(False)
             self.removeProfileBtn.setDisabled(False)
+            self.editBtn.setDisabled(False)
         else :
             self.okBtn.setDisabled(True)
             self.removeProfileBtn.setDisabled(True)
-        
+            self.editBtn.setDisabled(True)
