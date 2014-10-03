@@ -6,6 +6,7 @@ Created on Aug 16, 2014
 
 from PySide.QtCore import Signal, Qt
 from PySide.QtGui import QDialog
+from PySide.QtGui import QMessageBox
 from PySide.QtGui import QHBoxLayout, QVBoxLayout
 from PySide.QtGui import QLabel, QPushButton, QListWidget 
 from PySide.QtGui import QListWidgetItem, QIcon
@@ -67,22 +68,39 @@ class ProfileSelection(QDialog):
         # Buttons
         self.okBtn = QPushButton("Ok")
         self.okBtn.setDisabled(True)
+        self.okBtn.setDefault(True)
         self.okBtn.clicked.connect(self._okButtonSlot)
         self.list.itemDoubleClicked.connect(self._okButtonSlot)
                 
         cancelBtn = QPushButton("Cancel")      
         cancelBtn.clicked.connect(self._cancelButtonSlot)
         
+        self.editBtn = QPushButton("Edit")
+        self.editBtn.setCheckable(True)
+        
         self.removeProfileBtn = QPushButton("Remove Profile")
         self.removeProfileBtn.setDisabled(True)
-        self.removeProfileBtn.clicked.connect(self._emitRemoveProfile)
+        self.removeProfileBtn.clicked.connect(self._removeProfile_Dialog)
         
-        hLayout.addWidget(self.okBtn)
         hLayout.addWidget(cancelBtn)
-        hLayout.addWidget(self.removeProfileBtn)        
+        hLayout.addWidget(self.editBtn)
+        hLayout.addWidget(self.removeProfileBtn)
+        hLayout.addWidget(self.okBtn)
 
         self.setLayout(vLayout)
-            
+    
+    def _removeProfile_Dialog(self):
+        confirmationDialog = QMessageBox()
+        confirmationDialog.setText("Do you really want to remove the selected profile ?")
+        confirmationDialog.setInformativeText("Profile deletion can not be undone")
+        confirmationDialog.setIcon(QMessageBox.Question)
+        confirmationDialog.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        confirmationDialog.accepted.connect(self._emitRemoveProfile)
+        ret = confirmationDialog.exec_()
+        
+        if ret==QMessageBox.Yes:
+            self._emitRemoveProfile()
+                
     def _emitRemoveProfile(self):
         selectedListItem = self.list.selectedItems()[0]
         athlete = selectedListItem.data(Qt.UserRole)
