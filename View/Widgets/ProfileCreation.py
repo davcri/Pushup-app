@@ -7,6 +7,7 @@ Created on Aug 16, 2014
 from PySide.QtCore import Signal
 from PySide.QtGui import QDialog
 from PySide.QtGui import QDialogButtonBox
+from PySide.QtGui import QLabel
 from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QPushButton
 
@@ -40,6 +41,7 @@ class ProfileCreation(QDialog):
         self.buttonBox.addButton(self.okBtn, QDialogButtonBox.AcceptRole)
         
         vLayout = QVBoxLayout()
+        vLayout.addWidget(QLabel("<h3>Create a new profile!</h3><hr>"))
         vLayout.addLayout(self.profileLayout)
         vLayout.addWidget(self.buttonBox)
         

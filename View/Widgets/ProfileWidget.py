@@ -6,7 +6,6 @@ Created on Sep 30, 2014
 from datetime import date
 
 from PySide.QtCore import QDate
-from PySide.QtGui import QLabel
 from PySide.QtGui import QDoubleSpinBox
 from PySide.QtGui import QFormLayout, QVBoxLayout, QHBoxLayout
 from PySide.QtGui import QLineEdit, QCalendarWidget, QRadioButton
@@ -65,7 +64,6 @@ class ProfileWidget():
         self.form.addRow("Height", self.height)
         self.form.addRow("Mass", self.mass)
                 
-        self.layout.addWidget(QLabel("<h3>Create your profile!</h3><hr>"))
         self.layout.addLayout(self.form)
         self.layout.addLayout(btnLayout)
         
