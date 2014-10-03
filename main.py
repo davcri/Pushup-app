@@ -26,8 +26,10 @@ def getAthleteProfile():
     athletes = database.getAthletes()
     
     if len(athletes) == 0: 
-        _profileCreation = ProfileCreation()    
-        athlete = _profileCreation.runCreationDialog()
+        profileCreation = ProfileCreation()    
+        profileCreation.run() 
+        
+        athlete = database.getAthletes()[0]
         
         if athlete is not False:
             database.store(athlete)
