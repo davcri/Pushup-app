@@ -7,6 +7,7 @@ from datetime import date
 
 from PySide.QtCore import QDate
 from PySide.QtGui import QDoubleSpinBox
+from PySide.QtGui import QWidget
 from PySide.QtGui import QFormLayout, QVBoxLayout, QHBoxLayout
 from PySide.QtGui import QLineEdit, QCalendarWidget, QRadioButton
 
@@ -21,8 +22,9 @@ class ProfileWidget():
         '''
         Constructor
         '''
+        self._initGUI()
         
-    def getLayout(self):
+    def _initGUI(self):
         self.layout = QVBoxLayout()
         self.form = QFormLayout()
         
@@ -67,7 +69,14 @@ class ProfileWidget():
         self.layout.addLayout(self.form)
         self.layout.addLayout(btnLayout)
         
+    def getLayout(self):
         return self.layout
+    
+    def getWidget(self):
+        widget = QWidget()
+        widget.setLayout(self.layout)
+    
+        return widget
     
     def getProfile(self):        
         qDate = self.birthdate.selectedDate()

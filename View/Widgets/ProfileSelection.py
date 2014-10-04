@@ -48,6 +48,7 @@ class ProfileSelection(QDialog):
             
         # List 
         self.list = QListWidget()
+        self.list.setMinimumWidth(150)
         self.list.setSelectionMode(QAbstractItemView.SingleSelection)
         # SingleSelection is the default value, but I prefer to be sure
         self.list.itemSelectionChanged.connect(self._activateButtons) 
@@ -63,8 +64,11 @@ class ProfileSelection(QDialog):
             self.list.addItem(listW)
         
         topHLayout.addWidget(self.list)
-        profileWidget = ProfileWidget()
-        topHLayout.addLayout(profileWidget.getLayout())    
+        self.profileWidget = ProfileWidget().getWidget()
+        self.profileWidget.hide()
+        
+        topHLayout.addWidget(self.profileWidget)    
+       
         vLayout.addLayout(topHLayout)        
         vLayout.addLayout(hLayout)
         
@@ -137,9 +141,9 @@ class ProfileSelection(QDialog):
     
     def _toggleProfileEdit(self):
         if self.editBtn.isChecked():
-            print "show"
+            self.profileWidget.show()
         else:
-            print "hide"
+            self.profileWidget.hide()
     
     def _activateButtons(self):
         selectedItems = self.list.selectedItems()
