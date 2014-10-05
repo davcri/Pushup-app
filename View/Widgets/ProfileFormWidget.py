@@ -13,7 +13,7 @@ from PySide.QtGui import QLineEdit, QCalendarWidget, QRadioButton
 
 from Model.Athlete import Athlete
 
-class ProfileWidget():
+class ProfileFormWidget(QWidget):
     '''
     classdocs
     '''
@@ -22,6 +22,7 @@ class ProfileWidget():
         '''
         Constructor
         '''
+        QWidget.__init__(self)
         self._initGUI()
         
     def _initGUI(self):
@@ -68,6 +69,7 @@ class ProfileWidget():
                 
         self.layout.addLayout(self.form)
         self.layout.addLayout(btnLayout)
+        self.setLayout(self.layout)
         
     def getLayout(self):
         return self.layout
@@ -78,6 +80,10 @@ class ProfileWidget():
     
         return widget
     
+    def setProfile(self, athlete):
+        self.name.setText(athlete._name)
+        self.surname.setText(athlete._surname)
+        
     def getProfile(self):        
         qDate = self.birthdate.selectedDate()
         birthDate = self.qDate_to_date(qDate)

@@ -12,7 +12,7 @@ from PySide.QtGui import QVBoxLayout
 from PySide.QtGui import QPushButton
 
 from Model.Athlete import Athlete
-from View.Widgets.ProfileWidget import ProfileWidget
+from View.Widgets.ProfileFormWidget import ProfileFormWidget
  
 class ProfileCreation(QDialog):
     '''
@@ -31,9 +31,8 @@ class ProfileCreation(QDialog):
     
     def _initGUI(self):
         self.setWindowTitle("Profile Creation")
-        self.profileWidget = ProfileWidget()
+        self.profileWidget = ProfileFormWidget()
         
-        self.profileLayout = self.profileWidget.getLayout()
         self.buttonBox = QDialogButtonBox(QDialogButtonBox.Cancel)
         self.okBtn = QPushButton("Ok")
         self.okBtn.setDefault(True)
@@ -42,7 +41,7 @@ class ProfileCreation(QDialog):
         
         vLayout = QVBoxLayout()
         vLayout.addWidget(QLabel("<h3>Create a new profile!</h3><hr>"))
-        vLayout.addLayout(self.profileLayout)
+        vLayout.addWidget(self.profileWidget)
         vLayout.addWidget(self.buttonBox)
         
         self.setLayout(vLayout)        
