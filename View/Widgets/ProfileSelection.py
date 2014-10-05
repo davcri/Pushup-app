@@ -13,7 +13,7 @@ from PySide.QtGui import QListWidgetItem, QIcon
 from PySide.QtGui import QAbstractItemView
 
 from Model.Athlete import Athlete as Athlete_Model
-from View.Widgets.ProfileWidget import ProfileWidget
+from View.Widgets.ProfileFormWidget import ProfileFormWidget
  
 class ProfileSelection(QDialog):
     '''
@@ -32,7 +32,7 @@ class ProfileSelection(QDialog):
         self.setWindowTitle("Profile Selection")
         
         self.athletesList = athletesList
-        self.selectedProfile = False
+        #self.selectedProfile = False
         
         self._initGUI()      
     
@@ -64,7 +64,7 @@ class ProfileSelection(QDialog):
             self.list.addItem(listW)
         
         topHLayout.addWidget(self.list)
-        self.profileWidget = ProfileWidget().getWidget()
+        self.profileWidget = ProfileFormWidget()
         self.profileWidget.hide()
         
         topHLayout.addWidget(self.profileWidget)    
@@ -91,12 +91,18 @@ class ProfileSelection(QDialog):
         self.removeProfileBtn.setDisabled(True)
         self.removeProfileBtn.clicked.connect(self._removeProfile_Dialog)
         
-        hLayout.addWidget(cancelBtn)
         hLayout.addWidget(self.editBtn)
+        hLayout.addWidget(cancelBtn)
         hLayout.addWidget(self.removeProfileBtn)
         hLayout.addWidget(self.okBtn)
 
         self.setLayout(vLayout)
+    
+    def getSelectedProfile(self):
+        selectedListItem = self.list.selectedItems()[0]
+        athleteProfile = selectedListItem.data(Qt.UserRole)
+        
+        return athleteProfile
     
     def _removeProfile_Dialog(self):
         confirmationDialog = QMessageBox()
@@ -111,8 +117,7 @@ class ProfileSelection(QDialog):
             self._emitRemoveProfile()
                 
     def _emitRemoveProfile(self):
-        selectedListItem = self.list.selectedItems()[0]
-        athlete = selectedListItem.data(Qt.UserRole)
+        athlete = self.getSelectedProfile()
         
         rowToDelete = 0
         for index, element in enumerate(self.athletesList):
@@ -141,9 +146,14 @@ class ProfileSelection(QDialog):
     
     def _toggleProfileEdit(self):
         if self.editBtn.isChecked():
+            self.profileWidget.setProfile(self.getSelectedProfile())
             self.profileWidget.show()
+            self.okBtn.hide()
+            self.removeProfileBtn.hide()
         else:
             self.profileWidget.hide()
+            self.okBtn.show()
+            self.removeProfileBtn.show()
     
     def _activateButtons(self):
         selectedItems = self.list.selectedItems()

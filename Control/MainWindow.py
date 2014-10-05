@@ -101,6 +101,6 @@ class MainWindow():
         updatedPushups = database.getPushupsByAthlete(self.athlete._name)
         
         self.mainWindow.pushupsListWidget.reloadPushupsList(updatedPushups)
-        self.mainWindow.profileBox.refreshProfile(self.athlete)
+        self.mainWindow.profileBox.setProfile(self.athlete)
         self.mainWindow.addPushupBtn.setDisabled(False)
         self.graphController.refreshGraph(updatedPushups)
