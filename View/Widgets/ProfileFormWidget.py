@@ -83,7 +83,16 @@ class ProfileFormWidget(QWidget):
     def setProfile(self, athlete):
         self.name.setText(athlete._name)
         self.surname.setText(athlete._surname)
+        self.birthdate.setSelectedDate(athlete._birthDate)
         
+        if athlete._sex=="Male":
+            self.male.setChecked(True)
+        else:
+            self.female.setChecked(True)
+            
+        self.height.setValue(athlete._height)
+        self.mass.setValue(athlete._mass)
+                
     def getProfile(self):        
         qDate = self.birthdate.selectedDate()
         birthDate = self.qDate_to_date(qDate)

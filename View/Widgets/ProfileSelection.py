@@ -105,6 +105,10 @@ class ProfileSelection(QDialog):
         return athleteProfile
     
     def _removeProfile_Dialog(self):
+        """Runs a prompt dialog.
+        
+        Ask the user if he really wants to remove the selected profile.
+        """
         confirmationDialog = QMessageBox()
         confirmationDialog.setText("Do you really want to remove the selected profile ?")
         confirmationDialog.setInformativeText("Profile deletion can not be undone")
