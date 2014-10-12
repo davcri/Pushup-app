@@ -103,7 +103,7 @@ class PushupList(QWidget):
              
             dateItem = QTreeWidgetItem()
             
-            dayLabel = dayOfExercise.strftime("%d/%B/%Y")
+            dayLabel = dayOfExercise.strftime("%Y/%m/%d")
             
             dateItem.setText(0, "\n" + dayLabel + "\nDay : " + str(it))
             

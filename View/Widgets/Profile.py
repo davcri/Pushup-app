@@ -12,13 +12,17 @@ class Profile(QWidget):
     classdocs
     '''
 
-    def __init__(self, athlete):
+    def __init__(self, athlete=False):
         '''
         Constructor
         '''
         QWidget.__init__(self)
-        self.athlete = athlete
+            
         self.initGUI()
+        
+        if athlete is not False:
+            self.athlete = athlete
+            self.setProfile(athlete)
         
     def initGUI(self):
         self.vLayout = QVBoxLayout()
@@ -27,12 +31,12 @@ class Profile(QWidget):
         
         profileLayout = QFormLayout()
         
-        self.nameLabel = QLabel(self.athlete._name)
-        self.surnameLabel = QLabel(self.athlete._surname)
-        self.ageLabel = QLabel(str(self.athlete.getAge()))
-        self.bmiLabel = QLabel(str(self.athlete.getBMI()))
-        self.heightLabel = QLabel(str(self.athlete._height) + " cm")
-        self.massLabel = QLabel(str(self.athlete._mass) + " Kg")
+        self.nameLabel = QLabel()
+        self.surnameLabel = QLabel()
+        self.ageLabel = QLabel()
+        self.bmiLabel = QLabel()
+        self.heightLabel = QLabel()
+        self.massLabel = QLabel()
         
         profileLayout.addRow("Name", self.nameLabel)        
         profileLayout.addRow("Surname", self.surnameLabel)
@@ -47,7 +51,7 @@ class Profile(QWidget):
         self.vLayout.addStretch(1)
         self.setLayout(self.vLayout)
     
-    def refreshProfile(self, athlete):
+    def setProfile(self, athlete):
         self.athlete = athlete
         
         self.nameLabel.setText(self.athlete._name)

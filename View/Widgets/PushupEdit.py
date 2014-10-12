@@ -4,7 +4,7 @@ Created on Aug 20, 2014
 @author: davide
 '''
 
-from PySide.QtGui import QDialog, QPushButton, QHBoxLayout, QVBoxLayout, QFormLayout
+from PySide.QtGui import QDialog, QPushButton, QHBoxLayout, QVBoxLayout
 
 class PushupEdit(QDialog):
     '''
@@ -20,7 +20,7 @@ class PushupEdit(QDialog):
         self._initGUI()
         
     def _initGUI(self):
-        layout = QFormLayout()
+        #layout = QFormLayout()
         hLayout = QHBoxLayout()
         vLayout = QVBoxLayout()
         
