@@ -87,14 +87,18 @@ class ProfileSelection(QDialog):
         self.editBtn.setCheckable(True)
         self.editBtn.clicked.connect(self._toggleProfileEdit)
         
+        self.saveBtn = QPushButton("Save changes") # Saves the changes made on the profile 
+        self.saveBtn.hide()
+    
         self.removeProfileBtn = QPushButton("Remove Profile")
         self.removeProfileBtn.setDisabled(True)
         self.removeProfileBtn.clicked.connect(self._removeProfile_Dialog)
         
         hLayout.addWidget(self.editBtn)
-        hLayout.addWidget(cancelBtn)
         hLayout.addWidget(self.removeProfileBtn)
+        hLayout.addWidget(cancelBtn)
         hLayout.addWidget(self.okBtn)
+        hLayout.addWidget(self.saveBtn)
 
         self.setLayout(vLayout)
     
@@ -152,9 +156,11 @@ class ProfileSelection(QDialog):
         if self.editBtn.isChecked():
             self.profileWidget.setProfile(self.getSelectedProfile())
             self.profileWidget.show()
+            self.saveBtn.show()
             self.okBtn.hide()
             self.removeProfileBtn.hide()
         else:
+            self.saveBtn.hide()
             self.profileWidget.hide()
             self.okBtn.show()
             self.removeProfileBtn.show()
