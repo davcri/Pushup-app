@@ -28,9 +28,10 @@ class ProfileSelector(QObject):
         self.selectedProfile = False
         self.athletesList = athletes
         self._profileSelection = ProfileSelectionWidget(self.athletesList)
-        
+    
         self._profileSelection.profileSelected.connect(self._propagateProfileSelected)
         self._profileSelection.removeProfile.connect(self.removeProfile)
+        self._profileSelection.profileUpdate_request.connect(self.updateProfile)
     
     def runSelectionDialog(self):
         self._profileSelection.exec_()
@@ -53,3 +54,15 @@ class ProfileSelector(QObject):
         
         if database.countAthletes() == 0 :
             self.lastProfileDeleted.emit()
+    
+    @Slot(Athlete_Model, Athlete_Model)
+    def updateProfile(self, selectedProfile, updatedProfile):
+       database = Athlete_Database()
+       database.delete(selectedProfile._name)
+       database.store(updatedProfile)
+       
+       updatedList = database.getAthletes()
+       self._profileSelection.updateList(updatedList)
+       self._profileSelection.resetWidget()
+        
+        

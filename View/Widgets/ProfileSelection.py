@@ -22,6 +22,7 @@ class ProfileSelection(QDialog):
     
     removeProfile = Signal(Athlete_Model)
     profileSelected = Signal(Athlete_Model)
+    profileUpdate_request = Signal(Athlete_Model, Athlete_Model)
     lastProfileDeleted = Signal()
     
     def __init__(self, athletesList):
@@ -32,8 +33,7 @@ class ProfileSelection(QDialog):
         self.setWindowTitle("Profile Selection")
         
         self.athletesList = athletesList
-        #self.selectedProfile = False
-        
+            
         self._initGUI()      
     
     def _initGUI(self):
@@ -89,6 +89,7 @@ class ProfileSelection(QDialog):
         
         self.saveBtn = QPushButton("Save changes") # Saves the changes made on the profile 
         self.saveBtn.hide()
+        self.saveBtn.clicked.connect(self._saveButtonSlot)
     
         self.removeProfileBtn = QPushButton("Remove Profile")
         self.removeProfileBtn.setDisabled(True)
@@ -108,6 +109,28 @@ class ProfileSelection(QDialog):
         
         return athleteProfile
     
+    def updateList(self, athletes):
+        self.list.clear()
+        self.athletesList = athletes
+        
+        for athlete in self.athletesList:
+            iconW = QIcon.fromTheme("user-available")
+            # doens't work on Mac and Windows
+            # http://qt-project.org/doc/qt-4.8/qicon.html#fromTheme
+           
+            listW = QListWidgetItem(iconW, athlete._name)
+            listW.setData(Qt.UserRole, athlete)
+           
+            self.list.addItem(listW)
+    
+    def resetWidget(self):
+        """ Resets the widget to the initial laoyout. 
+        
+        Should be used only in specific cases
+        """
+        self.editBtn.setChecked(False)
+        self._toggleProfileEdit()
+            
     def _removeProfile_Dialog(self):
         """Runs a prompt dialog.
         
@@ -152,6 +175,14 @@ class ProfileSelection(QDialog):
         
         self.reject()
     
+    def _saveButtonSlot(self):
+        selectedProfile = self.getSelectedProfile()
+        updatedProfile = self.profileWidget.getProfile()
+    
+        self.profileUpdate_request.emit(selectedProfile, updatedProfile)
+        
+        #self._toggleProfileEdit()
+        
     def _toggleProfileEdit(self):
         if self.editBtn.isChecked():
             self.profileWidget.setProfile(self.getSelectedProfile())
