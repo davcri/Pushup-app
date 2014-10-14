@@ -49,12 +49,12 @@ class MainWindow(QMainWindow):
         self.pushupsListWidget = PushupList(self.pushups) 
         
         self.graphWidget = GraphWidget()
-        self.graphWidget.setMaximumSize(400, 300)
+        #self.graphWidget.setMaximumSize(400, 300)
                 
         vLayout.addWidget(self.profileBox)
         
         hLayout.addWidget(self.pushupsListWidget)
-        innerVLayout.addWidget(self.graphWidget)
+        #innerVLayout.addWidget(self.graphWidget)
         hLayout.addLayout(innerVLayout)
         
         vLayout.addLayout(hLayout)

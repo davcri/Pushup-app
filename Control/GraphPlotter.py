@@ -21,7 +21,7 @@ class GraphPlotter():
         return self.graphWidget
     
     def initPlotWidget(self):                                            
-        self.graphWidget.clear()
+        #self.graphWidget.clear()
         
         pushupDateList = {} # dictionary initialization
      
@@ -38,8 +38,7 @@ class GraphPlotter():
             x.append(k)
             y.append(pushupDateList[k])
             
-        self.graphWidget.customPlot(range(len(x)), y) 
-        # plot doesn't support date on axis by default. But it can be implemented
+        #self.graphWidget.customPlot(range(len(x)), y) 
     
     def refreshGraph(self, updatedPushups):
         self.pushups = updatedPushups
