@@ -54,7 +54,7 @@ class MainWindow(QMainWindow):
         vLayout.addWidget(self.profileBox)
         
         hLayout.addWidget(self.pushupsListWidget)
-        #innerVLayout.addWidget(self.graphWidget)
+        innerVLayout.addWidget(self.graphWidget)
         hLayout.addLayout(innerVLayout)
         
         vLayout.addLayout(hLayout)
