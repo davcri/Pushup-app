@@ -18,12 +18,15 @@ class GraphWidget(FigureCanvas):
     '''
     classdocs
     '''
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
+    def __init__(self, parent=None, width=1, height=1, dpi=100):
         '''
         Constructor
         '''
-    
-        fig = Figure(figsize=(width, height), dpi=dpi)
+
+        fig = Figure(figsize=(width, height), 
+                     dpi=dpi, 
+                     frameon = False)
+        
         self.axes = fig.add_subplot(1,1,1)
         # We want the axes cleared every time plot() is called
         self.axes.hold(False)
