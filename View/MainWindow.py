@@ -106,7 +106,7 @@ class MainWindow(QMainWindow):
         
     def _actionAboutApplication(self):
         text = "Pushup app is a work in progress application.<br><br>\
-                For developmente info look at the \
+                For development information look at the \
                 <a href=\"https://github.com/davcri/Push-up-app\">Github Page</a> <br>"
         QMessageBox.about(self, "About Pushup app", text)   
     
