@@ -6,4 +6,4 @@ install:
   - pip install PySide
   - pip install Matplotlib
 
-script: main.py
+script: python main.py
