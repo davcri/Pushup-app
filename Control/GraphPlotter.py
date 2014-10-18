@@ -38,7 +38,7 @@ class GraphPlotter():
             x.append(k)
             y.append(pushupDateList[k])
             
-        #self.graphWidget.customPlot(range(len(x)), y) 
+        self.graphWidget.drawGraph(range(len(x)), y) 
     
     def refreshGraph(self, updatedPushups):
         self.pushups = updatedPushups
