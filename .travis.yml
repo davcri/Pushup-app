@@ -6,6 +6,7 @@ virtualenv:
   system_site_packages: true
 
 before_install:
- sudo apt-get install -qq python-pyside python-matplotlib
+  - sudo apt-get update -qq  
+  - sudo apt-get install -y python-pyside python-matplotlib
 
 script: python main.py
