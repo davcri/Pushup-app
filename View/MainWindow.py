@@ -84,7 +84,7 @@ class MainWindow(QMainWindow):
         
         # Profile Menu
         self._createProfile = QAction("Create new profile", self)
-        self._switchProfile = QAction("Switch profile", self)
+        self._switchProfile = QAction("Profile...", self)
         
         #File Menu
         self.exit = QAction("Exit", self)   
