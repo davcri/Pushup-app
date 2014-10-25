@@ -1,17 +1,16 @@
+# WARNING
+# This is script is wrong, I write it only for testing Travis.
+
 language: python
 
 python:
   - "2.7"
 
-env:
-  - DISPLAY=:99.0
-  
 virtualenv:
   system_site_packages: true
 
 before_install:
-  - sudo apt-get update -qq  
+  - sudo apt-get update -qq
   - sudo apt-get install -y python-pyside python-matplotlib
-  - sh -e /etc/init.d/xvfb start
-  
+
 script: python main.py
