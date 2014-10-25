@@ -1,7 +1,7 @@
 # Pushup app
 ![Pushup-app Main Window screenshot](http://imgur.com/ngrWVMJ.jpg "Pushup-app MainWindow screenshot")
 
-This application stores your progresses in physicals exercises, like pushups, on a local database. 
+This application stores your progresses in physicals exercises, like pushups, on a local database.
 
 Any help, pull-request or question about this application is welcome :smile:
 
@@ -25,7 +25,7 @@ First check your requirements ! If all libraries are installed on your system th
 
  Otherwise look at the official documentation: https://pypi.python.org/pypi/PySide#installation
 
-- __PyQtGraph__ _0.9.8_: http://www.pyqtgraph.org/
+- __Matplotlib__ _1.3.1_: http://matplotlib.org/
 
 # Development
 I'm developing this application on __Linux__ (Mint 17) with :
@@ -33,5 +33,4 @@ I'm developing this application on __Linux__ (Mint 17) with :
 - __Programming language__ : Python 2.7.6
 - __Database__ : Sqlite3
 - __GUI__ : Pyside 1.2.1 (Qt 4.8)
-- __Graph__ : PyQtGraph (0.9.8), maybe I'll switch to Matplotlib.
-
+- __Graph__ : Matplotlib (1.3.1)
