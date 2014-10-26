@@ -7,7 +7,7 @@ Any help, pull-request or question about this application is welcome :smile:
 
 * __Target Platform__ : PC, actually Pushup-app has been tested only on Linux, but it should be portable.
 * __State__: In development
-* __License__ : Not decided yet.
+* __License__ : GPL v3.0
 
 # Run the application
 First check your requirements ! If all libraries are installed on your system then :
