@@ -69,6 +69,7 @@ class MainWindow():
         
         profileSelector = ProfileSelector(athletes) 
         profileSelector.profileSelected.connect(self._profileChange)
+        profileSelector.profileUpdated.connect(self.mainWindow.profileBox.setProfile)
         profileSelector.lastProfileDeleted.connect(self._clearUI)
         profileSelector.profileDeleted.connect(self._handleActiveProfileDeletion)
         profileSelector.runSelectionDialog() # Modal window appears

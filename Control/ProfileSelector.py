@@ -17,6 +17,7 @@ class ProfileSelector(QObject):
     
     profileSelected = Signal(Athlete_Model)
     profileDeleted = Signal(Athlete_Model)
+    profileUpdated = Signal(Athlete_Model)
     lastProfileDeleted = Signal()
     
     def __init__(self, athletes):
@@ -60,6 +61,7 @@ class ProfileSelector(QObject):
        database = Athlete_Database()
        database.delete(selectedProfile._name)
        database.store(updatedProfile)
+       self.profileUpdated.emit(updatedProfile)
        
        updatedList = database.getAthletes()
        self._profileSelection.updateList(updatedList)
