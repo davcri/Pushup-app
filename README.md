@@ -1,12 +1,11 @@
 # Pushup app
 ![Pushup-app Main Window screenshot](http://imgur.com/ngrWVMJ.jpg "Pushup-app MainWindow screenshot")
 
-This application stores your progresses in physicals exercises, like pushups, on a local database.
-
-Any help, pull-request or question about this application is welcome :smile:
+This application is only a proof of concept made to test the Python language for a desktop application. There is no software design or UI/UX design involved in this project.
+This app stores your progresses in physicals exercises, like pushups, on a local database.
 
 * __Target Platform__ : PC, actually Pushup-app has been tested only on Linux, but it should be portable.
-* __State__: In development
+* __State__: Not in development
 * __License__ : [GPL v3.0](https://github.com/davcri/Pushup-app/blob/master/LICENSE.txt)
 
 # Run the application
