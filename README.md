@@ -1,17 +1,26 @@
 # Pushup app
 ![Pushup-app Main Window screenshot](http://imgur.com/ngrWVMJ.jpg "Pushup-app MainWindow screenshot")
 
-This application is only a proof of concept made to test the Python language for a desktop application. There is no software design or UI/UX design involved in this project.
-This app stores your progresses in physicals exercises, like pushups, on a local database.
+**Note**:This application is only a proof of concept made to test the Python language
+for a desktop application. There is no UI/UX design involved
+in this project. 
 
-* __Target Platform__ : PC, actually Pushup-app has been tested only on Linux, but it should be portable.
+This app stores your progresses in physicals exercises, like
+pushups, on a local database.
+
+
+* __Target Platform__ : PC, actually Pushup-app has been tested only on Linux,
+  but it should be portable.
 * __State__: Not in development
-* __License__ : [GPL v3.0](https://github.com/davcri/Pushup-app/blob/master/LICENSE.txt)
+* __License__ : [GPL
+  v3.0](https://github.com/davcri/Pushup-app/blob/master/LICENSE.txt)
 
 # Run the application
-First check your requirements ! If all libraries are installed on your system then :
+First check your requirements ! If all libraries are installed on your system
+then :
 
-1. Download the [source code](https://github.com/davcri/Push-up-app/archive/master.zip).
+1. Download the [source
+   code](https://github.com/davcri/Push-up-app/archive/master.zip).
 2. Extract the archive.
 3. Open the terminal and run
 ```python main.py```
@@ -22,7 +31,8 @@ First check your requirements ! If all libraries are installed on your system th
 
 ```sudo apt-get install python-pyside```
 
- Otherwise look at the official documentation: https://pypi.python.org/pypi/PySide#installation
+ Otherwise look at the official documentation:
+ https://pypi.python.org/pypi/PySide#installation
 
 - __Matplotlib__ _1.3.1_: http://matplotlib.org/
 
